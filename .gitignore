@@ -36,4 +36,4 @@ build/
 
 ### Spring Boot config (local only) ###
 /mundotech/src/main/resources/application.properties
-mundotech/src/main/resources/application.yml
+/mundotech/src/main/resources/application.yml
