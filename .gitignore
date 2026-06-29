@@ -35,5 +35,5 @@ build/
 .vscode/
 
 ### Spring Boot config (local only) ###
-mundotech/target/main/resources/application.properties
-mundotech/target/main/resources/application.yml
+/mundotech/src/main/resources/application.properties
+mundotech/src/main/resources/application.yml
