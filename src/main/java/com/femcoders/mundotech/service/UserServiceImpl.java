@@ -9,8 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        List<Role> resolvedRoles = new ArrayList<>();
+        Set<Role> resolvedRoles = new HashSet<>();
         for (Role role : user.getRoles()) {
             Role existingRole = roleRepository.findById(role.getId())
                     .orElseThrow(() -> new ResponseStatusException(
