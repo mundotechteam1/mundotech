@@ -5,42 +5,45 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Name is required")
+    @Column(nullable = false)
     private String name;
 
-    @NotBlank
-    @Email
-    @Column(unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
     @Size(min = 6)
+    @Column(nullable = false)
     private String password;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Article> articles;
+    private List<Article> articles = new ArrayList<>();
 }

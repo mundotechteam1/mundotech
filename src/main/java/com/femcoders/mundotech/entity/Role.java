@@ -20,7 +20,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "Role name is required")
     @Column(nullable = false, unique = true)
     private String name;
 }
