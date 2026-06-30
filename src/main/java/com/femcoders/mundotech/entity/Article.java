@@ -1,17 +1,10 @@
 package com.femcoders.mundotech.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import java.time.LocalDateTime ;
-
-@Entity
-@Table(name = "articles")
-@Data
-
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "articles")
@@ -20,7 +13,7 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "Title is required")
     private String title;
