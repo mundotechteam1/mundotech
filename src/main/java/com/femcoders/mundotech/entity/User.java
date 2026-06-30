@@ -3,6 +3,7 @@ package com.femcoders.mundotech.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password is required")
+    @Size(min = 6)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
