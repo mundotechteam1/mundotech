@@ -7,7 +7,14 @@ import com.femcoders.mundotech.entity.ArticleStatus;
 import com.femcoders.mundotech.entity.UserRepository;
 import java.util.List;
 
-
+@Service
 public class ArticleService {
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
+
+    public ArticleService(ArticleRepository articleRepository, UserRepository userRepository) {
+        this.articleRepository = articleRepository;
+        this.userRepository = userRepository;
+    }
 
 }
