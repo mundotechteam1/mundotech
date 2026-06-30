@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Article> findByAuthorId(Long authorId);
+public interface ArticleRepository extends JpaRepository<Article, Integer> {
+    List<Article> findByAuthorId(Integer authorId);
     List<Article> findByStatus(ArticleStatus status);
 }
+
 

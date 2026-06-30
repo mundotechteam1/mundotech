@@ -1,5 +1,8 @@
 package com.femcoders.mundotech.repository;
 
-public interface RoleRepository {
+import com.femcoders.mundotech.entity.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
 }

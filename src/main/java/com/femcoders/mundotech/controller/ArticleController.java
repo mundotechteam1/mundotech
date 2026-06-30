@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/articles")
+@RequestMapping("/api/v1/articles")
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -22,52 +22,57 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(@Valid @RequestBody Article article,
-                                                  @RequestParam Long authorId) {
+    public ResponseEntity<Article> createArticle(
+            @Valid @RequestBody Article article,
+            @RequestParam Integer authorId) {
         Article created = articleService.createArticle(article, authorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
-     @GetMapping
+
+    @GetMapping
     public ResponseEntity<List<Article>> getAllArticles() {
         return ResponseEntity.ok(articleService.getAllArticles());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
+    public ResponseEntity<Article> getArticleById(@PathVariable Integer id) {
         return ResponseEntity.ok(articleService.getArticleById(id));
     }
 
     @GetMapping("/author/{authorId}")
-    public ResponseEntity<List<Article>> getArticlesByAuthor(@PathVariable Long authorId) {
-        return ResponseEntity.ok(articleService.getArticlesByAuthor(authorId));
+    public ResponseEntity<List<Article>> getArticlesByAuthorId(@PathVariable Integer authorId) {
+        return ResponseEntity.ok(articleService.getArticlesByAuthorId(authorId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable Long id,
-                                                  @RequestBody Map<String, String> body,
-                                                  @RequestParam Long authorId) {
+    public ResponseEntity<Article> updateArticle(@PathVariable Integer id,
+                                                  @Valid @RequestBody Map<String, String> body,
+                                                  @RequestParam Integer authorId) {
         String content = body.get("content");
         Article updated = articleService.updateArticleContent(id, authorId, content);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable Long id,
-                                               @RequestParam Long authorId) {
-        articleService.deleteArticle(id, authorId);
+    public ResponseEntity<Void> deleteArticleById(
+            @PathVariable Integer id,
+            @RequestParam Integer authorId) {
+        articleService.deleteArticleById(id, authorId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/send-review")
-    public ResponseEntity<Article> sendForReview(@PathVariable Long id,
-                                                  @RequestParam Long authorId) {
+    public ResponseEntity<Article> sendForReview(
+            @PathVariable Integer id,
+            @RequestParam Integer authorId) {
         Article updated = articleService.sendForReview(id, authorId);
         return ResponseEntity.ok(updated);
     }
 
     @PutMapping("/{id}/approve")
-    public ResponseEntity<Article> approveArticle(@PathVariable Long id,
-                                                   @RequestParam Long managerId) {
+    public ResponseEntity<Article> approveArticle(
+            @PathVariable Integer id,
+            @RequestParam Integer managerId) {
         Article updated = articleService.approveArticle(id, managerId);
         return ResponseEntity.ok(updated);
     }
