@@ -1,5 +1,8 @@
 package com.femcoders.mundotech.service;
 
-public class RoleService {
+import com.femcoders.mundotech.entity.Role;
 
+public interface RoleService {
+
+    public Role createRole(Role role);
 }
