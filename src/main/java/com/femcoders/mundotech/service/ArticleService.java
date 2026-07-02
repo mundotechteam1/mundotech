@@ -20,7 +20,7 @@ public interface ArticleService {
 
     List<Article> getArticlesByAuthorId(Integer authorId);
 
-    Article updateArticleContent(Integer articleId, Integer authorId, String content);
+    Article updateArticle(Integer articleId, Integer authorId, String content);
 
     void deleteArticleById(Integer articleId, Integer authorId);
 

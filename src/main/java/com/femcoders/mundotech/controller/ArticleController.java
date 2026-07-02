@@ -48,11 +48,15 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable Integer id,
-                                                  @Valid @RequestBody Map<String, String> body,
-                                                  @RequestParam Integer authorId) {
+    public ResponseEntity<Article> updateArticle(
+            @PathVariable Integer id,
+            @Valid @RequestBody Map<String, String> body,
+            @RequestParam Integer authorId) {
+
+        String title = body.get("title");
         String content = body.get("content");
-        Article updated = articleService.updateArticleContent(id, authorId, content);
+
+        Article updated = articleService.updateArticle(id, authorId, title, content);
         return ResponseEntity.ok(updated);
     }
 

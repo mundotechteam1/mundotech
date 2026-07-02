@@ -48,14 +48,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article updateArticleContent(Integer articleId, Integer authorId, String content) {
-        Article article = getArticleById(articleId);
+    public Article updateArticle(Integer id, Integer authorId, String title, String content) {
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
 
         if (!article.getAuthor().getId().equals(authorId)) {
-            throw new RuntimeException("Only the author can update this article");
+            throw new RuntimeException("You are not the author of this article");
         }
 
-        article.setContent(content);
+        if (title != null) {
+            article.setTitle(title);
+        }
+
+        if (content != null) {
+            article.setContent(content);
+        }
+
         return articleRepository.save(article);
     }
 
