@@ -38,6 +38,7 @@ erDiagram
         text content
         timestamp created_at
         timestamp updated_at
+        timestamp published_at
         varchar status
         bigint author_id FK
     }
@@ -128,6 +129,41 @@ stateDiagram-v2
 4. **Crear artículos** → `POST /api/articles?authorId=X`
 5. **Probar flujo completo** → crear → enviar a revisión → aprobar
 
+## ⚙️ Cómo instalar y ejecutar el proyecto
+
+### Requisitos previos
+
+- Java 21
+- Maven 3.9.16
+- PostgreSQL
+
+### Pasos
+
+1. Clonar el repositorio:
+   ```bash
+   git clone <url-del-repositorio>
+   cd mundotech
+   ```
+
+2. Crear la base de datos en PostgreSQL:
+   ```sql
+   CREATE DATABASE mundotech;
+   ```
+
+3. Configurar las credenciales de conexión en `src/main/resources/application.properties`:
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/mundotech
+   spring.datasource.username=tu_usuario
+   spring.datasource.password=tu_contraseña
+   ```
+
+4. Ejecutar la aplicación:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+5. La API estará disponible en `http://localhost:8080`
+
 ## 📁 Estructura del Proyecto
 
 ```
@@ -144,10 +180,22 @@ src/main/java/com/femcoders/mundotech/
 │   └── UserRepository.java
 ├── service/
 │   ├── ArticleService.java
+│   ├── ArticleServiceImpl.java
 │   ├── RoleService.java
-│   └── UserService.java
+│   ├── RoleServiceImpl.java
+│   ├── UserService.java
+│   └── UserServiceImpl.java
 └── controller/
     ├── ArticleController.java
     ├── RoleController.java
     └── UserController.java
 ```
+
+## 👥 Equipo de desarrollo
+
+| Nombre | Rol |
+|---|---|
+| Elena Almanza | Product Owner |
+| Siuzanna Vachaganian | Scrum Master |
+| Aïda García | Developer |
+| Fabiana Leonardo | Developer |
