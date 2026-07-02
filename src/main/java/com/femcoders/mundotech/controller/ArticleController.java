@@ -23,11 +23,14 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<Article> createArticle(
-            @Valid @RequestBody Article article,
-            @RequestParam Integer authorId) {
+            @Valid @RequestBody Article article) {
+
+        Integer authorId = article.getAuthor().getId();
         Article created = articleService.createArticle(article, authorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Article>> getAllArticles() {
