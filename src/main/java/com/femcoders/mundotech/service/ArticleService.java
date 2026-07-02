@@ -2,9 +2,6 @@ package com.femcoders.mundotech.service;
 
 import com.femcoders.mundotech.entity.Article;
 import com.femcoders.mundotech.entity.ArticleStatus;
-import com.femcoders.mundotech.entity.User;
-import com.femcoders.mundotech.repository.ArticleRepository;
-import com.femcoders.mundotech.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +17,7 @@ public interface ArticleService {
 
     List<Article> getArticlesByAuthorId(Integer authorId);
 
-    Article updateArticle(Integer articleId, Integer authorId, String content);
+    Article updateArticle(Integer articleId, Integer authorId, String content, String s);
 
     void deleteArticleById(Integer articleId, Integer authorId);
 
