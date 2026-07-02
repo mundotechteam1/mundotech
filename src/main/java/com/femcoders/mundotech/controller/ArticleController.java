@@ -23,11 +23,14 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<Article> createArticle(
-            @Valid @RequestBody Article article,
-            @RequestParam Integer authorId) {
+            @Valid @RequestBody Article article) {
+
+        Integer authorId = article.getAuthor().getId();
         Article created = articleService.createArticle(article, authorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Article>> getAllArticles() {
@@ -45,11 +48,15 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable Integer id,
-                                                  @Valid @RequestBody Map<String, String> body,
-                                                  @RequestParam Integer authorId) {
+    public ResponseEntity<Article> updateArticle(
+            @PathVariable Integer id,
+            @Valid @RequestBody Map<String, String> body,
+            @RequestParam Integer authorId) {
+
+        String title = body.get("title");
         String content = body.get("content");
-        Article updated = articleService.updateArticleContent(id, authorId, content);
+
+        Article updated = articleService.updateArticle(id, authorId, title, content);
         return ResponseEntity.ok(updated);
     }
 
