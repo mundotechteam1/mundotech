@@ -1,13 +1,15 @@
-import ArticleEditor from "./components/ArticleEditor/ArticleEditor";
-import "./App.css";
+import { Outlet } from "react-router-dom"
 
-function App() {
+export default function App() {
   return (
     <>
-      <section id="center">
-        <ArticleEditor />
-      </section>
+      {/* <Header /> + añadir import */}
+
+      <main>
+        <Outlet />
+      </main>
+
+      {/* <Footer /> + añadir import */}
     </>
   );
 }
-export default App;
