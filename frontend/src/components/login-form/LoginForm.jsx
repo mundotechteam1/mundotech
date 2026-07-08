@@ -1,6 +1,5 @@
 import styles from "./LoginForm.module.scss";
 import { useForm } from "react-hook-form";
-import Button from "../../components/login-button/LoginButton";
 
 function LoginForm() {
   const {
@@ -8,7 +7,7 @@ function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
-
+  
   const onSubmit = async (data) => {
     try {
       const res = await fetch("http://localhost:8080/api/auth/login", {
@@ -27,7 +26,7 @@ function LoginForm() {
 
   return (
     <form
-      className={styles.LoginForm}
+      className={styles.loginForm}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
@@ -35,6 +34,7 @@ function LoginForm() {
       <input
         id="email"
         type="email"
+        placeholder="editor@mundotech.pub"
         {...register("email", {
           required: "Email is required",
           pattern: {
@@ -44,7 +44,7 @@ function LoginForm() {
         })}
       />
       {errors.email && (
-        <p className="form-error" role="alert">
+        <p className={styles.formError} role="alert">
           {errors.email.message}
         </p>
       )}
@@ -53,20 +53,21 @@ function LoginForm() {
       <input
         id="password"
         type="password"
+        placeholder="••••••••"
         autoComplete="current-password"
         {...register("password", {
           required: "Password is required",
         })}
       />
       {errors.password && (
-        <p className="form-error" role="alert">
+        <p className={styles.formError} role="alert">
           {errors.password.message}
         </p>
       )}
 
-      <Button type="submit" disabled={isSubmitting}>
+      <button className={styles.loginBtn} type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Loading…" : "Login"}
-      </Button>
+      </button>
 
       {/* <a className="forgot-link" href="/forgot-password"> 
         Forgotten passcode?
