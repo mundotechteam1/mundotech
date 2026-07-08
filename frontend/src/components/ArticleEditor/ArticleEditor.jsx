@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "./ArticleEditor.scss";
 
 export default function ArticleEditor() {
@@ -6,6 +7,7 @@ export default function ArticleEditor() {
   const [section, setSection] = useState("Silicon Valley");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const today = new Date().toLocaleDateString("en-US");
 
@@ -15,26 +17,59 @@ export default function ArticleEditor() {
     }
   };
 
-  const handleSubmit = (e, statusType) => {
+  const handleSubmit = async (e, statusType) => {
     e.preventDefault();
-    console.log(`Status: ${statusType}`, {
-      headline,
-      section,
-      content,
-      image,
-    });
-    alert(`Status: ${statusType}`);
+    setLoading(true);
+
+    const formData = new FormData();
+
+    const articleDto = {
+      title: headline,
+      content: content,
+      section: section,
+      status: statusType,
+      authorId: 1
+    };
+
+    formData.append(
+      "article",
+      new Blob([JSON.stringify(articleDto)], { type: "application/json" })
+    );
+
+    if (image) {
+      formData.append("image", image);
+    }
+
+    try {
+      await axios.post("http://localhost:8080/api/articles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert(`¡Éxito! El artículo ha sido guardado con estado: ${statusType}`);
+      setHeadline("");
+      setContent("");
+      setImage(null);
+    } catch (error) {
+      console.error("Error al enviar el artículo:", error);
+      alert("Hubo un error al conectar con el servidor backend.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="article-editor-container">
       <form className="article-form">
+        
         <div className="meta-grid">
           <div className="form-group">
             <label>SECTION</label>
             <select
               value={section}
               onChange={(e) => setSection(e.target.value)}
+              disabled={loading}
             >
               <option value="Silicon Valley">Silicon Valley</option>
               <option value="Science">Science</option>
@@ -60,6 +95,7 @@ export default function ArticleEditor() {
             value={headline}
             onChange={(e) => setHeadline(e.target.value)}
             className="headline-input"
+            disabled={loading}
           />
         </div>
 
@@ -80,6 +116,7 @@ export default function ArticleEditor() {
             accept="image/*"
             onChange={handleFileChange}
             style={{ display: "none" }}
+            disabled={loading}
           />
         </div>
 
@@ -90,25 +127,29 @@ export default function ArticleEditor() {
             onChange={(e) => setContent(e.target.value)}
             className="content-textarea"
             rows="10"
+            disabled={loading}
           />
         </div>
 
         <div className="actions-panel">
-          <button
-            type="button"
+          <button 
+            type="button" 
             className="btn-draft"
             onClick={(e) => handleSubmit(e, "DRAFT")}
+            disabled={loading}
           >
-            SAVE DRAFT
+            {loading ? "SAVING..." : "SAVE DRAFT"}
           </button>
-          <button
-            type="button"
+          <button 
+            type="button" 
             className="btn-review"
             onClick={(e) => handleSubmit(e, "IN_REVIEW")}
+            disabled={loading}
           >
-            SEND TO REVIEW ▷
+            {loading ? "SENDING..." : "SEND TO REVIEW ▷"}
           </button>
         </div>
+
       </form>
     </div>
   );
