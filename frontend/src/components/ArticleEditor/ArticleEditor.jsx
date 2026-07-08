@@ -9,7 +9,7 @@ export default function ArticleEditor() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const today = new Date().toLocaleDateString("en-US");
+  const today = "05/24/2024";
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -22,18 +22,17 @@ export default function ArticleEditor() {
     setLoading(true);
 
     const formData = new FormData();
-
     const articleDto = {
       title: headline,
       content: content,
       section: section,
       status: statusType,
-      authorId: 1
+      authorId: 1,
     };
 
     formData.append(
       "article",
-      new Blob([JSON.stringify(articleDto)], { type: "application/json" })
+      new Blob([JSON.stringify(articleDto)], { type: "application/json" }),
     );
 
     if (image) {
@@ -46,14 +45,13 @@ export default function ArticleEditor() {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      alert(`¡Éxito! El artículo ha sido guardado con estado: ${statusType}`);
+      alert(`¡Éxito! Estado: ${statusType}`);
       setHeadline("");
       setContent("");
       setImage(null);
     } catch (error) {
-      console.error("Error al enviar el artículo:", error);
-      alert("Hubo un error al conectar con el servidor backend.");
+      console.error(error);
+      alert("Error backend");
     } finally {
       setLoading(false);
     }
@@ -62,29 +60,45 @@ export default function ArticleEditor() {
   return (
     <div className="article-editor-container">
       <form className="article-form">
-        
-        <div className="meta-grid">
-          <div className="form-group">
-            <label>SECTION</label>
-            <select
-              value={section}
-              onChange={(e) => setSection(e.target.value)}
-              disabled={loading}
-            >
-              <option value="Silicon Valley">Silicon Valley</option>
-              <option value="Science">Science</option>
-              <option value="Tech">Tech</option>
-            </select>
+        <div className="submission-box">
+          <div className="submission-header">
+            <div className="badge-status">
+              <span className="tag-new">NEW DRAFT</span>
+              <span className="tag-id">/ #4429</span>
+            </div>
+            <div className="submission-title-text">Untitled Submission</div>
+            <div className="autosave-text">LAST AUTOSAVE: JUST NOW</div>
           </div>
 
-          <div className="form-group">
-            <label>AUTHOR</label>
-            <input type="text" value="Julius V. Thorne" readOnly disabled />
-          </div>
+          <div className="meta-grid">
+            <div className="meta-item">
+              <span className="meta-label">SECTION</span>
+              <div className="form-group">
+                <select
+                  value={section}
+                  onChange={(e) => setSection(e.target.value)}
+                  disabled={loading}
+                >
+                  <option value="Silicon Valley">Silicon Valley</option>
+                  <option value="Science">Science</option>
+                  <option value="Tech">Tech</option>
+                </select>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label>PUBLICATION DATE</label>
-            <input type="text" value={today} readOnly disabled />
+            <div className="meta-item">
+              <span className="meta-label">AUTHOR</span>
+              <div className="form-group">
+                <input type="text" value="Julius V. Thorne" readOnly disabled />
+              </div>
+            </div>
+
+            <div className="meta-item">
+              <span className="meta-label">PUBLICATION DATE</span>
+              <div className="form-group">
+                <input type="text" value={today} readOnly disabled />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -126,30 +140,29 @@ export default function ArticleEditor() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="content-textarea"
-            rows="10"
+            rows="8"
             disabled={loading}
           />
         </div>
 
-        <div className="actions-panel">
-          <button 
-            type="button" 
+        <div className="actions-footer-bar">
+          <button
+            type="button"
             className="btn-draft"
             onClick={(e) => handleSubmit(e, "DRAFT")}
             disabled={loading}
           >
-            {loading ? "SAVING..." : "SAVE DRAFT"}
+            SAVE DRAFT
           </button>
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="btn-review"
             onClick={(e) => handleSubmit(e, "IN_REVIEW")}
             disabled={loading}
           >
-            {loading ? "SENDING..." : "SEND TO REVIEW ▷"}
+            SEND TO REVIEW ▷
           </button>
         </div>
-
       </form>
     </div>
   );
