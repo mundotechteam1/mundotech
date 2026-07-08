@@ -59,7 +59,7 @@ export default function ArticleEditor() {
 
   return (
     <div className="article-editor-container">
-      <form className="article-form">
+      <form className="article-form" onSubmit={(e) => e.preventDefault()}>
         <div className="submission-box">
           <div className="submission-header">
             <div className="badge-status">
@@ -72,32 +72,26 @@ export default function ArticleEditor() {
 
           <div className="meta-grid">
             <div className="meta-item">
-              <span className="meta-label">SECTION</span>
-              <div className="form-group">
-                <select
-                  value={section}
-                  onChange={(e) => setSection(e.target.value)}
-                  disabled={loading}
-                >
-                  <option value="Silicon Valley">Silicon Valley</option>
-                  <option value="Science">Science</option>
-                  <option value="Tech">Tech</option>
-                </select>
-              </div>
+              <div className="meta-label">SECTION</div>
+              <select
+                value={section}
+                onChange={(e) => setSection(e.target.value)}
+                disabled={loading}
+              >
+                <option value="Silicon Valley">Silicon Valley</option>
+                <option value="Science">Science</option>
+                <option value="Tech">Tech</option>
+              </select>
             </div>
 
             <div className="meta-item">
-              <span className="meta-label">AUTHOR</span>
-              <div className="form-group">
-                <input type="text" value="Julius V. Thorne" readOnly disabled />
-              </div>
+              <div className="meta-label">AUTHOR</div>
+              <input type="text" value="Julius V. Thorne" readOnly disabled />
             </div>
 
             <div className="meta-item">
-              <span className="meta-label">PUBLICATION DATE</span>
-              <div className="form-group">
-                <input type="text" value={today} readOnly disabled />
-              </div>
+              <div className="meta-label">PUBLICATION DATE</div>
+              <input type="text" value={today} readOnly disabled />
             </div>
           </div>
         </div>
@@ -116,11 +110,7 @@ export default function ArticleEditor() {
         <div className="image-upload-group">
           <label htmlFor="file-picker" className="upload-label">
             <div className="upload-content">
-              <span className="upload-icon">📷</span>
-              <span className="upload-text-main">UPLOAD LEAD IMAGERY</span>
-              <span className="upload-text-sub">
-                Recommend: 1600x900px | Max 5MB
-              </span>
+              <span className="upload-text-sub"></span>
               {image && <p className="file-name">Selected: {image.name}</p>}
             </div>
           </label>
