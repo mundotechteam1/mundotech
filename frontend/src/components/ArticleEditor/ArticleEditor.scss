@@ -1,0 +1,208 @@
+.article-editor-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: var(--bg);
+  min-height: 100vh;
+
+  .article-form {
+    width: 100%;
+    max-width: 768px;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background-color: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group {
+        background-color: var(--bg);
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-size: 0.75rem;
+          font-weight: bold;
+          color: var(--text-h);
+          margin-bottom: 0.25rem;
+          font-family: var(--sans);
+          text-transform: uppercase;
+        }
+
+        input,
+        select {
+          border: none;
+          background: transparent;
+          font-size: 0.95rem;
+          color: var(--text);
+          padding: 0.25rem 0;
+          font-family: var(--sans);
+          width: 100%;
+
+          &:focus {
+            outline: none;
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .headline-group {
+      margin-bottom: 2rem;
+
+      .headline-input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        background: transparent;
+        font-size: 2.5rem;
+        font-family: var(--heading);
+        font-weight: 500;
+        color: var(--text-h);
+        padding: 0.5rem 0;
+
+        @media (max-width: 480px) {
+          font-size: 1.8rem;
+        }
+
+        &:focus {
+          outline: none;
+          border-bottom-color: var(--accent);
+        }
+
+        &::placeholder {
+          color: var(--text);
+          opacity: 0.4;
+        }
+      }
+    }
+
+    .image-upload-group {
+      margin-bottom: 2rem;
+
+      .upload-label {
+        display: block;
+        border: 1px dashed var(--border);
+        padding: 3rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        background-color: var(--code-bg);
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: var(--social-bg);
+        }
+
+        .upload-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+
+          .upload-icon {
+            font-size: 1.5rem;
+          }
+
+          .upload-text-main {
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: var(--text-h);
+            font-family: var(--sans);
+          }
+
+          .upload-text-sub {
+            font-size: 0.75rem;
+            color: var(--text);
+            opacity: 0.8;
+          }
+
+          .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .content-group {
+      margin-bottom: 3rem;
+
+      .content-textarea {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-size: 1.1rem;
+        line-height: 145%;
+        color: var(--text);
+        font-family: var(--sans);
+        resize: vertical;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .actions-panel {
+      display: flex;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 0;
+      justify-content: flex-start;
+      gap: 1rem;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        button {
+          width: 100%;
+        }
+      }
+
+      button {
+        border: 1px solid var(--border);
+        padding: 0.6rem 1.5rem;
+        font-size: 0.85rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: var(--sans);
+        background: transparent;
+        color: var(--text-h);
+      }
+
+      .btn-draft {
+        &:hover {
+          background-color: var(--code-bg);
+          border-color: var(--text-h);
+        }
+      }
+
+      .btn-review {
+        background-color: var(--text-h);
+        color: var(--bg);
+        border-color: var(--text-h);
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+}
