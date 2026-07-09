@@ -1,20 +1,63 @@
-import "./Header.scss";
+import "./Header.module.scss";
+import { FaRegCircleUser } from "react-icons/fa6";
 
 function Header() {
+  const fechaActual = new Date();
+
+  const dias = [
+    "DOMINGO",
+    "LUNES",
+    "MARTES",
+    "MIÉRCOLES",
+    "JUEVES",
+    "VIERNES",
+    "SÁBADO",
+  ];
+
+  const meses = [
+    "ENERO",
+    "FEBRERO",
+    "MARZO",
+    "ABRIL",
+    "MAYO",
+    "JUNIO",
+    "JULIO",
+    "AGOSTO",
+    "SEPTIEMBRE",
+    "OCTUBRE",
+    "NOVIEMBRE",
+    "DICIEMBRE",
+  ];
+
+  const fecha = `${dias[fechaActual.getDay()]}, ${fechaActual.getDate()} DE ${
+    meses[fechaActual.getMonth()]
+  } DE ${fechaActual.getFullYear()}`;
+
   return (
     <header className="header">
-      <div className="header__logo">
-        <h1>MundoTech</h1>
+
+      <div className="user-icon">
+        <FaRegCircleUser />
       </div>
 
-      <nav className="header__nav">
-        <a href="/">Inicio</a>
-        <a href="/news">Noticias</a>
-        <a href="/login">Iniciar sesión</a>
-        <a href="/register" className="btn-register">
-          Registrarse
-        </a>
-      </nav>
+      <div className="newspaper">
+
+        <div className="line"></div>
+
+        <h1>
+          <span>MUNDO</span>
+          <span>TECH</span>
+        </h1>
+
+        <div className="line"></div>
+
+        <div className="bottom">
+          <p>{fecha}</p>
+          <p>BARCELONA</p>
+        </div>
+
+      </div>
+
     </header>
   );
 }
