@@ -1,37 +1,39 @@
-import { useEffect, useState } from 'react'
-import './AuthorDashboard.module.scss'
+import { useEffect, useState } from "react";
+import "./AuthorDashboard.module.scss";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
-  const [articles, setArticles] = useState([])
-  const [filter, setFilter] = useState('ALL')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [articles, setArticles] = useState([]);
+  const [filter, setFilter] = useState("ALL");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
-    loadArticles()
-  }, [])
+    loadArticles();
+  }, []);
 
   const loadArticles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/articles')
+      const response = await fetch("http://localhost:8080/api/v1/articles");
 
       if (!response.ok) {
-        throw new Error('No se pudieron cargar los artículos')
+        throw new Error("No se pudieron cargar los artículos");
       }
 
-      const data = await response.json()
-      setArticles(data)
+      const data = await response.json();
+      setArticles(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const filteredArticles =
-    filter === 'ALL'
+    filter === "ALL"
       ? articles
-      : articles.filter((article) => article.status === filter)
+      : articles.filter((article) => article.status === filter);
 
   return (
     <main className="author-dashboard">
@@ -44,7 +46,11 @@ function AuthorDashboard() {
           <h1>Panel del Autor</h1>
         </div>
 
-        <button className="author-dashboard__create-button" type="button">
+        <button
+          type="button"
+          onClick={() => setIsEditorOpen(true)}
+          className="author-dashboard__create-button"
+        >
           Crear nuevo artículo
         </button>
       </section>
@@ -53,9 +59,7 @@ function AuthorDashboard() {
         <p className="author-profile__label">Author Profile</p>
 
         <div className="author-profile__content">
-          <div className="author-profile__avatar">
-            M
-          </div>
+          <div className="author-profile__avatar">M</div>
 
           <div>
             <h2>M. Atrus</h2>
@@ -67,7 +71,7 @@ function AuthorDashboard() {
           <span>Total Published</span>
           <strong>
             {
-              articles.filter((article) => article.status === 'PUBLISHED')
+              articles.filter((article) => article.status === "PUBLISHED")
                 .length
             }
           </strong>
@@ -77,7 +81,7 @@ function AuthorDashboard() {
           <span>Review Cycles</span>
           <strong>
             {
-              articles.filter((article) => article.status === 'IN_REVIEW')
+              articles.filter((article) => article.status === "IN_REVIEW")
                 .length
             }
           </strong>
@@ -89,32 +93,32 @@ function AuthorDashboard() {
 
         <button
           type="button"
-          className={filter === 'ALL' ? 'active' : ''}
-          onClick={() => setFilter('ALL')}
+          className={filter === "ALL" ? "active" : ""}
+          onClick={() => setFilter("ALL")}
         >
           Todos
         </button>
 
         <button
           type="button"
-          className={filter === 'DRAFT' ? 'active' : ''}
-          onClick={() => setFilter('DRAFT')}
+          className={filter === "DRAFT" ? "active" : ""}
+          onClick={() => setFilter("DRAFT")}
         >
           Draft
         </button>
 
         <button
           type="button"
-          className={filter === 'IN_REVIEW' ? 'active' : ''}
-          onClick={() => setFilter('IN_REVIEW')}
+          className={filter === "IN_REVIEW" ? "active" : ""}
+          onClick={() => setFilter("IN_REVIEW")}
         >
           In Review
         </button>
 
         <button
           type="button"
-          className={filter === 'PUBLISHED' ? 'active' : ''}
-          onClick={() => setFilter('PUBLISHED')}
+          className={filter === "PUBLISHED" ? "active" : ""}
+          onClick={() => setFilter("PUBLISHED")}
         >
           Published
         </button>
@@ -124,9 +128,7 @@ function AuthorDashboard() {
         <p className="author-dashboard__message">Cargando artículos...</p>
       )}
 
-      {error && (
-        <p className="author-dashboard__error">{error}</p>
-      )}
+      {error && <p className="author-dashboard__error">{error}</p>}
 
       <section className="author-articles">
         {filteredArticles.map((article) => (
@@ -137,30 +139,28 @@ function AuthorDashboard() {
               </span>
 
               <span>
-                {article.createdAt || article.created_at || 'OCT 27, 2026'}
+                {article.createdAt || article.created_at || "OCT 27, 2026"}
               </span>
             </div>
 
             <h2>{article.title}</h2>
 
-            <p className="author-card__content">
-              {article.content}
-            </p>
+            <p className="author-card__content">{article.content}</p>
 
             <div className="author-card__actions">
-              {article.status === 'DRAFT' && (
+              {article.status === "DRAFT" && (
                 <button className="primary-action" type="button">
                   Enviar a revisión
                 </button>
               )}
 
-              {article.status === 'IN_REVIEW' && (
+              {article.status === "IN_REVIEW" && (
                 <button className="secondary-action" type="button">
                   Pending approval
                 </button>
               )}
 
-              {article.status === 'PUBLISHED' && (
+              {article.status === "PUBLISHED" && (
                 <button className="secondary-action" type="button">
                   Ver publicado
                 </button>
@@ -180,13 +180,28 @@ function AuthorDashboard() {
 
       <section className="author-pagination">
         <button type="button">Anterior</button>
-        <button className="active" type="button">1</button>
+        <button className="active" type="button">
+          1
+        </button>
         <button type="button">2</button>
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
+      {isEditorOpen && (
+        <div className="modal-overlay" onClick={() => setIsEditorOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setIsEditorOpen(false)}
+            >
+              ×
+            </button>
+            <ArticleEditor onClose={() => setIsEditorOpen(false)} />
+          </div>
+        </div>
+      )}
     </main>
-  )
+  );
 }
 
-export default AuthorDashboard
+export default AuthorDashboard;
