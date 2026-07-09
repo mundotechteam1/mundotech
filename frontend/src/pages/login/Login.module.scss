@@ -1,0 +1,25 @@
+@use "../../styles/variables" as v;
+
+.loginPage {
+    padding: 3rem
+}
+.securityBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  color: v.$color-form-security;
+}
+
+.securityIcon {
+  width: 1rem;
+  height: 1rem;
+  fill: v.$color-form-security;
+}
+
+.securityText {
+  font-family: v.$font-heading-secondary; 
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
