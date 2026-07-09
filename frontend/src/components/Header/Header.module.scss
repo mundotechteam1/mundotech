@@ -1,0 +1,122 @@
+@use '../../styles/_variables' as v;
+
+.header {
+  background: v.$color-bg;
+  width: 100%;
+  padding: 5rem 0;
+  position: relative;
+}
+
+.user-icon {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+
+  svg {
+    font-size: 2rem;
+    color: v.$color-text;
+    cursor: pointer;
+  }
+}
+
+.newspaper {
+  width: min(900px, 90%);
+  margin: 0 auto;
+}
+
+.line {
+  width: 90%;
+  height: 4px;
+  background: v.$color-text;
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 1.5rem 0;
+  line-height: 0.85;
+
+  span {
+    //font-family: "Bodoni Moda", serif;
+    font-weight: v.$weight-bold;
+    color: v.$color-text;
+  }
+
+  span:first-child {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  span:last-child {
+    font-size: clamp(2.7rem, 7vw, 5rem);
+  }
+}
+
+.bottom {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: v.$color-text;
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+}
+
+/* ---------- TABLET ---------- */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 4rem 0;
+  }
+  .user-icon {
+    top: 1rem;
+    right: 1.5rem;
+
+    svg {
+      font-size: 1.7rem;
+    }
+  }
+
+  .bottom {
+    p {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* ---------- MÓVIL ---------- */
+
+@media (max-width: 480px) {
+  .header {
+    padding: 3rem 0;
+  }
+
+  .user-icon {
+    top: 0.4rem;
+    right: 1rem;
+
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+
+  .line {
+    height: 3px;
+  }
+
+  .bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}
