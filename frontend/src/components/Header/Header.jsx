@@ -35,13 +35,11 @@ function Header() {
 
   return (
     <header className="header">
-
       <div className="user-icon">
         <FaRegCircleUser />
       </div>
 
       <div className="newspaper">
-
         <div className="line"></div>
 
         <h1>
@@ -55,9 +53,7 @@ function Header() {
           <p>{fecha}</p>
           <p>BARCELONA</p>
         </div>
-
       </div>
-
     </header>
   );
 }

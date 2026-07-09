@@ -1,0 +1,248 @@
+@use "../../styles/variables.scss" as v;
+
+.article-editor-container {
+  background-color: v.$color-bg;
+  color: v.$color-text;
+  font-family: v.$font-body;
+  padding: v.$space-md;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.article-form {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+}
+
+.submission-box {
+  border: 1px solid v.$color-border;
+  padding: v.$space-md;
+  background-color: transparent;
+}
+
+.submission-header {
+  margin-bottom: v.$space-md;
+}
+
+.badge-status {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  margin-bottom: v.$space-xs;
+
+  .tag-new {
+    display: inline-block;
+    color: v.$color-text;
+    background: none;
+    padding: 0.25rem 0;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tag-id {
+    display: inline-block;
+    color: v.$color-error;
+    padding: 0.25rem 0;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}
+
+.submission-title-text {
+  font-family: v.$font-heading-primary;
+  font-size: 1.5rem;
+  font-weight: v.$weight-bold;
+}
+
+.meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .meta-label {
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    font-weight: v.$weight-bold;
+    color: v.$color-form-label;
+    letter-spacing: 0.03em;
+  }
+}
+
+.form-group {
+  input {
+    width: 100%;
+    padding: v.$space-xs;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: transparent;
+    font-family: v.$font-body;
+    font-size: 0.9rem;
+    color: v.$color-text-muted;
+    box-sizing: border-box;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.headline-group {
+  .headline-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid v.$color-border;
+    background-color: transparent;
+    font-family: v.$font-heading-primary;
+    font-size: 1.5rem;
+    padding: v.$space-xs 0;
+    box-sizing: border-box;
+    outline: none;
+
+    &::placeholder {
+      color: v.$color-form-placeholder;
+    }
+  }
+}
+
+.image-upload-group {
+  .upload-label {
+    display: block;
+    border: 1px dashed v.$color-border;
+    padding: v.$space-lg v.$space-md;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .upload-icon {
+    font-size: 1.5rem;
+    margin-bottom: v.$space-xs;
+  }
+
+  .upload-text-main {
+    font-family: v.$font-heading-secondary;
+    font-size: 0.85rem;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.05em;
+  }
+
+  .upload-text-sub {
+    font-size: 0.7rem;
+    color: v.$color-text-muted;
+  }
+
+  .file-name {
+    margin-top: v.$space-xs;
+    font-size: 0.8rem;
+    color: v.$color-form-security;
+    font-weight: v.$weight-semibold;
+  }
+}
+
+.content-group {
+  .content-textarea {
+    width: 100%;
+    padding: v.$space-sm;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    font-family: v.$font-body;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+    outline: none;
+
+    &::placeholder {
+      color: v.$color-form-placeholder;
+    }
+  }
+}
+
+.actions-footer-bar {
+  display: flex;
+  flex-direction: row;
+  gap: v.$space-sm;
+  padding: v.$space-md;
+  border: 2px solid v.$color-border;
+  background-color: transparent;
+  margin-top: v.$space-sm;
+  box-sizing: border-box;
+
+  button {
+    flex: 1;
+    padding: v.$space-sm;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.85rem;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: normal;
+    line-height: 1.2;
+    cursor: pointer;
+    border: 1px solid v.$color-border;
+    transition: background-color 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-draft {
+    background-color: transparent;
+    color: v.$color-text;
+
+    &:not(:disabled):hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .btn-review {
+    background-color: v.$color-border;
+    color: v.$color-white;
+
+    &:not(:disabled):hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .article-form {
+    max-width: v.$max-content-width;
+  }
+
+  .meta-grid {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .meta-item {
+    flex: 1;
+  }
+
+  .headline-group {
+    .headline-input {
+      font-size: 1.75rem;
+    }
+  }
+}
