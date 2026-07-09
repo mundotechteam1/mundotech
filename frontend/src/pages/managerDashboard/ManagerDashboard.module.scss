@@ -1,0 +1,142 @@
+.manager-dashboard {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 70px 0 40px;
+  color: #111;
+  background-color: #fbf7ea;
+  font-family: Georgia, 'Times New Roman', serif;
+  text-align: left;
+
+  &__title {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    column-gap: 16px;
+    padding: 0 18px 10px;
+    margin-bottom: 42px;
+    border-bottom: 1px solid #111;
+
+    h1 {
+      margin: 0;
+      color: #111;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 36px;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -1.2px;
+    }
+
+    p {
+      margin: 14px 0 0;
+      color: #111;
+      font-family: Arial, sans-serif;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+  }
+
+  &__badge {
+    margin-bottom: 0;
+    padding: 6px 8px;
+    background-color: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__message,
+  &__error {
+    padding: 0 18px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+  }
+
+  &__error {
+    color: #b64635;
+  }
+
+  &__articles {
+    display: flex;
+    flex-direction: column;
+    padding: 0 18px;
+  }
+}
+
+.manager-article {
+  padding: 0 0 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #a9a18f;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__category {
+    margin: 0 0 8px;
+    color: #c6402f;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    color: #111;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.7px;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    color: #111;
+    font-family: Arial, sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button:first-child {
+      border: none;
+      background-color: #111;
+      color: #fff;
+      padding: 7px 20px;
+    }
+
+    button:nth-child(2) {
+      border: none;
+      background-color: transparent;
+      color: #111;
+      padding: 0 0 0 20px;
+    }
+  }
+}
