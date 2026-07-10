@@ -57,57 +57,53 @@ export default function ArticleEditor({ onClose }) {
   };
 
   return (
-    <div className={styles["article-editor-container"]}>
-      <form className={styles["article-form"]}>
-        <div className={styles["submission-box"]}>
-          <div className={styles["badge-status"]}>
-            <span className={styles["tag-new"]}>NEW DRAFT</span>
-            <span className={styles["tag-id"]}>/ #4429</span>
+    <div className={styles.articleEditorContainer}>
+      <form className={styles.articleForm}>
+        <div className={styles.submissionBox}>
+          <div className={styles.badgeStatus}>
+            <span className={styles.tagNew}>NUEVO BORRADOR</span>
+            <span className={styles.tagId}>/ #4429</span>
           </div>
-          <div className={styles["submission-title-text"]}>
-            Untitled Submission
-          </div>
+          <div className={styles.submissionTitleText}>Sin título</div>
         </div>
 
-        <div className={styles["meta-grid"]}>
-          <div className={styles["meta-item"]}>
-            <span className={styles["meta-label"]}>AUTHOR</span>
-            <div className={styles["form-group"]}>
+        <div className={styles.metaGrid}>
+          <div className={styles.metaItem}>
+            <span className={styles.metaLabel}>AUTOR</span>
+            <div className={styles.formGroup}>
               <input type="text" value="Julius V. Thorne" readOnly disabled />
             </div>
           </div>
 
-          <div className={styles["meta-item"]}>
-            <span className={styles["meta-label"]}>PUBLICATION DATE</span>
-            <div className={styles["form-group"]}>
+          <div className={styles.metaItem}>
+            <span className={styles.metaLabel}>FECHA DE PUBLICACIÓN</span>
+            <div className={styles.formGroup}>
               <input type="text" value={today} readOnly disabled />
             </div>
           </div>
         </div>
 
-        <div className={styles["headline-group"]}>
+        <div className={styles.headlineGroup}>
           <input
             type="text"
-            placeholder="Enter Headline..."
+            placeholder="Título..."
             value={headline}
             onChange={(e) => setHeadline(e.target.value)}
-            className={styles["headline-input"]}
+            className={styles.headlineInput}
             disabled={loading}
           />
         </div>
 
-        <div className={styles["image-upload-group"]}>
-          <label htmlFor="file-picker" className={styles["upload-label"]}>
-            <div className={styles["upload-content"]}>
-              <span className={styles["upload-icon"]}>📷</span>
-              <span className={styles["upload-text-main"]}>
-                UPLOAD LEAD IMAGERY
-              </span>
-              <span className={styles["upload-text-sub"]}>
-                Recommend: 1600x900px | Max 5MB
+        <div className={styles.uploadGroup}>
+          <label htmlFor="file-picker" className={styles.uploadLabel}>
+            <div className={styles.uploadContent}>
+              <span className={styles.uploadIcon}>📷</span>
+              <span className={styles.uploadTextMain}>SUBIR IMAGEN </span>
+              <span className={styles.uploadTextSub}>
+                Recomendado: 1600x900px | Máx 5MB
               </span>
               {image && (
-                <p className={styles["file-name"]}>Selected: {image.name}</p>
+                <p className={styles.fileName}>Selected: {image.name}</p>
               )}
             </div>
           </label>
@@ -121,33 +117,33 @@ export default function ArticleEditor({ onClose }) {
           />
         </div>
 
-        <div className={styles["content-group"]}>
+        <div className={styles.contentGroup}>
           <textarea
-            placeholder="Start your story here..."
+            placeholder="Escribe tu historia aquí..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className={styles["content-textarea"]}
+            className={styles.contentTextarea}
             rows="8"
             disabled={loading}
           />
         </div>
 
-        <div className={styles["actions-footer-bar"]}>
+        <div className={styles.actionsFooterBar}>
           <button
             type="button"
-            className={styles["btn-draft"]}
+            className={styles.btnDraft}
             onClick={(e) => handleSubmit(e, "DRAFT")}
             disabled={loading}
           >
-            SAVE DRAFT
+            GUARDAR BORRADOR
           </button>
           <button
             type="button"
-            className={styles["btn-review"]}
+            className={styles.btnReview}
             onClick={(e) => handleSubmit(e, "IN_REVIEW")}
             disabled={loading}
           >
-            SEND TO REVIEW ▷
+            ENVIAR A REVISIÓN ▷
           </button>
         </div>
       </form>

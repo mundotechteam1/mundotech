@@ -1,6 +1,6 @@
 @use "../../styles/variables.scss" as v;
 
-.article-editor-container {
+.articleEditorContainer {
   background-color: v.$color-bg;
   color: v.$color-text;
   font-family: v.$font-body;
@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-.article-form {
+.articleForm {
   max-width: 100%;
   margin: 0 auto;
   display: flex;
@@ -17,23 +17,23 @@
   gap: v.$space-md;
 }
 
-.submission-box {
+.submissionBox {
   border: 1px solid v.$color-border;
   padding: v.$space-md;
   background-color: transparent;
 }
 
-.submission-header {
+.submissionHeader {
   margin-bottom: v.$space-md;
 }
 
-.badge-status {
+.badgeStatus {
   display: flex;
   align-items: center;
   gap: v.$space-xs;
   margin-bottom: v.$space-xs;
 
-  .tag-new {
+  .tagNew {
     display: inline-block;
     color: v.$color-text;
     background: none;
@@ -44,7 +44,7 @@
     text-transform: uppercase;
   }
 
-  .tag-id {
+  .tagId {
     display: inline-block;
     color: v.$color-error;
     padding: 0.25rem 0;
@@ -55,24 +55,24 @@
   }
 }
 
-.submission-title-text {
+.submissionTitleText {
   font-family: v.$font-heading-primary;
   font-size: 1.5rem;
   font-weight: v.$weight-bold;
 }
 
-.meta-grid {
+.metaGrid {
   display: flex;
   flex-direction: column;
   gap: v.$space-sm;
 }
 
-.meta-item {
+.metaItem {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
-  .meta-label {
+  .metaLabel {
     font-family: v.$font-heading-secondary;
     font-size: 0.75rem;
     font-weight: v.$weight-bold;
@@ -81,7 +81,7 @@
   }
 }
 
-.form-group {
+.formGroup {
   input {
     width: 100%;
     padding: v.$space-xs;
@@ -98,8 +98,8 @@
   }
 }
 
-.headline-group {
-  .headline-input {
+.headlineGroup {
+  .headlineInput {
     width: 100%;
     border: none;
     border-bottom: 2px solid v.$color-border;
@@ -116,8 +116,8 @@
   }
 }
 
-.image-upload-group {
-  .upload-label {
+.uploadGroup {
+  .uploadLabel {
     display: block;
     border: 1px dashed v.$color-border;
     padding: v.$space-lg v.$space-md;
@@ -126,31 +126,31 @@
     background-color: rgba(0, 0, 0, 0.02);
   }
 
-  .upload-content {
+  .uploadContent {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
   }
 
-  .upload-icon {
+  .uploadIcon {
     font-size: 1.5rem;
     margin-bottom: v.$space-xs;
   }
 
-  .upload-text-main {
+  .uploadTextMain {
     font-family: v.$font-heading-secondary;
     font-size: 0.85rem;
     font-weight: v.$weight-bold;
     letter-spacing: 0.05em;
   }
 
-  .upload-text-sub {
+  .uploadTextSub {
     font-size: 0.7rem;
     color: v.$color-text-muted;
   }
 
-  .file-name {
+  .fileName {
     margin-top: v.$space-xs;
     font-size: 0.8rem;
     color: v.$color-form-security;
@@ -158,8 +158,8 @@
   }
 }
 
-.content-group {
-  .content-textarea {
+.contentGroup {
+  .contentTextarea {
     width: 100%;
     padding: v.$space-sm;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -177,7 +177,7 @@
   }
 }
 
-.actions-footer-bar {
+.actionsFooterBar {
   display: flex;
   flex-direction: row;
   gap: v.$space-sm;
@@ -207,7 +207,7 @@
     }
   }
 
-  .btn-draft {
+  .btnDraft {
     background-color: transparent;
     color: v.$color-text;
 
@@ -216,7 +216,7 @@
     }
   }
 
-  .btn-review {
+  .btnReview {
     background-color: v.$color-border;
     color: v.$color-white;
 
@@ -227,21 +227,21 @@
 }
 
 @media (min-width: 768px) {
-  .article-form {
+  .articleForm {
     max-width: v.$max-content-width;
   }
 
-  .meta-grid {
+  .metaGrid {
     flex-direction: row;
     justify-content: space-between;
   }
 
-  .meta-item {
+  .metaItem {
     flex: 1;
   }
 
-  .headline-group {
-    .headline-input {
+  .headlineGroup {
+    .headlineInput {
       font-size: 1.75rem;
     }
   }
