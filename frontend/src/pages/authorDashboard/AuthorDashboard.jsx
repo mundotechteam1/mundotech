@@ -2,31 +2,32 @@ import { useEffect, useState } from 'react'
 import styles from './AuthorDashboard.module.scss'
 
 function AuthorDashboard() {
-  const [articles, setArticles] = useState([])
-  const [filter, setFilter] = useState('ALL')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [articles, setArticles] = useState([]);
+  const [filter, setFilter] = useState("ALL");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
-    loadArticles()
-  }, [])
+    loadArticles();
+  }, []);
 
   const loadArticles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/articles')
+      const response = await fetch("http://localhost:8080/api/v1/articles");
 
       if (!response.ok) {
-        throw new Error('No se pudieron cargar los artículos')
+        throw new Error("No se pudieron cargar los artículos");
       }
 
-      const data = await response.json()
-      setArticles(data)
+      const data = await response.json();
+      setArticles(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const statusLabels = {
     DRAFT: 'Borrador',
@@ -43,9 +44,9 @@ function AuthorDashboard() {
   }
 
   const filteredArticles =
-    filter === 'ALL'
+    filter === "ALL"
       ? articles
-      : articles.filter((article) => article.status === filter)
+      : articles.filter((article) => article.status === filter);
 
   return (
     <div className={styles.authorDashboard}>
@@ -58,7 +59,10 @@ function AuthorDashboard() {
           <h1>Panel del Autor</h1>
         </div>
 
-        <button className={styles.authorDashboardCreateButton} type="button">
+        <button 
+          className={styles.authorDashboardCreateButton}
+          type="button"
+          onClick={() => setIsEditorOpen(true)}>
           Crear nuevo artículo
         </button>
       </section>
@@ -80,7 +84,7 @@ function AuthorDashboard() {
           <span>Total Publicados</span>
           <strong>
             {
-              articles.filter((article) => article.status === 'PUBLISHED')
+              articles.filter((article) => article.status === "PUBLISHED")
                 .length
             }
           </strong>
@@ -90,7 +94,7 @@ function AuthorDashboard() {
           <span>Ciclos de Revisión</span>
           <strong>
             {
-              articles.filter((article) => article.status === 'IN_REVIEW')
+              articles.filter((article) => article.status === "IN_REVIEW")
                 .length
             }
           </strong>
@@ -103,32 +107,28 @@ function AuthorDashboard() {
         <button
           type="button"
           className={filter === 'ALL' ? styles.active : ''}
-          onClick={() => setFilter('ALL')}
-        >
+          onClick={() => setFilter('ALL')}>
           Todos
         </button>
 
         <button
           type="button"
           className={filter === 'DRAFT' ? styles.active : ''}
-          onClick={() => setFilter('DRAFT')}
-        >
+          onClick={() => setFilter('DRAFT')}>
           Borrador
         </button>
 
         <button
           type="button"
           className={filter === 'IN_REVIEW' ? styles.active : ''}
-          onClick={() => setFilter('IN_REVIEW')}
-        >
+          onClick={() => setFilter('IN_REVIEW')}>
           En Revisión
         </button>
 
         <button
           type="button"
           className={filter === 'PUBLISHED' ? styles.active : ''}
-          onClick={() => setFilter('PUBLISHED')}
-        >
+          onClick={() => setFilter('PUBLISHED')}>
           Publicados
         </button>
       </section>
@@ -198,8 +198,21 @@ function AuthorDashboard() {
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
-    </div>
-  )
+      {isEditorOpen && (
+        <div className="modal-overlay" onClick={() => setIsEditorOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close"
+              onClick={() => setIsEditorOpen(false)}
+            >
+              ×
+            </button>
+            <ArticleEditor onClose={() => setIsEditorOpen(false)} />
+          </div>
+        </div>
+      )}
+    </main>
+  );
 }
 
-export default AuthorDashboard
+export default AuthorDashboard;
