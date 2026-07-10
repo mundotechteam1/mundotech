@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './ManagerDashboard.module.scss'
+import styles from './ManagerDashboard.module.scss'
 
 function ManagerDashboard() {
   const [articles, setArticles] = useState([])
@@ -27,60 +27,93 @@ function ManagerDashboard() {
     }
   }
 
+  const updateArticleStatus = async (articleId, newStatus) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      if (!response.ok) {
+        throw new Error('No se pudo actualizar el artículo')
+      }
+
+      setArticles((prev) =>
+        prev.map((a) =>
+          a.id === articleId ? { ...a, status: newStatus } : a
+        )
+      )
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  const handleApprove = (articleId) => updateArticleStatus(articleId, 'PUBLISHED')
+  const handleReject = (articleId) => updateArticleStatus(articleId, 'DRAFT')
+
   const articlesInReview = articles.filter(
     (article) => article.status === 'IN_REVIEW'
   )
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '27 oct 2026'
+    const d = new Date(dateStr)
+    if (isNaN(d)) return dateStr
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`
+  }
+
   return (
-    <main className="manager-dashboard">
-      <section className="manager-dashboard__title">
+    <div className={styles.managerDashboard}>
+      <section className={styles.managerDashboardTitle}>
         <div>
           <h1>
             Panel del
             <br />
-            Manager
+            Administrador
           </h1>
 
-          <p>Queer Editorial Review</p>
+          <p>Revisión Editorial</p>
         </div>
 
-        <span className="manager-dashboard__badge">
-          Status: In Review
+        <span className={styles.managerDashboardBadge}>
+          Estado: En Revisión
         </span>
       </section>
 
       {loading && (
-        <p className="manager-dashboard__message">Cargando artículos...</p>
+        <p className={styles.managerDashboardMessage}>Cargando artículos...</p>
       )}
 
       {error && (
-        <p className="manager-dashboard__error">{error}</p>
+        <p className={styles.managerDashboardError}>{error}</p>
       )}
 
-      <section className="manager-dashboard__articles">
+      <section className={styles.managerDashboardArticles}>
         {articlesInReview.map((article) => (
-          <article className="manager-article" key={article.id}>
-            <p className="manager-article__category">
+          <article className={styles.managerArticle} key={article.id}>
+            <p className={styles.managerArticleCategory}>
               {article.author?.name || 'Editorial'}
             </p>
 
             <h2>{article.title}</h2>
 
-            <div className="manager-article__meta">
-              <span>By {article.author?.name || 'Author'}</span>
+            <div className={styles.managerArticleMeta}>
+              <span>Por {article.author?.name || 'Autor'}</span>
               <span>
-                {article.createdAt || article.created_at || 'Oct 27, 2026'}
+                {formatDate(article.createdAt || article.created_at)}
               </span>
             </div>
 
-            <div className="manager-article__actions">
-              <button type="button">Aprobar</button>
-              <button type="button">Rechazar</button>
+            <div className={styles.managerArticleActions}>
+              <button type="button" onClick={() => handleApprove(article.id)}>Aprobar</button>
+              <button type="button" onClick={() => handleReject(article.id)}>Rechazar</button>
             </div>
           </article>
         ))}
       </section>
-    </main>
+    </div>
   )
 }
 

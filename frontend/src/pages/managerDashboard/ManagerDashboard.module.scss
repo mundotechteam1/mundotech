@@ -1,52 +1,54 @@
+@use '../../styles/_variables' as v;
+
 .manager-dashboard {
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 auto;
-  padding: 70px 0 40px;
-  color: #111;
-  background-color: #fbf7ea;
-  font-family: Georgia, 'Times New Roman', serif;
+  padding: 70px 18px 40px;
+  color: v.$color-text;
+  background-color: v.$color-bg;
+  font-family: v.$font-heading-primary;
   text-align: left;
 
   &__title {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    column-gap: 16px;
+    position: relative;
+    text-align: center;
     padding: 0 18px 10px;
     margin-bottom: 42px;
-    border-bottom: 1px solid #111;
+    border-bottom: 1px solid v.$color-text;
 
     h1 {
       margin: 0;
-      color: #111;
-      font-family: Georgia, 'Times New Roman', serif;
+      color: v.$color-text;
+      font-family: v.$font-heading-primary;
       font-size: 36px;
       font-style: italic;
-      font-weight: 700;
+      font-weight: v.$weight-bold;
       line-height: 0.95;
       letter-spacing: -1.2px;
     }
 
     p {
       margin: 14px 0 0;
-      color: #111;
-      font-family: Arial, sans-serif;
+      color: v.$color-text;
+      font-family: v.$font-heading-secondary;
       font-size: 8px;
-      font-weight: 700;
+      font-weight: v.$weight-bold;
       letter-spacing: 0.4px;
       text-transform: uppercase;
     }
   }
 
   &__badge {
-    margin-bottom: 0;
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
     padding: 6px 8px;
-    background-color: #111;
-    color: #fff;
-    font-family: Arial, sans-serif;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    font-family: v.$font-heading-secondary;
     font-size: 8px;
-    font-weight: 700;
+    font-weight: v.$weight-bold;
     line-height: 1;
     text-transform: uppercase;
     white-space: nowrap;
@@ -55,12 +57,12 @@
   &__message,
   &__error {
     padding: 0 18px;
-    font-family: Arial, sans-serif;
+    font-family: v.$font-heading-secondary;
     font-size: 10px;
   }
 
   &__error {
-    color: #b64635;
+    color: v.$color-error;
   }
 
   &__articles {
@@ -81,20 +83,20 @@
 
   &__category {
     margin: 0 0 8px;
-    color: #c6402f;
-    font-family: Arial, sans-serif;
+    color: v.$color-error;
+    font-family: v.$font-heading-secondary;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: v.$weight-bold;
     letter-spacing: 0.3px;
     text-transform: uppercase;
   }
 
   h2 {
     margin: 0 0 14px;
-    color: #111;
-    font-family: Georgia, 'Times New Roman', serif;
+    color: v.$color-text;
+    font-family: v.$font-heading-primary;
     font-size: 25px;
-    font-weight: 700;
+    font-weight: v.$weight-bold;
     line-height: 1.05;
     letter-spacing: -0.7px;
   }
@@ -103,10 +105,10 @@
     display: flex;
     gap: 12px;
     margin-bottom: 10px;
-    color: #111;
-    font-family: Arial, sans-serif;
+    color: v.$color-text;
+    font-family: v.$font-heading-secondary;
     font-size: 8px;
-    font-weight: 700;
+    font-weight: v.$weight-bold;
     text-transform: uppercase;
   }
 
@@ -117,9 +119,9 @@
     gap: 9px;
 
     button {
-      font-family: Arial, sans-serif;
+      font-family: v.$font-heading-secondary;
       font-size: 9px;
-      font-weight: 700;
+      font-weight: v.$weight-bold;
       letter-spacing: 0.2px;
       text-transform: uppercase;
       cursor: pointer;
@@ -127,16 +129,116 @@
 
     button:first-child {
       border: none;
-      background-color: #111;
-      color: #fff;
+      background-color: v.$color-text;
+      color: v.$color-white;
       padding: 7px 20px;
     }
 
     button:nth-child(2) {
       border: none;
       background-color: transparent;
-      color: #111;
+      color: v.$color-text;
       padding: 0 0 0 20px;
     }
+  }
+}
+
+/* ---------- TABLET ---------- */
+
+@media (min-width: 640px) {
+  .manager-dashboard {
+    max-width: 600px;
+    padding: 70px 24px 48px;
+  }
+
+  .manager-dashboard__title {
+    padding: 0 24px 14px;
+  }
+
+  .manager-dashboard__title h1 {
+    font-size: 44px;
+  }
+
+  .manager-dashboard__title p {
+    font-size: 9px;
+  }
+
+  .manager-dashboard__badge {
+    font-size: 9px;
+    padding: 8px 12px;
+    right: 24px;
+  }
+
+  .manager-article h2 {
+    font-size: 30px;
+  }
+
+  .manager-article__meta,
+  .manager-article__category {
+    font-size: 9px;
+  }
+
+  .manager-article__actions button {
+    font-size: 10px;
+  }
+
+  .manager-article__actions button:first-child {
+    padding: 8px 24px;
+  }
+}
+
+/* ---------- DESKTOP ---------- */
+
+@media (min-width: 1024px) {
+  .manager-dashboard {
+    max-width: 900px;
+    padding: 70px 32px 56px;
+  }
+
+  .manager-dashboard__title {
+    padding: 0 32px 18px;
+    margin-bottom: 48px;
+  }
+
+  .manager-dashboard__title h1 {
+    font-size: 52px;
+    letter-spacing: -1.8px;
+  }
+
+  .manager-dashboard__title p {
+    font-size: 10px;
+  }
+
+  .manager-dashboard__badge {
+    font-size: 10px;
+    padding: 10px 16px;
+    right: 32px;
+  }
+
+  .manager-article {
+    padding: 0 0 36px;
+    margin-bottom: 36px;
+  }
+
+  .manager-article h2 {
+    font-size: 36px;
+  }
+
+  .manager-article__meta,
+  .manager-article__category {
+    font-size: 10px;
+  }
+
+  .manager-article__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .manager-article__actions button {
+    font-size: 11px;
+  }
+
+  .manager-article__actions button:first-child {
+    padding: 10px 32px;
   }
 }

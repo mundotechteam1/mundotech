@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import "./AuthorDashboard.module.scss";
-import ArticleEditor from "../../components/articleEditor/ArticleEditor";
+import { useEffect, useState } from 'react'
+import styles from './AuthorDashboard.module.scss'
 
 function AuthorDashboard() {
   const [articles, setArticles] = useState([]);
@@ -30,45 +29,59 @@ function AuthorDashboard() {
     }
   };
 
+  const statusLabels = {
+    DRAFT: 'Borrador',
+    IN_REVIEW: 'En Revisión',
+    PUBLISHED: 'Publicado',
+  }
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '27 oct 2026'
+    const d = new Date(dateStr)
+    if (isNaN(d)) return dateStr
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`
+  }
+
   const filteredArticles =
     filter === "ALL"
       ? articles
       : articles.filter((article) => article.status === filter);
 
   return (
-    <main className="author-dashboard">
-      <section className="author-dashboard__title">
+    <div className={styles.authorDashboard}>
+      <section className={styles.authorDashboardTitle}>
         <div>
-          <p className="author-dashboard__subtitle">
-            Internal Editorial Terminal
+          <p className={styles.authorDashboardSubtitle}>
+            Terminal Editorial Interno
           </p>
 
           <h1>Panel del Autor</h1>
         </div>
 
-        <button
+        <button 
+          className={styles.authorDashboardCreateButton}
           type="button"
-          onClick={() => setIsEditorOpen(true)}
-          className="author-dashboard__create-button"
-        >
+          onClick={() => setIsEditorOpen(true)}>
           Crear nuevo artículo
         </button>
       </section>
 
-      <section className="author-profile">
-        <p className="author-profile__label">Author Profile</p>
+      <section className={styles.authorProfile}>
+        <p className={styles.authorProfileLabel}>Perfil del Autor</p>
 
-        <div className="author-profile__content">
-          <div className="author-profile__avatar">M</div>
+        <div className={styles.authorProfileContent}>
+          <div className={styles.authorProfileAvatar}>
+            M
+          </div>
 
           <div>
             <h2>M. Atrus</h2>
-            <p>Senior Tech Analyst</p>
           </div>
         </div>
 
-        <div className="author-profile__stats">
-          <span>Total Published</span>
+        <div className={styles.authorProfileStats}>
+          <span>Total Publicados</span>
           <strong>
             {
               articles.filter((article) => article.status === "PUBLISHED")
@@ -77,8 +90,8 @@ function AuthorDashboard() {
           </strong>
         </div>
 
-        <div className="author-profile__stats">
-          <span>Review Cycles</span>
+        <div className={styles.authorProfileStats}>
+          <span>Ciclos de Revisión</span>
           <strong>
             {
               articles.filter((article) => article.status === "IN_REVIEW")
@@ -88,89 +101,89 @@ function AuthorDashboard() {
         </div>
       </section>
 
-      <section className="author-filters">
+      <section className={styles.authorFilters}>
         <span>Filtrar por:</span>
 
         <button
           type="button"
-          className={filter === "ALL" ? "active" : ""}
-          onClick={() => setFilter("ALL")}
-        >
+          className={filter === 'ALL' ? styles.active : ''}
+          onClick={() => setFilter('ALL')}>
           Todos
         </button>
 
         <button
           type="button"
-          className={filter === "DRAFT" ? "active" : ""}
-          onClick={() => setFilter("DRAFT")}
-        >
-          Draft
+          className={filter === 'DRAFT' ? styles.active : ''}
+          onClick={() => setFilter('DRAFT')}>
+          Borrador
         </button>
 
         <button
           type="button"
-          className={filter === "IN_REVIEW" ? "active" : ""}
-          onClick={() => setFilter("IN_REVIEW")}
-        >
-          In Review
+          className={filter === 'IN_REVIEW' ? styles.active : ''}
+          onClick={() => setFilter('IN_REVIEW')}>
+          En Revisión
         </button>
 
         <button
           type="button"
-          className={filter === "PUBLISHED" ? "active" : ""}
-          onClick={() => setFilter("PUBLISHED")}
-        >
-          Published
+          className={filter === 'PUBLISHED' ? styles.active : ''}
+          onClick={() => setFilter('PUBLISHED')}>
+          Publicados
         </button>
       </section>
 
       {loading && (
-        <p className="author-dashboard__message">Cargando artículos...</p>
+        <p className={styles.authorDashboardMessage}>Cargando artículos...</p>
       )}
 
-      {error && <p className="author-dashboard__error">{error}</p>}
+      {error && (
+        <p className={styles.authorDashboardError}>{error}</p>
+      )}
 
-      <section className="author-articles">
+      <section className={styles.authorArticles}>
         {filteredArticles.map((article) => (
-          <article className="author-card" key={article.id}>
-            <div className="author-card__meta">
-              <span className={`author-card__status status-${article.status}`}>
-                {article.status}
+          <article className={styles.authorCard} key={article.id}>
+            <div className={styles.authorCardMeta}>
+              <span className={`${styles.authorCardStatus} ${styles[`status-${article.status}`]}`}>
+                {statusLabels[article.status] || article.status}
               </span>
 
               <span>
-                {article.createdAt || article.created_at || "OCT 27, 2026"}
+                {formatDate(article.createdAt || article.created_at)}
               </span>
             </div>
 
             <h2>{article.title}</h2>
 
-            <p className="author-card__content">{article.content}</p>
+            <p className={styles.authorCardContent}>
+              {article.content}
+            </p>
 
-            <div className="author-card__actions">
-              {article.status === "DRAFT" && (
-                <button className="primary-action" type="button">
+            <div className={styles.authorCardActions}>
+              {article.status === 'DRAFT' && (
+                <button className={styles.primaryAction} type="button">
                   Enviar a revisión
                 </button>
               )}
 
-              {article.status === "IN_REVIEW" && (
-                <button className="secondary-action" type="button">
-                  Pending approval
+              {article.status === 'IN_REVIEW' && (
+                <button className={styles.secondaryAction} type="button">
+                  Pendiente de aprobación
                 </button>
               )}
 
-              {article.status === "PUBLISHED" && (
-                <button className="secondary-action" type="button">
+              {article.status === 'PUBLISHED' && (
+                <button className={styles.secondaryAction} type="button">
                   Ver publicado
                 </button>
               )}
 
-              <button className="icon-action delete" type="button">
+              <button className={`${styles.iconAction} ${styles.delete}`} type="button">
                 ×
               </button>
 
-              <button className="icon-action edit" type="button">
+              <button className={`${styles.iconAction} ${styles.edit}`} type="button">
                 ✎
               </button>
             </div>
@@ -178,11 +191,9 @@ function AuthorDashboard() {
         ))}
       </section>
 
-      <section className="author-pagination">
+      <section className={styles.authorPagination}>
         <button type="button">Anterior</button>
-        <button className="active" type="button">
-          1
-        </button>
+        <button className={styles.active} type="button">1</button>
         <button type="button">2</button>
         <button type="button">3</button>
         <button type="button">Siguiente</button>
