@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import styles from './AuthorDashboard.module.scss'
+import { useEffect, useState } from "react";
+import styles from "./AuthorDashboard.module.scss";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
   const [articles, setArticles] = useState([]);
@@ -30,24 +31,37 @@ function AuthorDashboard() {
   };
 
   const statusLabels = {
-    DRAFT: 'Borrador',
-    IN_REVIEW: 'En Revisión',
-    PUBLISHED: 'Publicado',
-  }
+    DRAFT: "Borrador",
+    IN_REVIEW: "En Revisión",
+    PUBLISHED: "Publicado",
+  };
 
   const formatDate = (dateStr) => {
-    if (!dateStr) return '27 oct 2026'
-    const d = new Date(dateStr)
-    if (isNaN(d)) return dateStr
-    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
-    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`
-  }
+    if (!dateStr) return "27 oct 2026";
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    const meses = [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ];
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
+  };
 
   const statusClassMap = {
-    DRAFT: 'statusDraft',
-    IN_REVIEW: 'statusInReview',
-    PUBLISHED: 'statusPublished',
-  }
+    DRAFT: "statusDraft",
+    IN_REVIEW: "statusInReview",
+    PUBLISHED: "statusPublished",
+  };
 
   const filteredArticles =
     filter === "ALL"
@@ -65,10 +79,11 @@ function AuthorDashboard() {
           <h1>Panel del Autor</h1>
         </div>
 
-        <button 
+        <button
           className={styles.authorDashboardCreateButton}
           type="button"
-          onClick={() => setIsEditorOpen(true)}>
+          onClick={() => setIsEditorOpen(true)}
+        >
           Crear nuevo artículo
         </button>
       </section>
@@ -77,9 +92,7 @@ function AuthorDashboard() {
         <p className={styles.authorProfileLabel}>Perfil del Autor</p>
 
         <div className={styles.authorProfileContent}>
-          <div className={styles.authorProfileAvatar}>
-            M
-          </div>
+          <div className={styles.authorProfileAvatar}>M</div>
 
           <div>
             <h2>M. Atrus</h2>
@@ -112,29 +125,33 @@ function AuthorDashboard() {
 
         <button
           type="button"
-          className={filter === 'ALL' ? styles.active : ''}
-          onClick={() => setFilter('ALL')}>
+          className={filter === "ALL" ? styles.active : ""}
+          onClick={() => setFilter("ALL")}
+        >
           Todos
         </button>
 
         <button
           type="button"
-          className={filter === 'DRAFT' ? styles.active : ''}
-          onClick={() => setFilter('DRAFT')}>
+          className={filter === "DRAFT" ? styles.active : ""}
+          onClick={() => setFilter("DRAFT")}
+        >
           Borrador
         </button>
 
         <button
           type="button"
-          className={filter === 'IN_REVIEW' ? styles.active : ''}
-          onClick={() => setFilter('IN_REVIEW')}>
+          className={filter === "IN_REVIEW" ? styles.active : ""}
+          onClick={() => setFilter("IN_REVIEW")}
+        >
           En Revisión
         </button>
 
         <button
           type="button"
-          className={filter === 'PUBLISHED' ? styles.active : ''}
-          onClick={() => setFilter('PUBLISHED')}>
+          className={filter === "PUBLISHED" ? styles.active : ""}
+          onClick={() => setFilter("PUBLISHED")}
+        >
           Publicados
         </button>
       </section>
@@ -143,53 +160,55 @@ function AuthorDashboard() {
         <p className={styles.authorDashboardMessage}>Cargando artículos...</p>
       )}
 
-      {error && (
-        <p className={styles.authorDashboardError}>{error}</p>
-      )}
+      {error && <p className={styles.authorDashboardError}>{error}</p>}
 
       <section className={styles.authorArticles}>
         {filteredArticles.map((article) => (
           <article className={styles.authorCard} key={article.id}>
             <div className={styles.authorCardMeta}>
-              <span className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}>
+              <span
+                className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}
+              >
                 {statusLabels[article.status] || article.status}
               </span>
 
-              <span>
-                {formatDate(article.createdAt || article.created_at)}
-              </span>
+              <span>{formatDate(article.createdAt || article.created_at)}</span>
             </div>
 
             <h2>{article.title}</h2>
 
-            <p className={styles.authorCardContent}>
-              {article.content}
-            </p>
+            <p className={styles.authorCardContent}>{article.content}</p>
 
             <div className={styles.authorCardActions}>
-              {article.status === 'DRAFT' && (
+              {article.status === "DRAFT" && (
                 <button className={styles.primaryAction} type="button">
                   Enviar a revisión
                 </button>
               )}
 
-              {article.status === 'IN_REVIEW' && (
+              {article.status === "IN_REVIEW" && (
                 <button className={styles.secondaryAction} type="button">
                   Pendiente de aprobación
                 </button>
               )}
 
-              {article.status === 'PUBLISHED' && (
+              {article.status === "PUBLISHED" && (
                 <button className={styles.secondaryAction} type="button">
                   Ver publicado
                 </button>
               )}
 
-              <button className={`${styles.iconAction} ${styles.delete}`} type="button">
+              <button
+                className={`${styles.iconAction} ${styles.delete}`}
+                type="button"
+              >
                 ×
               </button>
 
-              <button className={`${styles.iconAction} ${styles.edit}`} type="button">
+              <button
+                className={`${styles.iconAction} ${styles.edit}`}
+                type="button"
+              >
                 ✎
               </button>
             </div>
@@ -199,7 +218,9 @@ function AuthorDashboard() {
 
       <section className={styles.authorPagination}>
         <button type="button">Anterior</button>
-        <button className={styles.active} type="button">1</button>
+        <button className={styles.active} type="button">
+          1
+        </button>
         <button type="button">2</button>
         <button type="button">3</button>
         <button type="button">Siguiente</button>
@@ -209,6 +230,7 @@ function AuthorDashboard() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button
               className="modal-close"
+              type="button"
               onClick={() => setIsEditorOpen(false)}
             >
               ×
@@ -217,7 +239,7 @@ function AuthorDashboard() {
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 
