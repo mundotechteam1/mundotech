@@ -1,13 +1,15 @@
-import ArticleEditor from "./components/ArticleEditor/ArticleEditor";
-import ArticleView from "./components/ArticleView/ArticleView";
-import "./App.css";
+import { Outlet } from "react-router-dom";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
     <>
-      <section id="center">
-        <ArticleView />
-      </section>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
   );
 }

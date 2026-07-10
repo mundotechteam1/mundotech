@@ -1,0 +1,62 @@
+@use '../../styles/_variables' as v;
+
+.article-list {
+  max-width: v.$max-content-width;
+  margin: 0 auto;
+  padding: v.$space-lg v.$space-md;
+  background: v.$color-bg;
+
+  &--state {
+    display: flex;
+    justify-content: center;
+    padding: v.$space-xl v.$space-md;
+  }
+
+  &__loading,
+  &__empty,
+  &__error {
+    font-family: v.$font-body;
+    font-size: 0.95rem;
+    color: v.$color-text-muted;
+    text-align: center;
+  }
+
+  &__error {
+    color: #b3261e;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: v.$space-lg;
+  }
+
+  &__load-more {
+    font-family: v.$font-body;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: v.$color-text;
+    background: transparent;
+    border: 1px solid v.$color-text;
+    padding: 0.85rem 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: v.$color-text;
+      color: v.$color-bg;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$color-text;
+      outline-offset: 2px;
+    }
+  }
+}

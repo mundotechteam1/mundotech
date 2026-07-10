@@ -1,10 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import "./ArticleEditor.scss";
+import styles from "./ArticleEditor.module.scss";
 
-export default function ArticleEditor() {
+export default function ArticleEditor({ onClose }) {
   const [headline, setHeadline] = useState("");
-  const [section, setSection] = useState("Silicon Valley");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,7 +24,6 @@ export default function ArticleEditor() {
     const articleDto = {
       title: headline,
       content: content,
-      section: section,
       status: statusType,
       authorId: 1,
     };
@@ -40,7 +38,7 @@ export default function ArticleEditor() {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/articles", formData, {
+      await axios.post("http://localhost:8080/api/v1/articles", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -49,6 +47,7 @@ export default function ArticleEditor() {
       setHeadline("");
       setContent("");
       setImage(null);
+      if (onClose) onClose();
     } catch (error) {
       console.error(error);
       alert("Error backend");
@@ -58,60 +57,54 @@ export default function ArticleEditor() {
   };
 
   return (
-    <div className="article-editor-container">
-      <form className="article-form" onSubmit={(e) => e.preventDefault()}>
-        <div className="submission-box">
-          <div className="submission-header">
-            <div className="badge-status">
-              <span className="tag-new">NEW DRAFT</span>
-              <span className="tag-id">/ #4429</span>
-            </div>
-            <div className="submission-title-text">Untitled Submission</div>
-            <div className="autosave-text">LAST AUTOSAVE: JUST NOW</div>
+    <div className={styles.articleEditorContainer}>
+      <form className={styles.articleForm}>
+        <div className={styles.submissionBox}>
+          <div className={styles.badgeStatus}>
+            <span className={styles.tagNew}>NUEVO BORRADOR</span>
+            <span className={styles.tagId}>/ #4429</span>
           </div>
+          <div className={styles.submissionTitleText}>Sin título</div>
+        </div>
 
-          <div className="meta-grid">
-            <div className="meta-item">
-              <div className="meta-label">SECTION</div>
-              <select
-                value={section}
-                onChange={(e) => setSection(e.target.value)}
-                disabled={loading}
-              >
-                <option value="Silicon Valley">Silicon Valley</option>
-                <option value="Science">Science</option>
-                <option value="Tech">Tech</option>
-              </select>
-            </div>
-
-            <div className="meta-item">
-              <div className="meta-label">AUTHOR</div>
+        <div className={styles.metaGrid}>
+          <div className={styles.metaItem}>
+            <span className={styles.metaLabel}>AUTOR</span>
+            <div className={styles.formGroup}>
               <input type="text" value="Julius V. Thorne" readOnly disabled />
             </div>
+          </div>
 
-            <div className="meta-item">
-              <div className="meta-label">PUBLICATION DATE</div>
+          <div className={styles.metaItem}>
+            <span className={styles.metaLabel}>FECHA DE PUBLICACIÓN</span>
+            <div className={styles.formGroup}>
               <input type="text" value={today} readOnly disabled />
             </div>
           </div>
         </div>
 
-        <div className="headline-group">
+        <div className={styles.headlineGroup}>
           <input
             type="text"
-            placeholder="Enter Headline..."
+            placeholder="Título..."
             value={headline}
             onChange={(e) => setHeadline(e.target.value)}
-            className="headline-input"
+            className={styles.headlineInput}
             disabled={loading}
           />
         </div>
 
-        <div className="image-upload-group">
-          <label htmlFor="file-picker" className="upload-label">
-            <div className="upload-content">
-              <span className="upload-text-sub"></span>
-              {image && <p className="file-name">Selected: {image.name}</p>}
+        <div className={styles.uploadGroup}>
+          <label htmlFor="file-picker" className={styles.uploadLabel}>
+            <div className={styles.uploadContent}>
+              <span className={styles.uploadIcon}>📷</span>
+              <span className={styles.uploadTextMain}>SUBIR IMAGEN </span>
+              <span className={styles.uploadTextSub}>
+                Recomendado: 1600x900px | Máx 5MB
+              </span>
+              {image && (
+                <p className={styles.fileName}>Selected: {image.name}</p>
+              )}
             </div>
           </label>
           <input
@@ -124,33 +117,33 @@ export default function ArticleEditor() {
           />
         </div>
 
-        <div className="content-group">
+        <div className={styles.contentGroup}>
           <textarea
-            placeholder="Start your story here..."
+            placeholder="Escribe tu historia aquí..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="content-textarea"
+            className={styles.contentTextarea}
             rows="8"
             disabled={loading}
           />
         </div>
 
-        <div className="actions-footer-bar">
+        <div className={styles.actionsFooterBar}>
           <button
             type="button"
-            className="btn-draft"
+            className={styles.btnDraft}
             onClick={(e) => handleSubmit(e, "DRAFT")}
             disabled={loading}
           >
-            SAVE DRAFT
+            GUARDAR BORRADOR
           </button>
           <button
             type="button"
-            className="btn-review"
+            className={styles.btnReview}
             onClick={(e) => handleSubmit(e, "IN_REVIEW")}
             disabled={loading}
           >
-            SEND TO REVIEW ▷
+            ENVIAR A REVISIÓN ▷
           </button>
         </div>
       </form>

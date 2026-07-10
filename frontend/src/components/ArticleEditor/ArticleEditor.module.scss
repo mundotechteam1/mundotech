@@ -1,0 +1,248 @@
+@use "../../styles/variables.scss" as v;
+
+.articleEditorContainer {
+  background-color: v.$color-bg;
+  color: v.$color-text;
+  font-family: v.$font-body;
+  padding: v.$space-md;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.articleForm {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+}
+
+.submissionBox {
+  border: 1px solid v.$color-border;
+  padding: v.$space-md;
+  background-color: transparent;
+}
+
+.submissionHeader {
+  margin-bottom: v.$space-md;
+}
+
+.badgeStatus {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  margin-bottom: v.$space-xs;
+
+  .tagNew {
+    display: inline-block;
+    color: v.$color-text;
+    background: none;
+    padding: 0.25rem 0;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .tagId {
+    display: inline-block;
+    color: v.$color-error;
+    padding: 0.25rem 0;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+}
+
+.submissionTitleText {
+  font-family: v.$font-heading-primary;
+  font-size: 1.5rem;
+  font-weight: v.$weight-bold;
+}
+
+.metaGrid {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .metaLabel {
+    font-family: v.$font-heading-secondary;
+    font-size: 0.75rem;
+    font-weight: v.$weight-bold;
+    color: v.$color-form-label;
+    letter-spacing: 0.03em;
+  }
+}
+
+.formGroup {
+  input {
+    width: 100%;
+    padding: v.$space-xs;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: transparent;
+    font-family: v.$font-body;
+    font-size: 0.9rem;
+    color: v.$color-text-muted;
+    box-sizing: border-box;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.headlineGroup {
+  .headlineInput {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid v.$color-border;
+    background-color: transparent;
+    font-family: v.$font-heading-primary;
+    font-size: 1.5rem;
+    padding: v.$space-xs 0;
+    box-sizing: border-box;
+    outline: none;
+
+    &::placeholder {
+      color: v.$color-form-placeholder;
+    }
+  }
+}
+
+.uploadGroup {
+  .uploadLabel {
+    display: block;
+    border: 1px dashed v.$color-border;
+    padding: v.$space-lg v.$space-md;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .uploadContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .uploadIcon {
+    font-size: 1.5rem;
+    margin-bottom: v.$space-xs;
+  }
+
+  .uploadTextMain {
+    font-family: v.$font-heading-secondary;
+    font-size: 0.85rem;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.05em;
+  }
+
+  .uploadTextSub {
+    font-size: 0.7rem;
+    color: v.$color-text-muted;
+  }
+
+  .fileName {
+    margin-top: v.$space-xs;
+    font-size: 0.8rem;
+    color: v.$color-form-security;
+    font-weight: v.$weight-semibold;
+  }
+}
+
+.contentGroup {
+  .contentTextarea {
+    width: 100%;
+    padding: v.$space-sm;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    font-family: v.$font-body;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+    outline: none;
+
+    &::placeholder {
+      color: v.$color-form-placeholder;
+    }
+  }
+}
+
+.actionsFooterBar {
+  display: flex;
+  flex-direction: row;
+  gap: v.$space-sm;
+  padding: v.$space-md;
+  border: 2px solid v.$color-border;
+  background-color: transparent;
+  margin-top: v.$space-sm;
+  box-sizing: border-box;
+
+  button {
+    flex: 1;
+    padding: v.$space-sm;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.85rem;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: normal;
+    line-height: 1.2;
+    cursor: pointer;
+    border: 1px solid v.$color-border;
+    transition: background-color 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btnDraft {
+    background-color: transparent;
+    color: v.$color-text;
+
+    &:not(:disabled):hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .btnReview {
+    background-color: v.$color-border;
+    color: v.$color-white;
+
+    &:not(:disabled):hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .articleForm {
+    max-width: v.$max-content-width;
+  }
+
+  .metaGrid {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .metaItem {
+    flex: 1;
+  }
+
+  .headlineGroup {
+    .headlineInput {
+      font-size: 1.75rem;
+    }
+  }
+}
