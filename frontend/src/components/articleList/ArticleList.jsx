@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
-import ArticleCard from '../articlecard/ArticleCard';
-import './ArticleList.module.scss';
+import ArticleCard from "../articlecard/ArticleCard";
+import "./ArticleList.module.scss";
 
 /**
  * Lista de artículos de la Home.
@@ -30,7 +29,9 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
   if (!isLoading && articles.length === 0) {
     return (
       <section className="article-list article-list--state">
-        <p className="article-list__empty">Todavía no hay artículos publicados.</p>
+        <p className="article-list__empty">
+          Todavía no hay artículos publicados.
+        </p>
       </section>
     );
   }
@@ -53,14 +54,14 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
             onClick={onLoadMore}
             disabled={isLoading}
           >
-            {isLoading ? 'Cargando…' : 'Ver más artículos'}
+            {isLoading ? "Cargando…" : "Ver más artículos"}
           </button>
         </div>
       )}
     </section>
   );
 }
-
+/*
 ArticleList.propTypes = {
   articles: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
@@ -75,5 +76,5 @@ ArticleList.defaultProps = {
   onLoadMore: () => {},
   hasMore: false,
 };
-
+*/
 export default ArticleList;

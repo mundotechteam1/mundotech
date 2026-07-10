@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import './ArticleCard.module.scss';
+import "./ArticleCard.module.scss";
 
 /**
  * Tarjeta de artículo individual.
@@ -19,7 +18,7 @@ function ArticleCard({ article, isLast }) {
   const { image, imageAlt, category, date, author, title, excerpt } = article;
 
   return (
-    <article className={`article-card${isLast ? ' article-card--last' : ''}`}>
+    <article className={`article-card${isLast ? " article-card--last" : ""}`}>
       {category && <p className="article-card__eyebrow">{category}</p>}
 
       <div className="article-card__media">
@@ -41,7 +40,7 @@ function ArticleCard({ article, isLast }) {
   );
 }
 
-ArticleCard.propTypes = {
+/*ArticleCard.propTypes = {
   article: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     image: PropTypes.string.isRequired,
@@ -58,5 +57,5 @@ ArticleCard.propTypes = {
 ArticleCard.defaultProps = {
   isLast: false,
 };
-
+*/
 export default ArticleCard;
