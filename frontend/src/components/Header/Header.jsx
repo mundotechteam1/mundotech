@@ -1,4 +1,4 @@
-import "./Header.module.scss";
+import styles from "./Header.module.scss";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 function Header() {
@@ -34,24 +34,28 @@ function Header() {
   } DE ${fechaActual.getFullYear()}`;
 
   return (
-    <header className="header">
+    <header className={styles.header}>
 
-      <div className="user-icon">
-        <FaRegCircleUser />
-      </div>
+      <div className={styles['user-icon']}>
+  <a href="/login" aria-label="Iniciar sesión">
+    <FaRegCircleUser />
+  </a>
+</div>
 
-      <div className="newspaper">
+      <div className={styles.newspaper}>
 
-        <div className="line"></div>
+        <div className={styles.line}></div>
 
         <h1>
-          <span>MUNDO</span>
-          <span>TECH</span>
+          <a href="/" aria-label="Iniciar sesión">
+            <span>MUNDO</span>
+            <span>TECH</span>
+          </a>
         </h1>
 
-        <div className="line"></div>
+        <div className={styles.line}></div>
 
-        <div className="bottom">
+        <div className={styles.bottom}>
           <p>{fecha}</p>
           <p>BARCELONA</p>
         </div>

@@ -2,9 +2,11 @@
 
 .article-list {
   max-width: v.$max-content-width;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: v.$space-lg v.$space-md;
+  padding: 4px;
   background: v.$color-bg;
+ 
 
   &--state {
     display: flex;
@@ -32,6 +34,7 @@
   }
 
   &__load-more {
+    margin-left: 1rem;
     font-family: v.$font-body;
     font-size: 0.8rem;
     font-weight: 600;

@@ -3,30 +3,30 @@
 .header {
   background: v.$color-bg;
   width: 100%;
-  padding: 5rem 0;
+  padding: 2.5rem 0;
   position: relative;
 }
 
 .user-icon {
   position: absolute;
-  top: 2rem;
-  right: 3rem;
+  top: 0.4rem;
+  right: 1rem;
 
   svg {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: v.$color-text;
     cursor: pointer;
   }
 }
 
 .newspaper {
-  width: min(900px, 90%);
+  width: 90%;
   margin: 0 auto;
 }
 
 .line {
   width: 90%;
-  height: 4px;
+  height: 3px;
   background: v.$color-text;
 }
 
@@ -38,25 +38,32 @@ h1 {
   margin: 1.5rem 0;
   line-height: 0.85;
 
+  a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   span {
-    //font-family: "Bodoni Moda", serif;
     font-weight: v.$weight-bold;
     color: v.$color-text;
   }
 
   span:first-child {
-    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
   }
 
   span:last-child {
-    font-size: clamp(2.7rem, 7vw, 5rem);
+    font-size: clamp(2.2rem, 7vw, 5rem);
   }
 }
 
 .bottom {
   margin-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   color: v.$color-text;
 
@@ -68,41 +75,19 @@ h1 {
   }
 }
 
-/* ---------- TABLET ---------- */
+/* ---------- TABLET (≥481px) ---------- */
 
-@media (max-width: 768px) {
+@media (min-width: 481px) {
   .header {
-    padding: 4rem 0;
+    padding: 3.5rem 0;
   }
+
   .user-icon {
-    top: 1rem;
+    top: 0.8rem;
     right: 1.5rem;
 
     svg {
       font-size: 1.7rem;
-    }
-  }
-
-  .bottom {
-    p {
-      font-size: 0.85rem;
-    }
-  }
-}
-
-/* ---------- MÓVIL ---------- */
-
-@media (max-width: 480px) {
-  .header {
-    padding: 3rem 0;
-  }
-
-  .user-icon {
-    top: 0.4rem;
-    right: 1rem;
-
-    svg {
-      font-size: 1.5rem;
     }
   }
 
@@ -111,10 +96,42 @@ h1 {
   }
 
   .bottom {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
 
+    p {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* ---------- DESKTOP (≥769px) ---------- */
+
+@media (min-width: 769px) {
+  .header {
+    padding: 5rem 0;
+  }
+
+  .user-icon {
+    top: 2rem;
+    right: 3rem;
+
+    svg {
+      font-size: 2rem;
+    }
+  }
+
+  .newspaper {
+    width: min(900px, 90%);
+  }
+
+  .line {
+    width: 90%;
+    height: 4px;
+  }
+
+  .bottom {
     p {
       font-size: 0.8rem;
     }
