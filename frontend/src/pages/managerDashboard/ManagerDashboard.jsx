@@ -65,8 +65,8 @@ function ManagerDashboard() {
   }
 
   return (
-    <div className={styles['manager-dashboard']}>
-      <section className={styles['manager-dashboard__title']}>
+    <div className={styles.managerDashboard}>
+      <section className={styles.managerDashboardTitle}>
         <div>
           <h1>
             Panel del
@@ -77,36 +77,36 @@ function ManagerDashboard() {
           <p>Revisión Editorial</p>
         </div>
 
-        <span className={styles['manager-dashboard__badge']}>
+        <span className={styles.managerDashboardBadge}>
           Estado: En Revisión
         </span>
       </section>
 
       {loading && (
-        <p className={styles['manager-dashboard__message']}>Cargando artículos...</p>
+        <p className={styles.managerDashboardMessage}>Cargando artículos...</p>
       )}
 
       {error && (
-        <p className={styles['manager-dashboard__error']}>{error}</p>
+        <p className={styles.managerDashboardError}>{error}</p>
       )}
 
-      <section className={styles['manager-dashboard__articles']}>
+      <section className={styles.managerDashboardArticles}>
         {articlesInReview.map((article) => (
-          <article className={styles['manager-article']} key={article.id}>
-            <p className={styles['manager-article__category']}>
+          <article className={styles.managerArticle} key={article.id}>
+            <p className={styles.managerArticleCategory}>
               {article.author?.name || 'Editorial'}
             </p>
 
             <h2>{article.title}</h2>
 
-            <div className={styles['manager-article__meta']}>
+            <div className={styles.managerArticleMeta}>
               <span>Por {article.author?.name || 'Autor'}</span>
               <span>
                 {formatDate(article.createdAt || article.created_at)}
               </span>
             </div>
 
-            <div className={styles['manager-article__actions']}>
+            <div className={styles.managerArticleActions}>
               <button type="button" onClick={() => handleApprove(article.id)}>Aprobar</button>
               <button type="button" onClick={() => handleReject(article.id)}>Rechazar</button>
             </div>
