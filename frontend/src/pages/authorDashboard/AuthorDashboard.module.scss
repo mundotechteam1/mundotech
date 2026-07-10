@@ -1,6 +1,6 @@
 @use '../../styles/_variables' as v;
 
-.author-dashboard {
+.authorDashboard {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -10,7 +10,7 @@
   font-family: v.$font-heading-primary;
   text-align: left;
 
-  &__title {
+  &Title {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -18,7 +18,7 @@
     margin-bottom: 24px;
   }
 
-  &__subtitle {
+  &Subtitle {
     margin: 0 0 6px;
     color: v.$color-text;
     font-family: v.$font-heading-secondary;
@@ -28,7 +28,7 @@
     text-transform: uppercase;
   }
 
-  &__title h1 {
+  &Title h1 {
     margin: 0;
     color: v.$color-text;
     font-family: v.$font-heading-primary;
@@ -39,7 +39,7 @@
     letter-spacing: -1px;
   }
 
-  &__create-button {
+  &CreateButton {
     border: none;
     background-color: v.$color-text;
     color: v.$color-white;
@@ -51,24 +51,24 @@
     cursor: pointer;
   }
 
-  &__message,
-  &__error {
+  &Message,
+  &Error {
     font-family: v.$font-heading-secondary;
     font-size: 10px;
   }
 
-  &__error {
+  &Error {
     color: v.$color-error;
   }
 }
 
-.author-profile {
+.authorProfile {
   border: 1px solid v.$color-text;
   padding: 10px;
   margin-bottom: 18px;
   background-color: transparent;
 
-  &__label {
+  &Label {
     margin: 0 0 8px;
     padding-bottom: 5px;
     border-bottom: 1px solid v.$color-text;
@@ -79,7 +79,7 @@
     text-transform: uppercase;
   }
 
-  &__content {
+  &Content {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -92,7 +92,7 @@
     }
   }
 
-  &__avatar {
+  &Avatar {
     width: 28px;
     height: 28px;
     display: grid;
@@ -112,7 +112,7 @@
     font-weight: v.$weight-regular;
   }
 
-  &__stats {
+  &Stats {
     display: flex;
     justify-content: space-between;
     color: v.$color-text;
@@ -126,7 +126,7 @@
   }
 }
 
-.author-filters {
+.authorFilters {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -160,18 +160,18 @@
   }
 }
 
-.author-articles {
+.authorArticles {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.author-card {
+.authorCard {
   border: 1px solid v.$color-text;
   padding: 10px;
   background-color: transparent;
 
-  &__meta {
+  &Meta {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -182,24 +182,31 @@
     text-transform: uppercase;
   }
 
-  &__status {
+  &Status {
     padding: 3px 5px;
     border: 1px solid v.$color-text;
     color: v.$color-text;
     background-color: transparent;
   }
 
-  .status-DRAFT {
-    background-color: transparent;
-    color: v.$color-text;
-  }
+}
 
-  .status-IN_REVIEW,
-  .status-PUBLISHED {
-    background-color: v.$color-text;
-    color: v.$color-white;
-  }
+.statusDraft {
+  background-color: transparent;
+  color: v.$color-text;
+  border: 1px solid v.$color-text;
+  padding: 3px 5px;
+}
 
+.statusInReview,
+.statusPublished {
+  background-color: v.$color-text;
+  color: v.$color-white;
+  border: 1px solid v.$color-text;
+  padding: 3px 5px;
+}
+
+.authorCard {
   h2 {
     margin: 0 0 8px;
     color: v.$color-text;
@@ -210,7 +217,7 @@
     letter-spacing: -0.6px;
   }
 
-  &__content {
+  &Content {
     margin: 0 0 10px;
     color: v.$color-text;
     font-family: v.$font-heading-secondary;
@@ -218,7 +225,7 @@
     line-height: 1.35;
   }
 
-  &__actions {
+  &Actions {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -235,19 +242,19 @@
   }
 }
 
-.primary-action {
+.primaryAction {
   background-color: v.$color-text;
   color: v.$color-white;
   padding: 0 8px;
 }
 
-.secondary-action {
+.secondaryAction {
   background-color: transparent;
   color: v.$color-text;
   padding: 0 8px;
 }
 
-.icon-action {
+.iconAction {
   width: 22px;
   padding: 0;
   background-color: transparent;
@@ -258,7 +265,7 @@
   }
 }
 
-.author-pagination {
+.authorPagination {
   display: flex;
   justify-content: center;
   gap: 5px;
@@ -285,57 +292,57 @@
 /* ---------- TABLET ---------- */
 
 @media (min-width: 640px) {
-  .author-dashboard {
+  .authorDashboard {
     max-width: 600px;
     padding: 32px 24px 48px;
   }
 
-  .author-dashboard__title h1 {
+  .authorDashboardTitle h1 {
     font-size: 38px;
   }
 
-  .author-dashboard__subtitle {
+  .authorDashboardSubtitle {
     font-size: 8px;
   }
 
-  .author-dashboard__create-button {
+  .authorDashboardCreateButton {
     font-size: 8px;
     padding: 8px 12px;
   }
 
-  .author-profile {
+  .authorProfile {
     padding: 14px;
   }
 
-  .author-profile__label {
+  .authorProfileLabel {
     font-size: 8px;
   }
 
-  .author-profile h2 {
+  .authorProfile h2 {
     font-size: 18px;
   }
 
-  .author-profile__avatar {
+  .authorProfileAvatar {
     width: 36px;
     height: 36px;
     font-size: 18px;
   }
 
-  .author-filters span,
-  .author-filters button {
+  .authorFilters span,
+  .authorFilters button {
     font-size: 8px;
   }
 
-  .author-card {
+  .authorCard {
     padding: 14px;
   }
 
-  .author-card h2 {
+  .authorCard h2 {
     font-size: 26px;
   }
 
-  .author-card__meta,
-  .author-card__content {
+  .authorCardMeta,
+  .authorCardContent {
     font-size: 8px;
   }
 }
@@ -343,68 +350,68 @@
 /* ---------- DESKTOP ---------- */
 
 @media (min-width: 1024px) {
-  .author-dashboard {
+  .authorDashboard {
     max-width: 960px;
     padding: 40px 32px 56px;
   }
 
-  .author-dashboard__title h1 {
+  .authorDashboardTitle h1 {
     font-size: 46px;
     letter-spacing: -1.5px;
   }
 
-  .author-dashboard__subtitle {
+  .authorDashboardSubtitle {
     font-size: 9px;
   }
 
-  .author-dashboard__create-button {
+  .authorDashboardCreateButton {
     font-size: 9px;
     padding: 10px 16px;
   }
 
-  .author-profile {
+  .authorProfile {
     padding: 18px;
   }
 
-  .author-profile__label {
+  .authorProfileLabel {
     font-size: 9px;
   }
 
-  .author-profile h2 {
+  .authorProfile h2 {
     font-size: 20px;
   }
 
-  .author-profile__avatar {
+  .authorProfileAvatar {
     width: 44px;
     height: 44px;
     font-size: 22px;
   }
 
-  .author-filters span,
-  .author-filters button {
+  .authorFilters span,
+  .authorFilters button {
     font-size: 9px;
   }
 
-  .author-articles {
+  .authorArticles {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
 
-  .author-card {
+  .authorCard {
     padding: 18px;
   }
 
-  .author-card h2 {
+  .authorCard h2 {
     font-size: 30px;
   }
 
-  .author-card__meta,
-  .author-card__content {
+  .authorCardMeta,
+  .authorCardContent {
     font-size: 9px;
   }
 
-  .author-card__actions button {
+  .authorCardActions button {
     height: 26px;
     font-size: 8px;
   }

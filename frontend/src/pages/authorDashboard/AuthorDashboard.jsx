@@ -43,6 +43,12 @@ function AuthorDashboard() {
     return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`
   }
 
+  const statusClassMap = {
+    DRAFT: 'statusDraft',
+    IN_REVIEW: 'statusInReview',
+    PUBLISHED: 'statusPublished',
+  }
+
   const filteredArticles =
     filter === "ALL"
       ? articles
@@ -145,7 +151,7 @@ function AuthorDashboard() {
         {filteredArticles.map((article) => (
           <article className={styles.authorCard} key={article.id}>
             <div className={styles.authorCardMeta}>
-              <span className={`${styles.authorCardStatus} ${styles[`status-${article.status}`]}`}>
+              <span className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}>
                 {statusLabels[article.status] || article.status}
               </span>
 
