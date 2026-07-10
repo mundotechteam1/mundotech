@@ -30,16 +30,16 @@ function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
-      <label htmlFor="email">Electronic Mail Address</label>
+      <label htmlFor="email">Correo electrónico</label>
       <input
         id="email"
         type="email"
         placeholder="editor@mundotech.pub"
         {...register("email", {
-          required: "Email is required",
+          required: "El email es obligatorio",
           pattern: {
             value: /^\S+@\S+$/i,
-            message: "Invalid email format",
+            message: "Formato de email inválido",
           },
         })}
       />
@@ -49,14 +49,14 @@ function LoginForm() {
         </p>
       )}
 
-      <label htmlFor="password">Security Cipher</label>
+      <label htmlFor="password">Contraseña</label>
       <input
         id="password"
         type="password"
         placeholder="••••••••"
         autoComplete="current-password"
         {...register("password", {
-          required: "Password is required",
+          required: "La constraseña es obligatoria",
         })}
       />
       {errors.password && (
@@ -66,7 +66,7 @@ function LoginForm() {
       )}
 
       <button className={styles.loginBtn} type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Loading…" : "Login"}
+        {isSubmitting ? "Cargando..." : "Entrar"}
       </button>
 
       {/* <a className="forgot-link" href="/forgot-password"> 
