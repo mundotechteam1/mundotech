@@ -1,6 +1,6 @@
-@use '../../styles/_variables' as v;
+@use "../../styles/_variables" as v;
 
-.author-dashboard {
+.authorDashboard {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -9,26 +9,16 @@
   background-color: v.$color-bg;
   font-family: v.$font-heading-primary;
   text-align: left;
+}
 
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
+.authorDashboardTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 24px;
 
-  &__subtitle {
-    margin: 0 0 6px;
-    color: v.$color-text;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-  }
-
-  &__title h1 {
+  h1 {
     margin: 0;
     color: v.$color-text;
     font-family: v.$font-heading-primary;
@@ -38,71 +28,45 @@
     line-height: 0.95;
     letter-spacing: -1px;
   }
-
-  &__create-button {
-    border: none;
-    background-color: v.$color-text;
-    color: v.$color-white;
-    padding: 7px 9px;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-
-  &__message,
-  &__error {
-    font-family: v.$font-heading-secondary;
-    font-size: 10px;
-  }
-
-  &__error {
-    color: v.$color-error;
-  }
 }
 
-.author-profile {
+.authorDashboardSubtitle {
+  margin: 0 0 6px;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.authorDashboardCreateButton {
+  border: none;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  padding: 7px 9px;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.authorDashboardMessage,
+.authorDashboardError {
+  font-family: v.$font-heading-secondary;
+  font-size: 10px;
+}
+
+.authorDashboardError {
+  color: v.$color-error;
+}
+
+.authorProfile {
   border: 1px solid v.$color-text;
   padding: 10px;
   margin-bottom: 18px;
   background-color: transparent;
-
-  &__label {
-    margin: 0 0 8px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid v.$color-text;
-    color: v.$color-text;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-  }
-
-  &__content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-
-    p {
-      margin: 0;
-      font-family: v.$font-heading-secondary;
-      font-size: 7px;
-    }
-  }
-
-  &__avatar {
-    width: 28px;
-    height: 28px;
-    display: grid;
-    place-items: center;
-    background-color: v.$color-text;
-    color: v.$color-white;
-    font-family: v.$font-heading-primary;
-    font-size: 15px;
-    font-weight: v.$weight-bold;
-  }
 
   h2 {
     margin: 0;
@@ -111,22 +75,58 @@
     font-size: 15px;
     font-weight: v.$weight-regular;
   }
+}
 
-  &__stats {
-    display: flex;
-    justify-content: space-between;
-    color: v.$color-text;
+.authorProfileLabel {
+  margin: 0 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid v.$color-text;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+}
+
+.authorProfileContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  p {
+    margin: 0;
     font-family: v.$font-heading-secondary;
-    font-size: 8px;
-    line-height: 1.5;
-
-    strong {
-      color: v.$color-text;
-    }
+    font-size: 7px;
   }
 }
 
-.author-filters {
+.authorProfileAvatar {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  font-family: v.$font-heading-primary;
+  font-size: 15px;
+  font-weight: v.$weight-bold;
+}
+
+.authorProfileStats {
+  display: flex;
+  justify-content: space-between;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 8px;
+  line-height: 1.5;
+
+  strong {
+    color: v.$color-text;
+  }
+}
+
+.authorFilters {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -160,45 +160,16 @@
   }
 }
 
-.author-articles {
+.authorArticles {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.author-card {
+.authorCard {
   border: 1px solid v.$color-text;
   padding: 10px;
   background-color: transparent;
-
-  &__meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-  }
-
-  &__status {
-    padding: 3px 5px;
-    border: 1px solid v.$color-text;
-    color: v.$color-text;
-    background-color: transparent;
-  }
-
-  .status-DRAFT {
-    background-color: transparent;
-    color: v.$color-text;
-  }
-
-  .status-IN_REVIEW,
-  .status-PUBLISHED {
-    background-color: v.$color-text;
-    color: v.$color-white;
-  }
 
   h2 {
     margin: 0 0 8px;
@@ -209,45 +180,77 @@
     line-height: 1;
     letter-spacing: -0.6px;
   }
+}
 
-  &__content {
-    margin: 0 0 10px;
-    color: v.$color-text;
+.authorCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+}
+
+.authorCardStatus {
+  padding: 3px 5px;
+  border: 1px solid v.$color-text;
+  color: v.$color-text;
+  background-color: transparent;
+}
+
+// Nota: article.status viene como DRAFT / IN_REVIEW / PUBLISHED
+// y en JSX se arma como styles[`status-${article.status}`]
+// por eso estas clases dinámicas SÍ deben llevar guion (van entre corchetes, no con punto)
+.status-DRAFT {
+  background-color: transparent;
+  color: v.$color-text;
+}
+
+.status-IN_REVIEW,
+.status-PUBLISHED {
+  background-color: v.$color-text;
+  color: v.$color-white;
+}
+
+.authorCardContent {
+  margin: 0 0 10px;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.authorCardActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  button {
+    height: 22px;
+    border: 1px solid v.$color-text;
     font-family: v.$font-heading-secondary;
-    font-size: 9px;
-    line-height: 1.35;
-  }
-
-  &__actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    button {
-      height: 22px;
-      border: 1px solid v.$color-text;
-      font-family: v.$font-heading-secondary;
-      font-size: 7px;
-      font-weight: v.$weight-bold;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 }
 
-.primary-action {
+.primaryAction {
   background-color: v.$color-text;
   color: v.$color-white;
   padding: 0 8px;
 }
 
-.secondary-action {
+.secondaryAction {
   background-color: transparent;
   color: v.$color-text;
   padding: 0 8px;
 }
 
-.icon-action {
+.iconAction {
   width: 22px;
   padding: 0;
   background-color: transparent;
@@ -258,7 +261,7 @@
   }
 }
 
-.author-pagination {
+.authorPagination {
   display: flex;
   justify-content: center;
   gap: 5px;
@@ -282,60 +285,98 @@
   }
 }
 
+/* ---------- MODAL ---------- */
+
+.modaloverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: v.$color-white;
+  border: 1px solid v.$color-text;
+  padding: 24px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid v.$color-text;
+  background-color: transparent;
+  color: v.$color-text;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* ---------- TABLET ---------- */
 
 @media (min-width: 640px) {
-  .author-dashboard {
+  .authorDashboard {
     max-width: 600px;
     padding: 32px 24px 48px;
   }
 
-  .author-dashboard__title h1 {
+  .authorDashboardTitle h1 {
     font-size: 38px;
   }
 
-  .author-dashboard__subtitle {
+  .authorDashboardSubtitle {
     font-size: 8px;
   }
 
-  .author-dashboard__create-button {
+  .authorDashboardCreateButton {
     font-size: 8px;
     padding: 8px 12px;
   }
 
-  .author-profile {
+  .authorProfile {
     padding: 14px;
+
+    h2 {
+      font-size: 18px;
+    }
   }
 
-  .author-profile__label {
+  .authorProfileLabel {
     font-size: 8px;
   }
 
-  .author-profile h2 {
-    font-size: 18px;
-  }
-
-  .author-profile__avatar {
+  .authorProfileAvatar {
     width: 36px;
     height: 36px;
     font-size: 18px;
   }
 
-  .author-filters span,
-  .author-filters button {
+  .authorFilters span,
+  .authorFilters button {
     font-size: 8px;
   }
 
-  .author-card {
+  .authorCard {
     padding: 14px;
+
+    h2 {
+      font-size: 26px;
+    }
   }
 
-  .author-card h2 {
-    font-size: 26px;
-  }
-
-  .author-card__meta,
-  .author-card__content {
+  .authorCardMeta,
+  .authorCardContent {
     font-size: 8px;
   }
 }
@@ -343,68 +384,68 @@
 /* ---------- DESKTOP ---------- */
 
 @media (min-width: 1024px) {
-  .author-dashboard {
+  .authorDashboard {
     max-width: 960px;
     padding: 40px 32px 56px;
   }
 
-  .author-dashboard__title h1 {
+  .authorDashboardTitle h1 {
     font-size: 46px;
     letter-spacing: -1.5px;
   }
 
-  .author-dashboard__subtitle {
+  .authorDashboardSubtitle {
     font-size: 9px;
   }
 
-  .author-dashboard__create-button {
+  .authorDashboardCreateButton {
     font-size: 9px;
     padding: 10px 16px;
   }
 
-  .author-profile {
+  .authorProfile {
     padding: 18px;
+
+    h2 {
+      font-size: 20px;
+    }
   }
 
-  .author-profile__label {
+  .authorProfileLabel {
     font-size: 9px;
   }
 
-  .author-profile h2 {
-    font-size: 20px;
-  }
-
-  .author-profile__avatar {
+  .authorProfileAvatar {
     width: 44px;
     height: 44px;
     font-size: 22px;
   }
 
-  .author-filters span,
-  .author-filters button {
+  .authorFilters span,
+  .authorFilters button {
     font-size: 9px;
   }
 
-  .author-articles {
+  .authorArticles {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
 
-  .author-card {
+  .authorCard {
     padding: 18px;
+
+    h2 {
+      font-size: 30px;
+    }
   }
 
-  .author-card h2 {
-    font-size: 30px;
-  }
-
-  .author-card__meta,
-  .author-card__content {
+  .authorCardMeta,
+  .authorCardContent {
     font-size: 9px;
   }
 
-  .author-card__actions button {
+  .authorCardActions button {
     height: 26px;
     font-size: 8px;
   }

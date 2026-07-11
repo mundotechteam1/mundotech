@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./AuthorDashboard.module.scss";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
   const [articles, setArticles] = useState([]);
@@ -219,10 +220,16 @@ function AuthorDashboard() {
         <button type="button">Siguiente</button>
       </section>
       {isEditorOpen && (
-        <div className="modal-overlay" onClick={() => setIsEditorOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.modaloverlay}
+          onClick={() => setIsEditorOpen(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              className="modal-close"
+              className={styles.modalClose}
               onClick={() => setIsEditorOpen(false)}
             >
               ×

@@ -1,173 +1,105 @@
 import React from "react";
-import "./ArticleView.scss";
-
-import processorImg from "../../assets/processor.jpg";
-import authorImg from "../../assets/author.jpg";
+import styles from "./ArticleView.module.scss";
+import processorImg from "../../assets/icons/processor.jpg";
 
 export default function ArticleView() {
   return (
-    <div className="page-layout">
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <h2>MT</h2>
-          <span>EDITORIAL DESK</span>
-        </div>
-        <nav className="sidebar-menu">
-          <a href="#frontpage" className="menu-item">
-            <svg
-              className="menu-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
-              <path d="M18 14h-8" />
-              <path d="M15 18h-5" />
-              <path d="M10 6h8v4h-8V6Z" />
-            </svg>
-            Frontpage
-          </a>
-          <a href="#drafts" className="menu-item">
-            <svg
-              className="menu-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-              <line x1="10" y1="9" x2="8" y2="9" />
-            </svg>
-            My Drafts
-          </a>
-          <a href="#submissions" className="menu-item active">
-            <svg
-              className="menu-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m9 11 3 3L22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-            Submissions
-          </a>
-        </nav>
-      </aside>
-
-      <main className="main-content">
-        <div className="article-container">
-          <div className="article-meta-header">
-            <span className="status-badge">STATUS: IN REVIEW</span>
-            <span className="priority">PRIORITY: HIGH</span>
-            <span className="submission-id">SUBMISSION ID: MT-80321-ARC</span>
+    <div className={styles.pageLayout}>
+      <main className={styles.mainContent}>
+        <div className={styles.articleContainer}>
+          <div className={styles.articleMetaHeader}>
+            <span className={styles.statusBadge}>ESTADO: EN REVISIÓN</span>
+            <span>RECIBIDO: 24 DE OCTUBRE, 2023 | 09:40 AM</span>
           </div>
 
-          <div className="article-main-image">
-            <img src={processorImg} alt="Processor architecture" />
-            <p className="image-caption">
-              Fig 1.0: The architecture of next-generation silicon. Photo by
-              Elena Vance.
-            </p>
+          <div className={styles.articleMainImage}>
+            <img src={processorImg} alt="Arquitectura del procesador" />
           </div>
 
-          <h1 className="article-title">
-            The Silent Revolution: How Generative Architectures are Redefining
-            Peripheral Computing
+          <h1 className={styles.articleTitle}>
+            La revolución silenciosa: cómo las arquitecturas generativas están
+            rediseñando la computación periférica
           </h1>
 
-          <div className="article-author-box">
-            <img
-              src={authorImg}
-              alt="Julian Thorne"
-              className="author-avatar"
-            />
-            <div className="author-info">
-              <span className="author-name">BY JULIAN THORNE</span>
-              <span className="author-role">LEAD TECHNOLOGY CORRESPONDENT</span>
+          <div className={styles.articleAuthorBox}>
+            <div className={styles.authorInfo}>
+              <span className={styles.authorName}>POR JULIAN THORNE</span>
+              <span className={styles.authorRole}>
+                CORRESPONSAL PRINCIPAL DE TECNOLOGÍA
+              </span>
             </div>
-            <span className="article-date">OCTOBER 24, 2023</span>
+            <span className={styles.articleDate}>24 DE OCTUBRE DE 2023</span>
           </div>
 
-          <div className="article-body-layout">
-            <div className="article-text-columns">
+          <div className={styles.articleBodyLayout}>
+            <div className={styles.articleTextColumns}>
               <p>
-                <span className="drop-cap">F</span>or decades, the trajectory of
-                computing has been towards central consolidation. We moved from
-                the mainframe to the cloud, offloading the heavy lifting of
-                cognition to massive data centers cooled by arctic winds. But a
-                quiet inversion is taking place. The "edge" is no longer a
-                peripheral destination; it is becoming the primary site of
-                intelligence.
+                <span className={styles.dropCap}>D</span>urante décadas, la
+                trayectoria de la informática se ha dirigido hacia la
+                consolidación centralizada. Nos trasladamos de los mainframes a
+                la nube, delegando el trabajo pesado de la cognición a enormes
+                centros de datos refrigerados por vientos árticos. Pero se está
+                produciendo una silenciosa inversión. El "borde" ya no es un
+                destino periférico; se está convirtiendo en el sitio principal
+                de la inteligencia.
               </p>
 
               <p>
-                The recent breakthroughs in local model quantization have
-                allowed generative architectures—previously the sole domain of
-                multi-GPU clusters—to reside comfortably within the low-wattage
-                confines of mobile processors and embedded sensors. This isn't
-                just a technical achievement; it's a paradigm shift in data
-                sovereignty and latency.
+                Los recientes avances en la cuantificación de modelos locales
+                han permitido que las arquitecturas generativas —antes dominio
+                exclusivo de los clústeres multi-GPU— residan cómodamente dentro
+                de los límites de bajo consumo de los procesadores móviles y los
+                sensores integrados. Esto no es solo un logro técnico; es un
+                cambio de paradigma en la soberanía de los datos y la latencia.
               </p>
 
-              <blockquote className="article-blockquote">
-                "We are witnessing the birth of 'Ambient Intelligence'—where the
-                device doesn't just record the world, it understands it in
-                real-time without asking for permission from the cloud."
+              <blockquote className={styles.articleBlockquote}>
+                "Estamos presenciando el nacimiento de la 'Inteligencia
+                Ambiental', donde el dispositivo no solo registra el mundo, sino
+                que lo comprende en tiempo real sin pedir permiso a la nube."
               </blockquote>
 
               <p>
-                In our testing at the Mundo Tech labs, we observed a 300%
-                increase in inferencing speed on the latest prototype chips
-                compared to the previous generation's cloud-dependent workflows.
-                More importantly, the security implications are profound. When
-                the data never leaves the local hardware, the attack surface of
-                the modern digital life shrinks from a global network to a
-                single physical object.
+                En nuestras pruebas en los laboratorios de Mundo Tech,
+                observamos un incremento del 300% en la velocidad de inferencia
+                en los últimos chips prototipo en comparación con los flujos de
+                trabajo dependientes de la nube de la generación anterior. Más
+                importante aún, las implicaciones de seguridad son profundas.
+                Cuando los datos nunca abandonan el hardware local, la
+                superficie de ataque de la vida digital moderna se reduce de una
+                red global a un solo objeto físico.
               </p>
 
               <p>
-                However, this decentralization comes with its own set of
-                challenges. The thermal management of high-density neural
-                engines on mobile boards remains a significant hurdle. Julian
-                Thorne explores how companies like NeuralLink and Terra-Silicon
-                are approaching these metallurgical constraints through
-                innovative liquid-cooling membranes.
+                Asísmo, esta descentralización conlleva su propio conjunto de
+                desafíos. La gestión térmica de los motores neuronales de alta
+                densidad en placas móviles sigue siendo un obstáculo
+                significativo. Julian Thorne explora cómo empresas como
+                NeuralLink y Terra-Silicon están abordando estas restricciones
+                metalúrgicas mediante innovadoras membranas de refrigeración
+                líquida.
               </p>
 
               <p>
-                As we move into the next fiscal year, the narrative of 'The
-                Cloud' may begin to evaporate, replaced by a more grounded, more
-                private, and infinitely faster local reality. The revolution
-                won't be televised; it will be computed in your pocket,
-                silently.
+                A medida que nos adentramos en el próximo año fiscal, la
+                narrativa de 'La Nube' podría comenzar a evaporarse, reemplazada
+                por una realidad local más conectada a tierra, más privada e
+                infinitamente más rápida. La revolución no será televisada; se
+                computará en tu bolsillo, silenciosamente.
               </p>
             </div>
           </div>
 
-          <div className="editorial-notes-section">
-            <label>ADD EDITORIAL NOTE</label>
-            <textarea placeholder="Provide feedback to the author or internal notes for the editorial board..."></textarea>
-            <div className="editorial-actions">
-              <button className="btn-approve">APPROVE & PUBLISH</button>
-              <button className="btn-reject">REJECT & RETURN TO AUTHOR</button>
+          <div className={styles.editorialNotesSection}>
+            <label>AÑADIR NOTA EDITORIAL</label>
+            <textarea placeholder="Proporcione comentarios al autor o notas internas para el consejo editorial..."></textarea>
+            <div className={styles.editorialActions}>
+              <button className={styles.btnApprove} type="button">
+                ✓ APROBAR Y PUBLICAR
+              </button>
+              <button className={styles.btnReject} type="button">
+                ⤶ RECHAZAR Y DEVOLVER AL AUTOR
+              </button>
             </div>
           </div>
         </div>

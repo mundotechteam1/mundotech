@@ -2,18 +2,24 @@
 
 .pageLayout {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   width: 100%;
   background-color: v.$color-bg;
   text-align: left;
 
   .sidebar {
-    width: 240px;
-    background-color: v.$color-bg;
-    border-right: 1px solid v.$color-border;
-    padding: 40px 0;
-    box-sizing: border-box;
-    flex-shrink: 0;
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+      width: 240px;
+      background-color: v.$color-bg;
+      border-right: 1px solid v.$color-border;
+      padding: 40px 0;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
 
     .sidebarLogo {
       padding: 0 v.$space-md;
@@ -28,7 +34,8 @@
         color: v.$color-black;
       }
       span {
-        font-size: v.$font-heading-secondary;
+        font-family: v.$font-heading-secondary;
+        font-size: 11px;
         letter-spacing: 1px;
         color: v.$color-text-muted;
       }
@@ -79,8 +86,8 @@
 }
 
 .articleContainer {
-  max-width: v.$max-content-width;
   width: 100%;
+  max-width: v.$max-content-width;
   background-color: v.$color-white;
   padding: v.$space-md;
   border: 1px solid v.$color-border;
@@ -88,6 +95,10 @@
   color: v.$color-text;
   text-align: left;
   box-sizing: border-box;
+
+  @media (min-width: 768px) {
+    padding: v.$space-xl;
+  }
 
   .articleMetaHeader {
     display: flex;
@@ -128,14 +139,18 @@
   }
 
   .articleTitle {
-    font-size: v.$font-heading-primary;
+    font-family: v.$font-heading-primary;
+    font-size: 32px;
     line-height: 1.1;
     font-weight: 700;
     margin-top: 0;
     margin-bottom: 25px;
-    font-family: v.$font-heading-primary;
     color: v.$color-black;
     text-align: left;
+
+    @media (min-width: 768px) {
+      font-size: 42px;
+    }
   }
 
   .articleAuthorBox {
@@ -146,7 +161,7 @@
     border-bottom: 1px solid v.$color-border;
     padding: 10px 0;
     margin-bottom: 30px;
-    font-family: v.$font-heading-primary;
+    font-family: v.$font-heading-secondary;
     font-size: 12px;
 
     .authorAvatar {
@@ -178,12 +193,16 @@
 
   .articleBodyLayout {
     .articleTextColumns {
-      column-count: 2;
-      column-gap: 40px;
+      column-count: 1;
       text-align: justify;
       font-size: 16px;
       line-height: 1.6;
       color: v.$color-text;
+
+      @media (min-width: 768px) {
+        column-count: 2;
+        column-gap: 40px;
+      }
 
       p {
         margin-top: 0;
@@ -198,14 +217,14 @@
         padding-top: 4px;
         padding-right: 8px;
         font-weight: bold;
-        font-family: v.$font-heading-primary; 
+        font-family: v.$font-heading-primary;
         color: v.$color-black;
       }
     }
 
     .articleBlockquote {
       break-inside: avoid;
-      background-color:v.$color-bg;
+      background-color: v.$color-bg;
       border-left: 4px solid v.$color-black;
       margin: 20px 0;
       padding: 20px;
@@ -222,7 +241,7 @@
     margin-top: 50px;
     border-top: 2px solid v.$color-black;
     padding-top: 20px;
-    font-family: v.$font-heading-primary;
+    font-family: v.$font-heading-secondary;
     text-align: left;
 
     label {
@@ -240,7 +259,7 @@
       border: 1px solid v.$color-border;
       background-color: v.$color-bg;
       resize: vertical;
-      font-family: inherit;
+      font-family: v.$font-body;
       box-sizing: border-box;
       margin-bottom: 15px;
       color: v.$color-black;
@@ -249,7 +268,12 @@
 
     .editorialActions {
       display: flex;
+      flex-direction: column;
       gap: 10px;
+
+      @media (min-width: 576px) {
+        flex-direction: row;
+      }
 
       button {
         flex: 1;
@@ -259,6 +283,7 @@
         cursor: pointer;
         border: 1px solid v.$color-black;
         transition: all 0.2s;
+        font-family: v.$font-heading-secondary;
       }
 
       .btnApprove {
@@ -266,6 +291,7 @@
         color: v.$color-white;
         &:hover {
           background: v.$color-text-muted;
+          border-color: v.$color-text-muted;
         }
       }
 
@@ -279,5 +305,4 @@
       }
     }
   }
-
 }
