@@ -35,15 +35,13 @@ function Header() {
 
   return (
     <header className={styles.header}>
-
-      <div className={styles['user-icon']}>
-  <a href="/login" aria-label="Iniciar sesión">
-    <FaRegCircleUser />
-  </a>
-</div>
+      <div className={styles["user-icon"]}>
+        <a href="/login" aria-label="Iniciar sesión">
+          <FaRegCircleUser />
+        </a>
+      </div>
 
       <div className={styles.newspaper}>
-
         <div className={styles.line}></div>
 
         <h1>
@@ -59,9 +57,7 @@ function Header() {
           <p>{fecha}</p>
           <p>BARCELONA</p>
         </div>
-
       </div>
-
     </header>
   );
 }
