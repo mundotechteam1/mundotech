@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import styles from './AuthorDashboard.module.scss'
-import ArticleEditor from '../../components/ArticleEditor/ArticleEditor'
+import { useEffect, useState } from "react";
+import styles from "./AuthorDashboard.module.scss";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
   const [articles, setArticles] = useState([])
@@ -35,16 +35,37 @@ function AuthorDashboard() {
   }
 
   const statusLabels = {
-    DRAFT: 'Borrador',
-    IN_REVIEW: 'En Revisión',
-    PUBLISHED: 'Publicado',
-  }
+    DRAFT: "Borrador",
+    IN_REVIEW: "En Revisión",
+    PUBLISHED: "Publicado",
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "27 oct 2026";
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    const meses = [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ];
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
+  };
 
   const statusClassMap = {
-    DRAFT: 'statusDraft',
-    IN_REVIEW: 'statusInReview',
-    PUBLISHED: 'statusPublished',
-  }
+    DRAFT: "statusDraft",
+    IN_REVIEW: "statusInReview",
+    PUBLISHED: "statusPublished",
+  };
 
   const formatDate = (dateStr) => {
     if (!dateStr) {
@@ -168,32 +189,32 @@ function AuthorDashboard() {
 
         <button
           type="button"
-          className={filter === 'ALL' ? styles.active : ''}
-          onClick={() => handleFilterChange('ALL')}
+          className={filter === "ALL" ? styles.active : ""}
+          onClick={() => setFilter("ALL")}
         >
           Todos
         </button>
 
         <button
           type="button"
-          className={filter === 'DRAFT' ? styles.active : ''}
-          onClick={() => handleFilterChange('DRAFT')}
+          className={filter === "DRAFT" ? styles.active : ""}
+          onClick={() => setFilter("DRAFT")}
         >
           Borrador
         </button>
 
         <button
           type="button"
-          className={filter === 'IN_REVIEW' ? styles.active : ''}
-          onClick={() => handleFilterChange('IN_REVIEW')}
+          className={filter === "IN_REVIEW" ? styles.active : ""}
+          onClick={() => setFilter("IN_REVIEW")}
         >
           En Revisión
         </button>
 
         <button
           type="button"
-          className={filter === 'PUBLISHED' ? styles.active : ''}
-          onClick={() => handleFilterChange('PUBLISHED')}
+          className={filter === "PUBLISHED" ? styles.active : ""}
+          onClick={() => setFilter("PUBLISHED")}
         >
           Publicados
         </button>
@@ -205,11 +226,7 @@ function AuthorDashboard() {
         </p>
       )}
 
-      {error && (
-        <p className={styles.authorDashboardError}>
-          {error}
-        </p>
-      )}
+      {error && <p className={styles.authorDashboardError}>{error}</p>}
 
       <section className={styles.authorArticles}>
         {paginatedArticles.map((article) => (
@@ -219,50 +236,33 @@ function AuthorDashboard() {
           >
             <div className={styles.authorCardMeta}>
               <span
-                className={`${styles.authorCardStatus} ${
-                  styles[statusClassMap[article.status]] || ''
-                }`}
+                className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}
               >
                 {statusLabels[article.status] || article.status}
               </span>
 
-              <span>
-                {formatDate(
-                  article.createdAt || article.created_at
-                )}
-              </span>
+              <span>{formatDate(article.createdAt || article.created_at)}</span>
             </div>
 
             <h2>{article.title}</h2>
 
-            <p className={styles.authorCardContent}>
-              {article.content}
-            </p>
+            <p className={styles.authorCardContent}>{article.content}</p>
 
             <div className={styles.authorCardActions}>
-              {article.status === 'DRAFT' && (
-                <button
-                  className={styles.primaryAction}
-                  type="button"
-                >
+              {article.status === "DRAFT" && (
+                <button className={styles.primaryAction} type="button">
                   Enviar a revisión
                 </button>
               )}
 
-              {article.status === 'IN_REVIEW' && (
-                <button
-                  className={styles.secondaryAction}
-                  type="button"
-                >
+              {article.status === "IN_REVIEW" && (
+                <button className={styles.secondaryAction} type="button">
                   Pendiente de aprobación
                 </button>
               )}
 
-              {article.status === 'PUBLISHED' && (
-                <button
-                  className={styles.secondaryAction}
-                  type="button"
-                >
+              {article.status === "PUBLISHED" && (
+                <button className={styles.secondaryAction} type="button">
                   Ver publicado
                 </button>
               )}
@@ -270,7 +270,6 @@ function AuthorDashboard() {
               <button
                 className={`${styles.iconAction} ${styles.delete}`}
                 type="button"
-                aria-label="Eliminar artículo"
               >
                 ×
               </button>
@@ -278,7 +277,6 @@ function AuthorDashboard() {
               <button
                 className={`${styles.iconAction} ${styles.edit}`}
                 type="button"
-                aria-label="Editar artículo"
               >
                 ✎
               </button>
@@ -288,51 +286,13 @@ function AuthorDashboard() {
       </section>
 
       <section className={styles.authorPagination}>
-        <button
-          type="button"
-          disabled={safePage === 1}
-          onClick={() => goToPage(safePage - 1)}
-        >
-          Anterior
+        <button type="button">Anterior</button>
+        <button className={styles.active} type="button">
+          1
         </button>
-
-        {pageNumbers.map((num) => (
-          <button
-            key={num}
-            type="button"
-            className={num === safePage ? styles.active : ''}
-            onClick={() => goToPage(num)}
-          >
-            {num}
-          </button>
-        ))}
-
-        <button
-          type="button"
-          disabled={safePage === totalPages}
-          onClick={() => goToPage(safePage + 1)}
-        >
-          Siguiente
-        </button>
-
-        <span className={styles.paginationInfo}>
-          {filteredArticles.length} artículos &mdash;
-        </span>
-
-        <select
-          className={styles.perPageSelect}
-          value={itemsPerPage}
-          onChange={(e) => {
-            setItemsPerPage(Number(e.target.value))
-            setCurrentPage(1)
-          }}
-        >
-          {itemsPerPageOptions.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt} por pág.
-            </option>
-          ))}
-        </select>
+        <button type="button">2</button>
+        <button type="button">3</button>
+        <button type="button">Siguiente</button>
       </section>
 
       {isEditorOpen && (
@@ -345,7 +305,7 @@ function AuthorDashboard() {
             onClick={(event) => event.stopPropagation()}
           >
             <button
-              className={styles.modalClose}
+              className="modal-close"
               type="button"
               onClick={() => setIsEditorOpen(false)}
               aria-label="Cerrar editor"
@@ -360,7 +320,7 @@ function AuthorDashboard() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default AuthorDashboard
