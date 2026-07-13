@@ -114,7 +114,8 @@
 
   &Stats {
     display: flex;
-    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px;
     color: v.$color-text;
     font-family: v.$font-heading-secondary;
     font-size: 8px;
@@ -268,6 +269,7 @@
 .authorPagination {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   margin-top: 28px;
 
@@ -282,11 +284,36 @@
     text-transform: uppercase;
     cursor: pointer;
 
+    &[disabled] {
+      opacity: 0.35;
+      cursor: default;
+    }
+
     &.active {
       background-color: v.$color-text;
       color: v.$color-white;
     }
   }
+}
+
+.paginationInfo {
+  margin-left: auto;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+}
+
+.perPageSelect {
+  border: 1px solid v.$color-text;
+  background-color: transparent;
+  color: v.$color-text;
+  padding: 3px 4px;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 /* ---------- TABLET ---------- */

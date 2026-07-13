@@ -3,32 +3,36 @@ import styles from "./AuthorDashboard.module.scss";
 import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
-  const [articles, setArticles] = useState([]);
-  const [filter, setFilter] = useState("ALL");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [articles, setArticles] = useState([])
+  const [filter, setFilter] = useState('ALL')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
 
   useEffect(() => {
-    loadArticles();
-  }, []);
+    loadArticles()
+  }, [])
 
   const loadArticles = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/articles");
+      const response = await fetch(
+        'http://localhost:8080/api/v1/articles'
+      )
 
       if (!response.ok) {
-        throw new Error("No se pudieron cargar los artículos");
+        throw new Error('No se pudieron cargar los artículos')
       }
 
-      const data = await response.json();
-      setArticles(data);
+      const data = await response.json()
+      setArticles(data)
     } catch (error) {
-      setError(error.message);
+      setError(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const statusLabels = {
     DRAFT: "Borrador",
@@ -63,10 +67,66 @@ function AuthorDashboard() {
     PUBLISHED: "statusPublished",
   };
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) {
+      return '27 oct 2026'
+    }
+
+    const date = new Date(dateStr)
+
+    if (Number.isNaN(date.getTime())) {
+      return dateStr
+    }
+
+    const months = [
+      'Ene',
+      'Feb',
+      'Mar',
+      'Abr',
+      'May',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dic',
+    ]
+
+    return `${date.getDate()} ${
+      months[date.getMonth()]
+    }, ${date.getFullYear()}`
+  }
+
   const filteredArticles =
-    filter === "ALL"
+    filter === 'ALL'
       ? articles
-      : articles.filter((article) => article.status === filter);
+      : articles.filter((article) => article.status === filter)
+
+  const totalPages = Math.ceil(filteredArticles.length / itemsPerPage)
+  const safePage = Math.min(currentPage, Math.max(totalPages, 1))
+  const paginatedArticles = filteredArticles.slice(
+    (safePage - 1) * itemsPerPage,
+    safePage * itemsPerPage,
+  )
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter)
+    setCurrentPage(1)
+  }
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page)
+    }
+  }
+
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i)
+  }
+
+  const itemsPerPageOptions = [10, 20, 50]
 
   return (
     <div className={styles.authorDashboard}>
@@ -101,20 +161,24 @@ function AuthorDashboard() {
 
         <div className={styles.authorProfileStats}>
           <span>Total Publicados</span>
+
           <strong>
             {
-              articles.filter((article) => article.status === "PUBLISHED")
-                .length
+              articles.filter(
+                (article) => article.status === 'PUBLISHED'
+              ).length
             }
           </strong>
         </div>
 
         <div className={styles.authorProfileStats}>
           <span>Ciclos de Revisión</span>
+
           <strong>
             {
-              articles.filter((article) => article.status === "IN_REVIEW")
-                .length
+              articles.filter(
+                (article) => article.status === 'IN_REVIEW'
+              ).length
             }
           </strong>
         </div>
@@ -157,14 +221,19 @@ function AuthorDashboard() {
       </section>
 
       {loading && (
-        <p className={styles.authorDashboardMessage}>Cargando artículos...</p>
+        <p className={styles.authorDashboardMessage}>
+          Cargando artículos...
+        </p>
       )}
 
       {error && <p className={styles.authorDashboardError}>{error}</p>}
 
       <section className={styles.authorArticles}>
-        {filteredArticles.map((article) => (
-          <article className={styles.authorCard} key={article.id}>
+        {paginatedArticles.map((article) => (
+          <article
+            className={styles.authorCard}
+            key={article.id}
+          >
             <div className={styles.authorCardMeta}>
               <span
                 className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}
@@ -225,17 +294,28 @@ function AuthorDashboard() {
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
+
       {isEditorOpen && (
-        <div className="modal-overlay" onClick={() => setIsEditorOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setIsEditorOpen(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(event) => event.stopPropagation()}
+          >
             <button
               className="modal-close"
               type="button"
               onClick={() => setIsEditorOpen(false)}
+              aria-label="Cerrar editor"
             >
               ×
             </button>
-            <ArticleEditor onClose={() => setIsEditorOpen(false)} />
+
+            <ArticleEditor
+              onClose={() => setIsEditorOpen(false)}
+            />
           </div>
         </div>
       )}
@@ -243,4 +323,4 @@ function AuthorDashboard() {
   );
 }
 
-export default AuthorDashboard;
+export default AuthorDashboard
