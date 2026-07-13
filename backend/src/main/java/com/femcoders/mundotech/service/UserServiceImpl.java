@@ -2,7 +2,6 @@ package com.femcoders.mundotech.service;
 
 import com.femcoders.mundotech.entity.Role;
 import com.femcoders.mundotech.entity.User;
-import com.femcoders.mundotech.repository.RoleRepository;
 import com.femcoders.mundotech.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     @Override
     public List<User> getAllUsers() {
@@ -34,14 +33,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+
         Set<Role> resolvedRoles = new HashSet<>();
+
         for (Role role : user.getRoles()) {
-            Role existingRole = roleRepository.findById(role.getId())
-                    .orElseThrow(() -> new ResponseStatusException(
-                            HttpStatus.NOT_FOUND, "Role not found with id: " + role.getId()));
+            Role existingRole = roleService.getRoleById(role.getId());
             resolvedRoles.add(existingRole);
         }
+
         user.setRoles(resolvedRoles);
+
         return userRepository.save(user);
     }
 
