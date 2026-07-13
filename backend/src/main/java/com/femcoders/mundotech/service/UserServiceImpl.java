@@ -4,8 +4,13 @@ import com.femcoders.mundotech.entity.Role;
 import com.femcoders.mundotech.entity.User;
 import com.femcoders.mundotech.repository.RoleRepository;
 import com.femcoders.mundotech.repository.UserRepository;
+import com.femcoders.mundotech.security.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,10 +20,11 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -49,5 +55,18 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Integer id) {
         User user = getUserById(id);
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .map(user -> new UserDetail(user))
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return loadUserByEmail(email);
     }
 }
