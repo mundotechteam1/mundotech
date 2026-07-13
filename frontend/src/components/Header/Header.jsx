@@ -34,15 +34,13 @@ function Header() {
   } DE ${fechaActual.getFullYear()}`;
 
   return (
-    <header className={styles.header}>
-      <div className={styles["user-icon"]}>
-        <a href="/login" aria-label="Iniciar sesión">
-          <FaRegCircleUser />
-        </a>
+    <header className="header">
+      <div className="user-icon">
+        <FaRegCircleUser />
       </div>
 
-      <div className={styles.newspaper}>
-        <div className={styles.line}></div>
+      <div className="newspaper">
+        <div className="line"></div>
 
         <h1>
           <a href="/" aria-label="Iniciar sesión">
