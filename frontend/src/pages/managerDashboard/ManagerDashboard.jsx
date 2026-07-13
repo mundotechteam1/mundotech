@@ -5,6 +5,8 @@ function ManagerDashboard() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   useEffect(() => {
     loadArticles()
@@ -56,6 +58,26 @@ function ManagerDashboard() {
     (article) => article.status === 'IN_REVIEW'
   )
 
+  const totalPages = Math.ceil(articlesInReview.length / itemsPerPage)
+  const safePage = Math.min(currentPage, Math.max(totalPages, 1))
+  const paginatedArticles = articlesInReview.slice(
+    (safePage - 1) * itemsPerPage,
+    safePage * itemsPerPage,
+  )
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page)
+    }
+  }
+
+  const pageNumbers = []
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i)
+  }
+
+  const itemsPerPageOptions = [10, 20, 50]
+
   const formatDate = (dateStr) => {
     if (!dateStr) return '27 oct 2026'
     const d = new Date(dateStr)
@@ -91,7 +113,7 @@ function ManagerDashboard() {
       )}
 
       <section className={styles.managerDashboardArticles}>
-        {articlesInReview.map((article) => (
+        {paginatedArticles.map((article) => (
           <article className={styles.managerArticle} key={article.id}>
             <p className={styles.managerArticleCategory}>
               {article.author?.name || 'Editorial'}
@@ -112,6 +134,54 @@ function ManagerDashboard() {
             </div>
           </article>
         ))}
+      </section>
+
+      <section className={styles.managerPagination}>
+        <button
+          type="button"
+          disabled={safePage === 1}
+          onClick={() => goToPage(safePage - 1)}
+        >
+          Anterior
+        </button>
+
+        {pageNumbers.map((num) => (
+          <button
+            key={num}
+            type="button"
+            className={num === safePage ? styles.active : ''}
+            onClick={() => goToPage(num)}
+          >
+            {num}
+          </button>
+        ))}
+
+        <button
+          type="button"
+          disabled={safePage === totalPages}
+          onClick={() => goToPage(safePage + 1)}
+        >
+          Siguiente
+        </button>
+
+        <span className={styles.paginationInfo}>
+          {articlesInReview.length} artículos &mdash;
+        </span>
+
+        <select
+          className={styles.perPageSelect}
+          value={itemsPerPage}
+          onChange={(e) => {
+            setItemsPerPage(Number(e.target.value))
+            setCurrentPage(1)
+          }}
+        >
+          {itemsPerPageOptions.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt} por pág.
+            </option>
+          ))}
+        </select>
       </section>
     </div>
   )

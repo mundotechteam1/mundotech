@@ -7,6 +7,8 @@ function AuthorDashboard() {
   const [filter, setFilter] = useState("ALL");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
@@ -57,10 +59,41 @@ function AuthorDashboard() {
     return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
   };
 
+  const statusClassMap = {
+    DRAFT: "statusDraft",
+    IN_REVIEW: "statusInReview",
+    PUBLISHED: "statusPublished",
+  };
+
   const filteredArticles =
     filter === "ALL"
       ? articles
       : articles.filter((article) => article.status === filter);
+
+  const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
+  const safePage = Math.min(currentPage, Math.max(totalPages, 1));
+  const paginatedArticles = filteredArticles.slice(
+    (safePage - 1) * itemsPerPage,
+    safePage * itemsPerPage,
+  );
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  const itemsPerPageOptions = [10, 20, 50];
 
   return (
     <main className={styles.authorDashboard}>
@@ -95,6 +128,7 @@ function AuthorDashboard() {
 
         <div className={styles.authorProfileStats}>
           <span>Total Publicados</span>
+
           <strong>
             {
               articles.filter((article) => article.status === "PUBLISHED")
@@ -105,6 +139,7 @@ function AuthorDashboard() {
 
         <div className={styles.authorProfileStats}>
           <span>Ciclos de Revisión</span>
+
           <strong>
             {
               articles.filter((article) => article.status === "IN_REVIEW")
@@ -157,11 +192,11 @@ function AuthorDashboard() {
       {error && <p className={styles.authorDashboardError}>{error}</p>}
 
       <section className={styles.authorArticles}>
-        {filteredArticles.map((article) => (
+        {paginatedArticles.map((article) => (
           <article className={styles.authorCard} key={article.id}>
             <div className={styles.authorCardMeta}>
               <span
-                className={`${styles.authorCardStatus} ${styles[`status-${article.status}`]}`}
+                className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}
               >
                 {statusLabels[article.status] || article.status}
               </span>
@@ -219,26 +254,30 @@ function AuthorDashboard() {
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
+
       {isEditorOpen && (
         <div
-          className={styles.modaloverlay}
+          className={styles.modalOverlay}
           onClick={() => setIsEditorOpen(false)}
         >
           <div
             className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           >
             <button
               className={styles.modalClose}
+              type="button"
               onClick={() => setIsEditorOpen(false)}
+              aria-label="Cerrar editor"
             >
               ×
             </button>
+
             <ArticleEditor onClose={() => setIsEditorOpen(false)} />
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 
