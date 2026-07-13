@@ -4,37 +4,36 @@
   max-width: v.$max-content-width;
   margin: 1rem auto;
   padding: v.$space-lg v.$space-md;
-  padding: 4px;
   background: v.$color-bg;
- 
 
-  &--state {
+  &-state {
     display: flex;
     justify-content: center;
     padding: v.$space-xl v.$space-md;
   }
 
-  &__loading,
-  &__empty,
-  &__error {
+  &-loading,
+  &-empty,
+  &-error {
     font-family: v.$font-body;
     font-size: 0.95rem;
     color: v.$color-text-muted;
     text-align: center;
   }
 
-  &__error {
+  &-error {
     color: #b3261e;
   }
 
-  &__footer {
+  &-footer {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
     margin-top: v.$space-lg;
   }
 
-  &__load-more {
-    margin-left: 1rem;
+  &-load-more {
     font-family: v.$font-body;
     font-size: 0.8rem;
     font-weight: 600;

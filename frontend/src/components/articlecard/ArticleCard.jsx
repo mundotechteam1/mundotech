@@ -1,4 +1,4 @@
-import "./ArticleCard.module.scss";
+import styles from "./ArticleCard.module.scss";
 
 /**
  * Tarjeta de artículo individual.
@@ -14,48 +14,34 @@ import "./ArticleCard.module.scss";
  *   excerpt: string,
  * }
  */
-function ArticleCard({ article, isLast }) {
+function ArticleCard({ article, isLast = false }) {
   const { image, imageAlt, category, date, author, title, excerpt } = article;
 
-  return (
-    <article className={`article-card${isLast ? " article-card--last" : ""}`}>
-      {category && <p className="article-card__eyebrow">{category}</p>}
+  const cardClassName = `${styles.articleCard}${
+    isLast ? ` ${styles.articleCardLast}` : ""
+  }`;
 
-      <div className={styles['article-card__media']}>
+  return (
+    <article className={cardClassName}>
+      {category && <p className={styles.articleCardEyebrow}>{category}</p>}
+
+      <div className={styles.articleCardMedia}>
         <img
-          className={styles['article-card__image']}
+          className={styles.articleCardImage}
           src={image}
           alt={imageAlt || title}
           loading="lazy"
         />
-        <div className={styles['article-card__meta']}>
-          <span className={styles['article-card__date']}>{date}</span>
-          <span className={styles['article-card__author']}>Por {author}</span>
+        <div className={styles.articleCardMeta}>
+          <span className={styles.articleCardDate}>{date}</span>
+          <span className={styles.articleCardAuthor}>Por {author}</span>
         </div>
       </div>
 
-      <h2 className={styles['article-card__title']}>{title}</h2>
-      <p className={styles['article-card__excerpt']}>{excerpt}</p>
+      <h2 className={styles.articleCardTitle}>{title}</h2>
+      <p className={styles.articleCardExcerpt}>{excerpt}</p>
     </article>
   );
 }
 
-/*ArticleCard.propTypes = {
-  article: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    image: PropTypes.string.isRequired,
-    imageAlt: PropTypes.string,
-    category: PropTypes.string,
-    date: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    excerpt: PropTypes.string.isRequired,
-  }).isRequired,
-  isLast: PropTypes.bool,
-};
-
-ArticleCard.defaultProps = {
-  isLast: false,
-};
-*/
 export default ArticleCard;

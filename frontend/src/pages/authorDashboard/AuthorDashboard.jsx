@@ -277,7 +277,7 @@ function AuthorDashboard() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }
 

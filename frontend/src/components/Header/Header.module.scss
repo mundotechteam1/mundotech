@@ -7,15 +7,26 @@
   position: relative;
 }
 
-.user-icon {
+.userIcon {
   position: absolute;
-  top: 0.4rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 2rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   svg {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: v.$color-text;
     cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -125,10 +136,7 @@ h1 {
 
   
 
-  .line {
-    width: 90%;
-    height: 4px;
-  }
+  
 
   .bottom {
     p {
