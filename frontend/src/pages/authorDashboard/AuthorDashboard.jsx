@@ -257,18 +257,16 @@ function AuthorDashboard() {
 
       {isEditorOpen && (
         <div
-          className={styles.modalOverlay}
+          className={styles.modaloverlay}
           onClick={() => setIsEditorOpen(false)}
         >
           <div
             className={styles.modalContent}
-            onClick={(event) => event.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               className={styles.modalClose}
-              type="button"
               onClick={() => setIsEditorOpen(false)}
-              aria-label="Cerrar editor"
             >
               ×
             </button>
