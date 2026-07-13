@@ -9,12 +9,12 @@ import styles from "./ArticleCard.module.scss";
     id: string | number,
     image: string,
     imageAlt: string,
-    category: string,
     date: string,
     author: string,
     title: string,
-    excerpt: string,
-    }*/
+    status: string,
+    }
+    */
 
 
 function ArticleCard({ article, isLast = false }) {

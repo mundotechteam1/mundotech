@@ -8,7 +8,7 @@ function ArticleList({
   onLoadMore = () => {},
   hasMore = false,
 }) {
-  const stateClassName = `${styles.articleList} ${styles.articleListState}`;
+  const stateClassName = styles.articleList;
 
   if (error && articles.length === 0) {
     return (
@@ -23,7 +23,9 @@ function ArticleList({
   if (isLoading && articles.length === 0) {
     return (
       <section className={stateClassName}>
-        <p className={styles.articleListLoading}>Cargando artículos…</p>
+        <p className={styles.articleListLoading}>
+          Cargando artículos…
+        </p>
       </section>
     );
   }
@@ -52,10 +54,10 @@ function ArticleList({
         <div className={styles.articleListFooter}>
           {error && (
             <p className={styles.articleListError}>
-              No se han podido cargar más artículos. Inténtalo de nuevo más
-              tarde.
+              No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
             </p>
           )}
+
           <button
             type="button"
             className={styles.articleListLoadMore}

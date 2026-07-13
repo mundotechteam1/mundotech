@@ -1,7 +1,7 @@
 package com.femcoders.mundotech.service;
 
 import com.femcoders.mundotech.entity.Article;
-import com.femcoders.mundotech.entity.ArticleStatus;
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
