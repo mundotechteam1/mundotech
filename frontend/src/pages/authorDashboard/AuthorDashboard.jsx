@@ -254,27 +254,6 @@ function AuthorDashboard() {
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
-
-      {isEditorOpen && (
-        <div
-          className={styles.modaloverlay}
-          onClick={() => setIsEditorOpen(false)}
-        >
-          <div
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className={styles.modalClose}
-              onClick={() => setIsEditorOpen(false)}
-            >
-              ×
-            </button>
-
-            <ArticleEditor onClose={() => setIsEditorOpen(false)} />
-          </div>
-        </div>
-      )}
     </main>
   );
 }

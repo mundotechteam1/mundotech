@@ -245,4 +245,40 @@
       font-size: 1.75rem;
     }
   }
+  /* ---------- MODAL ---------- */
+
+  .modaloverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 1000;
+    padding: 40px 20px;
+    overflow-y: auto;
+  }
+
+  .modalContent {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    background-color: v.$color-white;
+    border: 1px solid v.$color-text;
+    padding: 24px;
+  }
+
+  .modalClose {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid v.$color-text;
+    background-color: transparent;
+    color: v.$color-text;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
 }
