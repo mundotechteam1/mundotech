@@ -254,6 +254,10 @@ function AuthorDashboard() {
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
+      <ArticleEditor
+        isEditorOpen={isEditorOpen}
+        setIsEditorOpen={setIsEditorOpen}
+      />
     </main>
   );
 }
