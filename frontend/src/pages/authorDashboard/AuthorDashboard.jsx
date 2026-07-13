@@ -96,7 +96,7 @@ function AuthorDashboard() {
   const itemsPerPageOptions = [10, 20, 50];
 
   return (
-    <div className={styles.authorDashboard}>
+    <main className={styles.authorDashboard}>
       <section className={styles.authorDashboardTitle}>
         <div>
           <p className={styles.authorDashboardSubtitle}>

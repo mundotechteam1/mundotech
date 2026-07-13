@@ -1,4 +1,4 @@
-@use '../../styles/_variables' as v;
+@use "../../styles/_variables" as v;
 
 .authorDashboard {
   width: 100%;
@@ -9,6 +9,7 @@
   background-color: v.$color-bg;
   font-family: v.$font-heading-primary;
   text-align: left;
+}
 
   &Title {
     display: flex;
@@ -38,6 +39,7 @@
     line-height: 0.95;
     letter-spacing: -1px;
   }
+}
 
   &CreateButton {
     border: none;
@@ -111,6 +113,7 @@
     font-size: 15px;
     font-weight: v.$weight-regular;
   }
+}
 
   &Stats {
     display: flex;
@@ -118,12 +121,32 @@
     gap: 4px;
     color: v.$color-text;
     font-family: v.$font-heading-secondary;
-    font-size: 8px;
-    line-height: 1.5;
+    font-size: 7px;
+  }
+}
 
-    strong {
-      color: v.$color-text;
-    }
+.authorProfileAvatar {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  font-family: v.$font-heading-primary;
+  font-size: 15px;
+  font-weight: v.$weight-bold;
+}
+
+.authorProfileStats {
+  display: flex;
+  justify-content: space-between;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 8px;
+  line-height: 1.5;
+
+  strong {
+    color: v.$color-text;
   }
 }
 
@@ -217,6 +240,7 @@
     line-height: 1;
     letter-spacing: -0.6px;
   }
+}
 
   &Content {
     margin: 0 0 10px;
@@ -339,7 +363,6 @@
 
   .authorProfile {
     padding: 14px;
-  }
 
   .authorProfileLabel {
     font-size: 8px;
@@ -362,7 +385,6 @@
 
   .authorCard {
     padding: 14px;
-  }
 
   .authorCard h2 {
     font-size: 26px;
@@ -398,7 +420,6 @@
 
   .authorProfile {
     padding: 18px;
-  }
 
   .authorProfileLabel {
     font-size: 9px;
@@ -427,7 +448,6 @@
 
   .authorCard {
     padding: 18px;
-  }
 
   .authorCard h2 {
     font-size: 30px;
