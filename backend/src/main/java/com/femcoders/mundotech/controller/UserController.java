@@ -1,6 +1,8 @@
 package com.femcoders.mundotech.controller;
 
+import com.femcoders.mundotech.entity.Role;
 import com.femcoders.mundotech.entity.User;
+import com.femcoders.mundotech.service.RoleService;
 import com.femcoders.mundotech.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -16,6 +19,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
@@ -28,10 +32,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(
+            @Valid @RequestBody User user,
+            @RequestParam Integer roleId) {
+
+        Role role = roleService.getRoleById(roleId);
+        user.setRoles(Set.of(role));
+
         User savedUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

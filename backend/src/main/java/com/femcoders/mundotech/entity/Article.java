@@ -1,5 +1,6 @@
 package com.femcoders.mundotech.entity;
 
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

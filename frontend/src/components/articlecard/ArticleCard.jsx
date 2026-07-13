@@ -1,19 +1,21 @@
 import styles from "./ArticleCard.module.scss";
 
 /**
- * Tarjeta de artículo individual.
- * Espera un objeto `article` normalizado:
- * {
- *   id: string | number,
- *   image: string,
- *   imageAlt: string,
- *   category: string,
- *   date: string,
- *   author: string,
- *   title: string,
- *   excerpt: string,
- * }
- */
+ 
+
+    Tarjeta de artículo individual.
+    Espera un objeto article normalizado:
+    {
+    id: string | number,
+    image: string,
+    imageAlt: string,
+    date: string,
+    author: string,
+    title: string,
+    status: string,
+    }
+    */
+
 
 function ArticleCard({ article, isLast = false }) {
   const {

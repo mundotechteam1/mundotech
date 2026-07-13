@@ -149,4 +149,26 @@ export default function ArticleEditor({ onClose }) {
       </form>
     </div>
   );
+  {
+    isEditorOpen && (
+      <div
+        className={styles.modaloverlay}
+        onClick={() => setIsEditorOpen(false)}
+      >
+        <div
+          className={styles.modalContent}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            className={styles.modalClose}
+            onClick={() => setIsEditorOpen(false)}
+          >
+            ×
+          </button>
+
+          <ArticleEditor onClose={() => setIsEditorOpen(false)} />
+        </div>
+      </div>
+    );
+  }
 }

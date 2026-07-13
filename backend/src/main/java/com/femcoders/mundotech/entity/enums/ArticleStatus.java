@@ -1,4 +1,4 @@
-package com.femcoders.mundotech.entity;
+package com.femcoders.mundotech.entity.enums;
 
 public enum ArticleStatus {
     DRAFT,
