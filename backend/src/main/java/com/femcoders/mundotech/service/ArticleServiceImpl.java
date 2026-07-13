@@ -1,10 +1,9 @@
 package com.femcoders.mundotech.service;
 
 import com.femcoders.mundotech.entity.Article;
-import com.femcoders.mundotech.entity.ArticleStatus;
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.entity.User;
 import com.femcoders.mundotech.repository.ArticleRepository;
-import com.femcoders.mundotech.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,21 +13,18 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, UserRepository userRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, UserService userService) {
         this.articleRepository = articleRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
     public Article createArticle(Article article, Integer authorId) {
-        User author = userRepository.findById(authorId)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + authorId));
-
+        User author = userService.getUserById(authorId);
         article.setAuthor(author);
         article.setStatus(ArticleStatus.DRAFT);
-
         return articleRepository.save(article);
     }
 
@@ -99,11 +95,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Article approveArticle(Integer articleId, Integer managerId) {
         Article article = getArticleById(articleId);
 
-        User manager = userRepository.findById(managerId)
-                .orElseThrow(() -> new RuntimeException("Manager not found with id: " + managerId));
+        User manager = userService.getUserById(managerId);
 
         boolean isManager = manager.getRoles().stream()
-                .anyMatch(role -> role.getName().equalsIgnoreCase("manager"));
+                .anyMatch(role -> role.getName().equalsIgnoreCase("MANAGER"));
 
         if (!isManager) {
             throw new RuntimeException("Only a manager can approve articles");

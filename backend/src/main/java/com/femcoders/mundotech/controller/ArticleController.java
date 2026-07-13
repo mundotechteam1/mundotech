@@ -1,6 +1,6 @@
 package com.femcoders.mundotech.controller;
 import com.femcoders.mundotech.entity.Article;
-import com.femcoders.mundotech.entity.ArticleStatus;
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.service.ArticleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
