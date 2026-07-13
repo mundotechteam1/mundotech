@@ -10,8 +10,8 @@ import "./ArticleList.module.scss";
 function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
   if (error) {
     return (
-      <section className="article-list article-list--state">
-        <p className="article-list__error">
+      <section className={styles['article-list'] + ' ' + styles['article-list--state']}>
+        <p className={styles['article-list__error']}>
           No se han podido cargar los artículos. Inténtalo de nuevo más tarde.
         </p>
       </section>
@@ -20,8 +20,8 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
 
   if (isLoading && articles.length === 0) {
     return (
-      <section className="article-list article-list--state">
-        <p className="article-list__loading">Cargando artículos…</p>
+      <section className={styles['article-list'] + ' ' + styles['article-list--state']}>
+        <p className={styles['article-list__loading']}>Cargando artículos…</p>
       </section>
     );
   }
@@ -37,7 +37,7 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
   }
 
   return (
-    <section className="article-list">
+    <section className={styles['article-list']}>
       {articles.map((article, index) => (
         <ArticleCard
           key={article.id}
@@ -47,10 +47,15 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
       ))}
 
       {hasMore && (
-        <div className="article-list__footer">
+        <div className={styles['article-list__footer']}>
+          {error && (
+            <p className={styles['article-list__error']}>
+              No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
+            </p>
+          )}  
           <button
             type="button"
-            className="article-list__load-more"
+            className={styles['article-list__load-more']}
             onClick={onLoadMore}
             disabled={isLoading}
           >
