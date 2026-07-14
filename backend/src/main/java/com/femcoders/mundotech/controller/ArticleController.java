@@ -1,5 +1,6 @@
 package com.femcoders.mundotech.controller;
-import com.femcoders.mundotech.entity.Article;
+import com.femcoders.mundotech.dto.request.ArticleRequestDTO;
+import com.femcoders.mundotech.dto.response.ArticleResponseDTO;
 import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.service.ArticleService;
 import jakarta.validation.Valid;
@@ -22,31 +23,30 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(
-            @Valid @RequestBody Article article) {
+    public ResponseEntity<ArticleResponseDTO> createArticle(
+            @Valid @RequestBody ArticleRequestDTO dto) {
 
-        Integer authorId = article.getAuthor().getId();
-        Article created = articleService.createArticle(article, authorId);
+        ArticleResponseDTO created = articleService.createArticle(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> getAllArticles() {
+    public ResponseEntity<List<ArticleResponseDTO>> getAllArticles() {
         return ResponseEntity.ok(articleService.getAllArticles());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable Integer id) {
+    public ResponseEntity<ArticleResponseDTO> getArticleById(@PathVariable Integer id) {
         return ResponseEntity.ok(articleService.getArticleById(id));
     }
 
     @GetMapping("/author/{authorId}")
-    public ResponseEntity<List<Article>> getArticlesByAuthorId(@PathVariable Integer authorId) {
+    public ResponseEntity<List<ArticleResponseDTO>> getArticlesByAuthorId(@PathVariable Integer authorId) {
         return ResponseEntity.ok(articleService.getArticlesByAuthorId(authorId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(
+    public ResponseEntity<ArticleResponseDTO> updateArticle(
             @PathVariable Integer id,
             @Valid @RequestBody Map<String, String> body,
             @RequestParam Integer authorId) {
@@ -54,7 +54,7 @@ public class ArticleController {
         String title = body.get("title");
         String content = body.get("content");
 
-        Article updated = articleService.updateArticle(id, authorId, title, content);
+        ArticleResponseDTO updated = articleService.updateArticle(id, authorId, title, content);
         return ResponseEntity.ok(updated);
     }
 
@@ -67,34 +67,24 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}/send-review")
-    public ResponseEntity<Article> sendForReview(
+    public ResponseEntity<ArticleResponseDTO> sendForReview(
             @PathVariable Integer id,
             @RequestParam Integer authorId) {
-        Article updated = articleService.sendForReview(id, authorId);
+        ArticleResponseDTO updated = articleService.sendForReview(id, authorId);
         return ResponseEntity.ok(updated);
     }
 
     @PutMapping("/{id}/approve")
-    public ResponseEntity<Article> approveArticle(
+    public ResponseEntity<ArticleResponseDTO> approveArticle(
             @PathVariable Integer id,
             @RequestParam Integer managerId) {
-        Article updated = articleService.approveArticle(id, managerId);
+        ArticleResponseDTO updated = articleService.approveArticle(id, managerId);
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/status/draft")
-    public ResponseEntity<List<Article>> getDraftArticles() {
-        return ResponseEntity.ok(articleService.getArticlesByStatus(ArticleStatus.DRAFT));
-    }
-
-    @GetMapping("/status/in-review")
-    public ResponseEntity<List<Article>> getInReviewArticles() {
-        return ResponseEntity.ok(articleService.getArticlesByStatus(ArticleStatus.IN_REVIEW));
-    }
-
-    @GetMapping("/status/published")
-    public ResponseEntity<List<Article>> getPublishedArticles() {
-        return ResponseEntity.ok(articleService.getArticlesByStatus(ArticleStatus.PUBLISHED));
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<ArticleResponseDTO>> getArticlesByStatus(@PathVariable ArticleStatus status) {
+        return ResponseEntity.ok(articleService.getArticlesByStatus(status));
     }
 }
 
