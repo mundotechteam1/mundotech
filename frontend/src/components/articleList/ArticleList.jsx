@@ -1,13 +1,17 @@
 import ArticleCard from "../articlecard/ArticleCard";
+import { useNavigate } from "react-router-dom";
 import styles from "./ArticleList.module.scss";
 
 function ArticleList({
   articles,
+  totalArticles = 0,
   isLoading = false,
   error = null,
   onLoadMore = () => {},
   hasMore = false,
 }) {
+  const navigate = useNavigate();
+
   const stateClassName = styles.articleList;
 
   if (error && articles.length === 0) {
@@ -50,6 +54,20 @@ function ArticleList({
         />
       ))}
 
+      {/* Botón para ir a la lista completa */}
+      {totalArticles > articles.length && (
+        <div className={styles.articleListFooter}>
+          <button
+            type="button"
+            className={styles.articleListLoadMore}
+            onClick={() => navigate("/articles")}
+          >
+            Ver todos los artículos
+          </button>
+        </div>
+      )}
+
+      {/* Botón para cargar más si usamos paginación */}
       {hasMore && (
         <div className={styles.articleListFooter}>
           {error && (
@@ -64,7 +82,7 @@ function ArticleList({
             onClick={onLoadMore}
             disabled={isLoading}
           >
-            {isLoading ? "Cargando…" : "Ver más artículos"}
+            {isLoading ? "Cargando…" : "Cargar más"}
           </button>
         </div>
       )}

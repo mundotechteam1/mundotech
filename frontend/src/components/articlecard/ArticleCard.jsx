@@ -1,4 +1,5 @@
 import styles from "./ArticleCard.module.scss";
+import articlePlaceholder from "../../assets/office_bw_illustration.png";
 
 function ArticleCard({ article, isLast = false }) {
   const {
@@ -15,16 +16,25 @@ function ArticleCard({ article, isLast = false }) {
   return (
     <article className={isLast ? styles.articleCardLast : styles.articleCard}>
 
-      <div className={styles.articleCardMeta}>
-        <span className={styles.articleCardDate}>
-          {formattedDate
-            ? new Date(formattedDate).toLocaleDateString("es-ES")
-            : ""}
-        </span>
+      <div className={styles.articleCardMedia}>
+        <img
+          className={styles.articleCardImage}
+          src={articlePlaceholder}
+          alt={title}
+          loading="lazy"
+        />
 
-        <span className={styles.articleCardAuthor}>
-          Por {author?.name}
-        </span>
+        <div className={styles.articleCardMeta}>
+          <span className={styles.articleCardDate}>
+            {formattedDate
+              ? new Date(formattedDate).toLocaleDateString("es-ES")
+              : ""}
+          </span>
+
+          <span className={styles.articleCardAuthor}>
+            Por {author?.name}
+          </span>
+        </div>
       </div>
 
       <h2 className={styles.articleCardTitle}>
