@@ -36,4 +36,4 @@ build/
 
 ### Spring Boot config (local only) ###
 backend/src/main/resources/application.properties
-backend/src/main/resources/application.yml
+backend/src/main/resources/application.yml.DS_Store
