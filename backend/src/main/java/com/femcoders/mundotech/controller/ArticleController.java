@@ -1,6 +1,6 @@
 package com.femcoders.mundotech.controller;
 import com.femcoders.mundotech.entity.Article;
-import com.femcoders.mundotech.entity.ArticleStatus;
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.service.ArticleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/articles")
+//@CrossOrigin(origin = "http://localhost:5173")
 public class ArticleController {
 
     private final ArticleService articleService;
