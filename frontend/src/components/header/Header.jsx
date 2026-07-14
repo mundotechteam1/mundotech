@@ -1,22 +1,38 @@
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { FaRegCircleUser } from "react-icons/fa6";
 
-function Header() {
-  const getUser = () => {
-    try {
-      const stored = localStorage.getItem("user");
-      return stored ? JSON.parse(stored) : null;
-    } catch {
+function getUserFromToken() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+
+    const now = Date.now() / 1000;
+    if (payload.exp <= now) {
+      localStorage.removeItem("token");
       return null;
     }
-  };
 
-  const user = getUser();
+    return { email: payload.sub, roles: payload.roles || [] };
+  } catch {
+    return null;
+  }
+}
+
+function Header() {
+  const location = useLocation();
+  const [user, setUser] = useState(getUserFromToken());
+
+  useEffect(() => {
+    setUser(getUserFromToken());
+  }, [location]);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("lastEmail");
-    localStorage.removeItem("lastPassword");
+    localStorage.removeItem("token");
+    setUser(null);
     window.location.href = "/login";
   };
 
@@ -56,7 +72,7 @@ function Header() {
       <div className={styles.userArea}>
         {user ? (
           <>
-            <span className={styles.userName}>{user.name}</span>
+            <span className={styles.userName}>{user.email}</span>
             <button className={styles.logoutBtn} onClick={handleLogout}>
               Cerrar sesión
             </button>
