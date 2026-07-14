@@ -9,6 +9,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
 
 @Configuration
 public class SpringConfig {
@@ -17,6 +24,20 @@ public class SpringConfig {
 
     @Value("${JWT_SECRET}")
     private String secret;
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     public SpringConfig(CustomAuthenticationManager customAuthenticationManager) {
         this.customAuthenticationManager = customAuthenticationManager;
@@ -29,19 +50,14 @@ public class SpringConfig {
         jwtAuthentication.setFilterProcessesUrl("/login");
 
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 .authorizeHttpRequests(request -> request
-                        // H2 console
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/h2/**").permitAll()
-
-                        // Login debe ser público
                         .requestMatchers("/login").permitAll()
-
-                        // Crear usuario debe ser público
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
-
-                        // Reglas de artículos
                         .requestMatchers(HttpMethod.POST, "/api/v1/articles").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/author/**").hasAnyRole("AUTHOR", "MANAGER")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/published").permitAll()
@@ -51,15 +67,14 @@ public class SpringConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/**").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/send-review").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/approve").hasRole("MANAGER")
-
-                        // Todo lo demás requiere autenticación
                         .anyRequest().authenticated()
                 )
-                .authenticationManager(customAuthenticationManager)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                .addFilter(jwtAuthentication)
-                .addFilterAfter(new JWTAuthorization(secret), JWTAuthentication.class)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
+
+                .addFilterAfter(new JWTAuthorization(secret), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }

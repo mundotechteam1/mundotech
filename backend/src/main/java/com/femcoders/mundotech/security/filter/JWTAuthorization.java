@@ -29,18 +29,30 @@ public class JWTAuthorization extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
+        if (path.equals("/login") ||
+                path.startsWith("/api/v1/users") ||
+                path.startsWith("/h2") ||
+                path.equals("/") ||
+                path.equals("/error") ||
+                path.equals("/favicon.ico") ||
+                path.startsWith("/actuator")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader("Authorization");
 
-        // Si no hay token, continuar sin autenticar
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return; // ⭐ IMPORTANTE
+            return;
         }
 
         try {
             String token = header.replace("Bearer ", "");
 
-            // Verificar token con el algoritmo correcto
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret))
                     .build()
                     .verify(token);
@@ -59,7 +71,6 @@ public class JWTAuthorization extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (Exception e) {
-            // Token inválido → no autenticamos, pero dejamos continuar
             SecurityContextHolder.clearContext();
         }
 
