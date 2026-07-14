@@ -18,6 +18,9 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "image")
+    private String image;
+
     @NotBlank(message = "Title is required")
     @Column(nullable = false)
     private String title;
