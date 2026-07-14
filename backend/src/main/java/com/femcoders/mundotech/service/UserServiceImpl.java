@@ -1,6 +1,8 @@
 package com.femcoders.mundotech.service;
 
+import com.femcoders.mundotech.dto.request.LoginRequestDTO;
 import com.femcoders.mundotech.dto.request.UserRequestDTO;
+import com.femcoders.mundotech.dto.response.LoginResponseDTO;
 import com.femcoders.mundotech.dto.response.UserResponseDTO;
 import com.femcoders.mundotech.entity.Role;
 import com.femcoders.mundotech.entity.User;
@@ -13,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,5 +59,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO dto) {
+        User user = userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password"));
+
+        if (!user.getPassword().equals(dto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+        }
+
+        Set<String> roleNames = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
+
+        return new LoginResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                roleNames
+        );
     }
 }

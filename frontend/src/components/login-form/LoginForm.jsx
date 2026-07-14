@@ -1,14 +1,28 @@
-import styles from "./LoginForm.module.scss";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import styles from "./LoginForm.module.scss";
 
 function LoginForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
-  
+
+  const [loginError, setLoginError] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("lastEmail");
+    const savedPassword = localStorage.getItem("lastPassword");
+    if (savedEmail) setValue("email", savedEmail);
+    if (savedPassword) setValue("password", savedPassword);
+  }, [setValue]);
+
   const onSubmit = async (data) => {
+    setLoginError("");
     try {
       const res = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
@@ -16,11 +30,24 @@ function LoginForm() {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("Invalid credentials");
+      if (!res.ok) {
+        const errorMsg = res.status === 401
+          ? "Invalid email or password"
+          : "An unexpected error occurred. Please try again.";
+        throw new Error(errorMsg);
+      }
 
-      // manejar login correcto
+      const userData = await res.json();
+      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("lastEmail", data.email);
+      localStorage.setItem("lastPassword", data.password);
+
+      const isManager = userData.roles?.some(
+        (role) => role === "ROLE_MANAGER" || role === "MANAGER"
+      );
+      navigate(isManager ? "/dashboard-manager" : "/dashboard-author");
     } catch (err) {
-      // aquí puedes setear un error global si quieres
+      setLoginError(err.message);
     }
   };
 
@@ -30,16 +57,22 @@ function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
-      <label htmlFor="email">Electronic Mail Address</label>
+      {loginError && (
+        <p className={styles.formErrorGlobal} role="alert">
+          {loginError}
+        </p>
+      )}
+
+      <label htmlFor="email">Correo Electrónico</label>
       <input
         id="email"
         type="email"
         placeholder="editor@mundotech.pub"
         {...register("email", {
-          required: "Email is required",
+          required: "El correo es obligatorio",
           pattern: {
             value: /^\S+@\S+$/i,
-            message: "Invalid email format",
+            message: "Formato de correo inválido",
           },
         })}
       />
@@ -49,14 +82,14 @@ function LoginForm() {
         </p>
       )}
 
-      <label htmlFor="password">Security Cipher</label>
+      <label htmlFor="password">Contraseña</label>
       <input
         id="password"
         type="password"
         placeholder="••••••••"
         autoComplete="current-password"
         {...register("password", {
-          required: "Password is required",
+          required: "La contraseña es obligatoria",
         })}
       />
       {errors.password && (
@@ -66,12 +99,8 @@ function LoginForm() {
       )}
 
       <button className={styles.loginBtn} type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Loading…" : "Login"}
+        {isSubmitting ? "Cargando…" : "Iniciar Sesión"}
       </button>
-
-      {/* <a className="forgot-link" href="/forgot-password"> 
-        Forgotten passcode?
-      </a>*/}
     </form>
   );
 }

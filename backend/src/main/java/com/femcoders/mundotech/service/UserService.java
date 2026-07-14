@@ -1,6 +1,8 @@
 package com.femcoders.mundotech.service;
 
+import com.femcoders.mundotech.dto.request.LoginRequestDTO;
 import com.femcoders.mundotech.dto.request.UserRequestDTO;
+import com.femcoders.mundotech.dto.response.LoginResponseDTO;
 import com.femcoders.mundotech.dto.response.UserResponseDTO;
 import com.femcoders.mundotech.entity.User;
 import java.util.List;
@@ -11,4 +13,5 @@ public interface UserService {
     User getUserEntityById(Integer id);
     UserResponseDTO createUser(UserRequestDTO dto, Integer roleId);
     void deleteUser(Integer id);
+    LoginResponseDTO login(LoginRequestDTO dto);
 }

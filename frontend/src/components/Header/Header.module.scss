@@ -30,6 +30,56 @@
   }
 }
 
+.userArea {
+  position: absolute;
+  top: 0.5rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loginLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-text;
+  text-decoration: none;
+
+  svg {
+    font-size: 1.4rem;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.userName {
+  font-family: v.$font-heading-secondary;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$color-text;
+}
+
+.logoutBtn {
+  font-family: v.$font-heading-secondary;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$color-form-security;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .newspaper {
   width: min(900px, 90%);
   margin: 0 auto;
@@ -94,13 +144,13 @@ h1 {
     padding: 3.5rem 0;
   }
 
-  .user-icon {
+  .userArea {
     top: 0.8rem;
     right: 1.5rem;
+  }
 
-    svg {
-      font-size: 1.7rem;
-    }
+  .loginLink svg {
+    font-size: 1.7rem;
   }
 
   .line {
@@ -125,13 +175,13 @@ h1 {
     padding: 5rem 0;
   }
 
-  .user-icon {
+  .userArea {
     top: 2rem;
     right: 3rem;
+  }
 
-    svg {
-      font-size: 2rem;
-    }
+  .loginLink svg {
+    font-size: 2rem;
   }
 
   

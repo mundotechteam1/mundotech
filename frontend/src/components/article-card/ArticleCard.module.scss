@@ -1,0 +1,254 @@
+@use '../../styles/_variables' as v;
+
+/* ---- author variant ---- */
+
+.articleCard {
+  border: 1px solid v.$color-text;
+  padding: 10px;
+  background-color: transparent;
+
+  &Meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+  }
+
+  &Status {
+    padding: 3px 5px;
+    border: 1px solid v.$color-text;
+    color: v.$color-text;
+    background-color: transparent;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    color: v.$color-text;
+    font-family: v.$font-heading-primary;
+    font-size: 22px;
+    font-weight: v.$weight-regular;
+    line-height: 1;
+    letter-spacing: -0.6px;
+  }
+
+  &Content {
+    margin: 0 0 10px;
+    color: v.$color-text;
+    font-family: v.$font-heading-secondary;
+    font-size: 9px;
+    line-height: 1.35;
+  }
+
+  &Actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    button {
+      height: 22px;
+      border: 1px solid v.$color-text;
+      font-family: v.$font-heading-secondary;
+      font-size: 7px;
+      font-weight: v.$weight-bold;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+  }
+}
+
+.statusDraft {
+  background-color: transparent;
+  color: v.$color-text;
+  border: 1px solid v.$color-text;
+  padding: 3px 5px;
+}
+
+.statusInReview,
+.statusPublished {
+  background-color: v.$color-text;
+  color: v.$color-white;
+  border: 1px solid v.$color-text;
+  padding: 3px 5px;
+}
+
+.primaryAction {
+  background-color: v.$color-text;
+  color: v.$color-white;
+  padding: 0 8px;
+}
+
+.secondaryAction {
+  background-color: transparent;
+  color: v.$color-text;
+  padding: 0 8px;
+}
+
+.iconAction {
+  width: 22px;
+  padding: 0;
+  background-color: transparent;
+  color: v.$color-text;
+
+  &.delete {
+    color: v.$color-error;
+  }
+}
+
+/* ---- manager variant ---- */
+
+.managerArticle {
+  padding: 0 0 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #a9a18f;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.managerCategory {
+  margin: 0 0 8px;
+  color: v.$color-error;
+  font-family: v.$font-heading-secondary;
+  font-size: 9px;
+  font-weight: v.$weight-bold;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.managerArticle h2 {
+  margin: 0 0 14px;
+  color: v.$color-text;
+  font-family: v.$font-heading-primary;
+  font-size: 25px;
+  font-weight: v.$weight-bold;
+  line-height: 1.05;
+  letter-spacing: -0.7px;
+}
+
+.managerMeta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 8px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+}
+
+.managerActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+
+  button {
+    font-family: v.$font-heading-secondary;
+    font-size: 9px;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  button:first-child {
+    border: none;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    padding: 7px 20px;
+  }
+
+  button:nth-child(2) {
+    border: none;
+    background-color: transparent;
+    color: v.$color-text;
+    padding: 0 0 0 20px;
+  }
+}
+
+.managerIconActions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* ---- responsive ---- */
+
+@media (min-width: 640px) {
+  .articleCard {
+    padding: 14px;
+  }
+
+  .articleCard h2 {
+    font-size: 26px;
+  }
+
+  .articleCardMeta,
+  .articleCardContent {
+    font-size: 8px;
+  }
+
+  .managerArticle h2 {
+    font-size: 30px;
+  }
+
+  .managerMeta,
+  .managerCategory {
+    font-size: 9px;
+  }
+
+  .managerActions button {
+    font-size: 10px;
+  }
+
+  .managerActions button:first-child {
+    padding: 8px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .articleCard {
+    padding: 18px;
+  }
+
+  .articleCard h2 {
+    font-size: 30px;
+  }
+
+  .articleCardMeta,
+  .articleCardContent {
+    font-size: 9px;
+  }
+
+  .articleCardActions button {
+    height: 26px;
+    font-size: 8px;
+  }
+
+  .managerArticle h2 {
+    font-size: 36px;
+  }
+
+  .managerMeta,
+  .managerCategory {
+    font-size: 10px;
+  }
+
+  .managerActions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .managerActions button {
+    font-size: 11px;
+  }
+
+  .managerActions button:first-child {
+    padding: 10px 32px;
+  }
+}

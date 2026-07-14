@@ -1,0 +1,105 @@
+@use '../../styles/_variables' as v;
+
+.authorProfile {
+  border: 1px solid v.$color-text;
+  padding: 10px;
+  margin-bottom: 18px;
+  background-color: transparent;
+
+  &Label {
+    margin: 0 0 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid v.$color-text;
+    color: v.$color-text;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+  }
+
+  &Content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+
+    p {
+      margin: 0;
+      font-family: v.$font-heading-secondary;
+      font-size: 7px;
+    }
+  }
+
+  &Avatar {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    font-family: v.$font-heading-primary;
+    font-size: 15px;
+    font-weight: v.$weight-bold;
+  }
+
+  h2 {
+    margin: 0;
+    color: v.$color-text;
+    font-family: v.$font-heading-primary;
+    font-size: 15px;
+    font-weight: v.$weight-regular;
+  }
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: v.$color-text;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+
+  strong {
+    color: v.$color-text;
+  }
+}
+
+@media (min-width: 640px) {
+  .authorProfile {
+    padding: 14px;
+  }
+
+  .authorProfileLabel {
+    font-size: 8px;
+  }
+
+  .authorProfile h2 {
+    font-size: 18px;
+  }
+
+  .authorProfileAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .authorProfile {
+    padding: 18px;
+  }
+
+  .authorProfileLabel {
+    font-size: 9px;
+  }
+
+  .authorProfile h2 {
+    font-size: 20px;
+  }
+
+  .authorProfileAvatar {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+}
