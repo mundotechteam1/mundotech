@@ -20,6 +20,7 @@ public class ArticleMapper {
         dto.setTitle(article.getTitle());
         dto.setContent(article.getContent());
         dto.setImage(article.getImage());
+        dto.setStatus(article.getStatus());
 
         dto.setAuthor(authorMapper.toSummary(article.getAuthor()));
 
