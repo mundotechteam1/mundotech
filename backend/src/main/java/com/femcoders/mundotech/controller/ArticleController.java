@@ -31,8 +31,6 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-
-
     @GetMapping
     public ResponseEntity<List<Article>> getAllArticles() {
         return ResponseEntity.ok(articleService.getAllArticles());

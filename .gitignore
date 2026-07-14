@@ -1,0 +1,62 @@
+# =========================
+# GLOBAL IGNORE (frontend + backend)
+# =========================
+
+HELP.md
+
+# ---- Java / Spring Boot ----
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+!backend/src/main/**/target/
+!backend/src/test/**/target/
+
+# STS
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
+backend/.env
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/nb-gradle/
+backend/build/
+!backend/src/main/**/build/
+!backend/src/test/**/build/
+
+# VS Code
+.vscode/
+
+# Spring Boot local config (solo backend)
+backend/src/main/resources/application.properties
+backend/src/main/resources/application.yml
+
+# ---- Node / Frontend ----
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env files (frontend)
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+frontend/.env.test.local
