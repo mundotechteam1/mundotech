@@ -1,5 +1,7 @@
 package com.femcoders.mundotech.security;
 
+import com.femcoders.mundotech.security.filter.JWTAuthentication;
+import com.femcoders.mundotech.security.filter.JWTAuthorization;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,10 +29,19 @@ public class SpringConfig {
         jwtAuthentication.setFilterProcessesUrl("/login");
 
         http
-                .csrf(crsf -> crsf.disable())
+                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 .authorizeHttpRequests(request -> request
+                        // H2 console
                         .requestMatchers("/h2/**").permitAll()
+
+                        // Login debe ser público
+                        .requestMatchers("/login").permitAll()
+
+                        // Crear usuario debe ser público
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
+
+                        // Reglas de artículos
                         .requestMatchers(HttpMethod.POST, "/api/v1/articles").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/author/**").hasAnyRole("AUTHOR", "MANAGER")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/published").permitAll()
@@ -40,11 +51,15 @@ public class SpringConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/**").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/send-review").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/approve").hasRole("MANAGER")
+
+                        // Todo lo demás requiere autenticación
                         .anyRequest().authenticated()
                 )
+                .authenticationManager(customAuthenticationManager)
+
                 .addFilter(jwtAuthentication)
                 .addFilterAfter(new JWTAuthorization(secret), JWTAuthentication.class)
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 }

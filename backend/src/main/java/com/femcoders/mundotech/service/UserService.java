@@ -14,4 +14,6 @@ public interface UserService {
     UserResponseDTO createUser(UserRequestDTO dto, Integer roleId);
     void deleteUser(Integer id);
     public UserDetails loadUserByEmail(String email);
+
+    UserDetails loadUserByUsername(String name);
 }
