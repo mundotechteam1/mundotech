@@ -1,4 +1,5 @@
 package com.femcoders.mundotech.controller;
+
 import com.femcoders.mundotech.dto.request.ArticleRequestDTO;
 import com.femcoders.mundotech.dto.response.ArticleResponseDTO;
 import com.femcoders.mundotech.entity.enums.ArticleStatus;
@@ -14,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api/v1/articles")
 @RequiredArgsConstructor
@@ -23,11 +23,32 @@ public class ArticleController {
     private final ArticleService articleService;
     private final ImageService imageService;
 
-    @PostMapping
+    // =========================================================================
+    // REVISIÓN SCRUM: Soporte para subir múltiples imágenes (Hasta 5 para pruebas, ampliable a 15)
+    // Este método recibe la información del artículo (JSON) y el array de archivos
+    // en una sola petición 'multipart/form-data' enviada desde el Frontend (VS Code).
+    // =========================================================================
+    @PostMapping(consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArticleResponseDTO> createArticle(
-            @Valid @RequestBody ArticleRequestDTO dto) {
+            @Valid @RequestPart("article") ArticleRequestDTO dto,
+            @RequestPart(value = "images", required = false) MultipartFile[] images) {
 
         ArticleResponseDTO created = articleService.createArticle(dto);
+
+        if (images != null && images.length > 0) {
+            // LÍMITE DE PRUEBA: Cambiar a > 15 
+            if (images.length > 5) {
+                throw new IllegalArgumentException("No puedes subir más de 5 imágenes.");
+            }
+
+            for (MultipartFile file : images) {
+                if (file.isEmpty()) continue;
+
+                String imageUrl = imageService.saveImage(file);
+                created = articleService.updateImage(created.getId(), imageUrl);
+            }
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
@@ -42,7 +63,6 @@ public class ArticleController {
 
         return ResponseEntity.ok(updated);
     }
-
 
     @GetMapping
     public ResponseEntity<List<ArticleResponseDTO>> getAllArticles() {
@@ -101,5 +121,3 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 }
-
-
