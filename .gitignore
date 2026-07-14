@@ -60,3 +60,10 @@ frontend/.env.local
 frontend/.env.development.local
 frontend/.env.production.local
 frontend/.env.test.local
+
+
+# System and IDE files to ignore
+.idea/
+Backup/
+target/
+.DS_Store
