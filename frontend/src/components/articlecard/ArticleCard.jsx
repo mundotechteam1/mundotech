@@ -1,4 +1,4 @@
-import "./ArticleCard.module.scss";
+import styles from "./ArticleCard.module.scss";
 
 /**
  * Tarjeta de artículo individual.
@@ -21,21 +21,21 @@ function ArticleCard({ article, isLast }) {
     <article className={`article-card${isLast ? " article-card--last" : ""}`}>
       {category && <p className="article-card__eyebrow">{category}</p>}
 
-      <div className={styles['article-card__media']}>
+      <div className={styles["article-card__media"]}>
         <img
-          className={styles['article-card__image']}
+          className={styles["article-card__image"]}
           src={image}
           alt={imageAlt || title}
           loading="lazy"
         />
-        <div className={styles['article-card__meta']}>
-          <span className={styles['article-card__date']}>{date}</span>
-          <span className={styles['article-card__author']}>Por {author}</span>
+        <div className={styles["article-card__meta"]}>
+          <span className={styles["article-card__date"]}>{date}</span>
+          <span className={styles["article-card__author"]}>Por {author}</span>
         </div>
       </div>
 
-      <h2 className={styles['article-card__title']}>{title}</h2>
-      <p className={styles['article-card__excerpt']}>{excerpt}</p>
+      <h2 className={styles["article-card__title"]}>{title}</h2>
+      <p className={styles["article-card__excerpt"]}>{excerpt}</p>
     </article>
   );
 }

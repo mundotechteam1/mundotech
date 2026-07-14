@@ -4,7 +4,7 @@ import Login from "../pages/login/Login";
 import Home from "../pages/home/Home";
 import AuthorDashboard from "../pages/authorDashboard/AuthorDashboard";
 import ManagerDashboard from "../pages/managerDashboard/ManagerDashboard";
-import ArticleView from "../components/ArticleView/ArticleView";
+import ArticleView from "../pages/articleView/ArticleView";
 
 export const router = createBrowserRouter([
   {

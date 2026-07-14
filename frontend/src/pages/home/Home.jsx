@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import MOCK_ARTICLES from '../../mockArticles';
-import ArticleList from '../../components/ArticleList/ArticleList';
+import { useState } from "react";
+import MOCK_ARTICLES from "../../mockArticles";
+import ArticleList from "../../components/articleList/ArticleList";
 
 function Home() {
   const [articles] = useState(MOCK_ARTICLES);

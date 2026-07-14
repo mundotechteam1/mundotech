@@ -1,5 +1,5 @@
 import ArticleCard from "../articlecard/ArticleCard";
-import "./ArticleList.module.scss";
+import styles from "./ArticleList.module.scss";
 
 /**
  * Lista de artículos de la Home.
@@ -10,8 +10,10 @@ import "./ArticleList.module.scss";
 function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
   if (error) {
     return (
-      <section className={styles['article-list'] + ' ' + styles['article-list--state']}>
-        <p className={styles['article-list__error']}>
+      <section
+        className={styles["article-list"] + " " + styles["article-list--state"]}
+      >
+        <p className={styles["article-list__error"]}>
           No se han podido cargar los artículos. Inténtalo de nuevo más tarde.
         </p>
       </section>
@@ -20,8 +22,10 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
 
   if (isLoading && articles.length === 0) {
     return (
-      <section className={styles['article-list'] + ' ' + styles['article-list--state']}>
-        <p className={styles['article-list__loading']}>Cargando artículos…</p>
+      <section
+        className={styles["article-list"] + " " + styles["article-list--state"]}
+      >
+        <p className={styles["article-list__loading"]}>Cargando artículos…</p>
       </section>
     );
   }
@@ -37,7 +41,7 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
   }
 
   return (
-    <section className={styles['article-list']}>
+    <section className={styles["article-list"]}>
       {articles.map((article, index) => (
         <ArticleCard
           key={article.id}
@@ -47,15 +51,16 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
       ))}
 
       {hasMore && (
-        <div className={styles['article-list__footer']}>
+        <div className={styles["article-list__footer"]}>
           {error && (
-            <p className={styles['article-list__error']}>
-              No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
+            <p className={styles["article-list__error"]}>
+              No se han podido cargar más artículos. Inténtalo de nuevo más
+              tarde.
             </p>
-          )}  
+          )}
           <button
             type="button"
-            className={styles['article-list__load-more']}
+            className={styles["article-list__load-more"]}
             onClick={onLoadMore}
             disabled={isLoading}
           >
