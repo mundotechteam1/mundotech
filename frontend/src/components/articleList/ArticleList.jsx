@@ -1,4 +1,3 @@
-
 import ArticleCard from "../articlecard/ArticleCard";
 import styles from "./ArticleList.module.scss";
 
