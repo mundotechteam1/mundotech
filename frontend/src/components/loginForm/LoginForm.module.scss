@@ -8,6 +8,22 @@
   max-width: 420px;
 }
 
+/* CHECKBOX */
+.roleSelector {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.roleOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
 /* LABELS */
 .loginForm label {
   font-family: v.$font-heading-secondary;
@@ -41,6 +57,14 @@
   margin-top: -1rem;
 }
 
+.formErrorGlobal {
+  color: v.$color-error;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid v.$color-error;
+}
+
 /* FORGOTTEN PASSCODE */
 .forgotLink {
   font-family: v.$font-heading-secondary;
@@ -62,7 +86,7 @@
   padding: 0.75rem;
   background-color: v.$color-black;
   color: v.$color-white;
-  font-family: v.$font-heading-secondary; // Archivo Narrow
+  font-family: v.$font-heading-secondary; 
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;

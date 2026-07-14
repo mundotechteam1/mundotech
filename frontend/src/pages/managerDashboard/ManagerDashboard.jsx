@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
 import styles from "./ManagerDashboard.module.scss";
+import ArticleCard from "../../components/ArticleCardManager/ArticleCardManager";
+import Pagination from "../../components/pagination/Pagination";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function ManagerDashboard() {
   const [articles, setArticles] = useState([]);
@@ -9,6 +10,7 @@ function ManagerDashboard() {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
     loadArticles();
@@ -58,6 +60,32 @@ function ManagerDashboard() {
     updateArticleStatus(articleId, "PUBLISHED");
   const handleReject = (articleId) => updateArticleStatus(articleId, "DRAFT");
 
+  const handleDelete = async (articleId) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
+      return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("No se pudo eliminar el artículo");
+      }
+
+      setArticles((prev) => prev.filter((a) => a.id !== articleId));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleEdit = () => {
+    setIsEditorOpen(true);
+  };
+
   const articlesInReview = articles.filter(
     (article) => article.status === "IN_REVIEW",
   );
@@ -69,38 +97,15 @@ function ManagerDashboard() {
     safePage * itemsPerPage,
   );
 
-  const goToPage = (page) => {
+  const handleGoToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  const itemsPerPageOptions = [10, 20, 50];
-
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "27 oct 2026";
-    const d = new Date(dateStr);
-    if (isNaN(d)) return dateStr;
-    const meses = [
-      "Ene",
-      "Feb",
-      "Mar",
-      "Abr",
-      "May",
-      "Jun",
-      "Jul",
-      "Ago",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dic",
-    ];
-    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
+  const handleItemsPerPageChange = (value) => {
+    setItemsPerPage(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -129,79 +134,31 @@ function ManagerDashboard() {
 
       <section className={styles.managerDashboardArticles}>
         {paginatedArticles.map((article) => (
-          <article className={styles.managerArticle} key={article.id}>
-            <p className={styles.managerArticleCategory}>
-              {article.author?.name || "Editorial"}
-            </p>
-
-            <Link to={"/article-view/" + article.id}>
-              <h2>{article.title}</h2>
-            </Link>
-
-            <div className={styles.managerArticleMeta}>
-              <span>Por {article.author?.name || "Autor"}</span>
-              <span>{formatDate(article.createdAt || article.created_at)}</span>
-            </div>
-
-            <div className={styles.managerArticleActions}>
-              <button type="button" onClick={() => handleApprove(article.id)}>
-                Aprobar
-              </button>
-              <button type="button" onClick={() => handleReject(article.id)}>
-                Rechazar
-              </button>
-            </div>
-          </article>
+          <ArticleCard
+            key={article.id}
+            article={article}
+            variant="manager"
+            onApprove={handleApprove}
+            onReject={handleReject}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
         ))}
       </section>
 
-      <section className={styles.managerPagination}>
-        <button
-          type="button"
-          disabled={safePage === 1}
-          onClick={() => goToPage(safePage - 1)}
-        >
-          Anterior
-        </button>
+      <Pagination
+        currentPage={safePage}
+        totalPages={totalPages}
+        totalItems={articlesInReview.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handleGoToPage}
+        onItemsPerPageChange={handleItemsPerPageChange}
+      />
 
-        {pageNumbers.map((num) => (
-          <button
-            key={num}
-            type="button"
-            className={num === safePage ? styles.active : ""}
-            onClick={() => goToPage(num)}
-          >
-            {num}
-          </button>
-        ))}
-
-        <button
-          type="button"
-          disabled={safePage === totalPages}
-          onClick={() => goToPage(safePage + 1)}
-        >
-          Siguiente
-        </button>
-
-        <span className={styles.paginationInfo}>
-          {articlesInReview.length} artículos &mdash;
-        </span>
-
-        <select
-          className={styles.perPageSelect}
-          value={itemsPerPage}
-          onChange={(e) => {
-            setItemsPerPage(Number(e.target.value));
-            setCurrentPage(1);
-          }}
-        >
-          {itemsPerPageOptions.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt} por pág.
-            </option>
-          ))}
-        </select>
-      </section>
+      <ArticleEditor
+        isEditorOpen={isEditorOpen}
+        setIsEditorOpen={setIsEditorOpen}
+      />
     </div>
   );
 }
