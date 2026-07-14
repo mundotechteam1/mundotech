@@ -1,17 +1,17 @@
-@use '../../styles/_variables' as v;
+@use "../../styles/_variables" as v;
 
-.article-card {
+.articleCard {
   padding-bottom: v.$space-xl;
   margin-bottom: v.$space-xl;
   border-bottom: 1px solid rgba(v.$color-text, 0.15);
 
-  &-last {
+  &Last {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
   }
 
-  &-eyebrow {
+  &Eyebrow {
     font-family: v.$font-body;
     font-size: 0.75rem;
     font-weight: 700;
@@ -21,63 +21,74 @@
     margin: 0 0 v.$space-sm;
   }
 
-  &-media {
+  &Media {
     position: relative;
     margin-bottom: v.$space-md;
   }
 
-  &-image {
+  &Image {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
   }
 
-  &-meta {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+  &Meta {
     display: flex;
     align-items: center;
     gap: v.$space-sm;
-    background: rgba(v.$color-text, 0.85);
-    color: v.$color-bg;
-    padding: 0.4rem v.$space-sm;
+    margin-bottom: v.$space-md;
+  }
+
+  &Date {
+    display: inline-block;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    padding: 0.35rem 0.8rem;
     font-family: v.$font-body;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
-  &-date {
-    font-weight: 700;
-  }
-
-  &-author {
-    opacity: 0.85;
-    font-weight: 400;
+  &Author {
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    color: v.$color-text-muted;
 
     &::before {
-      content: '·';
-      margin-right: v.$space-sm;
-      opacity: 0.6;
+      content: "•";
+      margin: 0 0.5rem;
     }
   }
 
-  &-title {
+  &Title {
+    margin: 0 0 v.$space-sm;
     font-family: v.$font-heading-primary;
+    font-size: 1.8rem;
     font-weight: 700;
-    font-size: 1.6rem;
     line-height: 1.2;
     color: v.$color-text;
-    margin: 0 0 v.$space-sm;
   }
 
-  &-excerpt {
+  &Excerpt {
+    margin: 0 0 v.$space-md;
     font-family: v.$font-body;
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.6;
     color: v.$color-text-muted;
-    margin: 0;
+  }
+
+  &Status {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid v.$color-text;
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: v.$color-text;
+    background-color: transparent;
   }
 }

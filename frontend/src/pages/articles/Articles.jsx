@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ArticleList from "../../components/ArticleList/ArticleList";
 import { getArticles } from "../../services/articleService";
 
-function Home() {
+function Articles() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,10 +14,7 @@ function Home() {
 
         const publishedArticles = data
           .filter((article) => article.status === "PUBLISHED")
-          .sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          )
-          .slice(0, 5);
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         setArticles(publishedArticles);
       } catch (err) {
@@ -42,4 +39,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Articles;

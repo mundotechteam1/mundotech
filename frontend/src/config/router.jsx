@@ -5,6 +5,7 @@ import Home from "../pages/home/Home";
 import AuthorDashboard from "../pages/authorDashboard/AuthorDashboard";
 import ManagerDashboard from "../pages/managerDashboard/ManagerDashboard";
 import ArticleView from "../pages/articleView/ArticleView";
+import Articles from "../pages/articles/Articles";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "article-view/:id",
         element: <ArticleView />,
+      },
+      {
+        path: "articles",
+        element: <Articles />,
       },
     ],
   },
