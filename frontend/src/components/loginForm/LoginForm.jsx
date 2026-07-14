@@ -38,45 +38,44 @@ function LoginForm() {
       });
 
       if (!res.ok) {
-        const errorMsg =
+        throw new Error(
           res.status === 401
             ? "Correo o contraseña incorrectos"
-            : "Error inesperado. Inténtalo de nuevo.";
-        throw new Error(errorMsg);
+            : "Error inesperado. Inténtalo de nuevo.",
+        );
       }
 
-      const userData = await res.json();
-      localStorage.setItem("user", JSON.stringify(userData));
-      localStorage.setItem("lastEmail", data.email);
-      localStorage.setItem("lastPassword", data.password);
+      const authHeader = res.headers.get("Authorization");
+      if (!authHeader) {
+        throw new Error("No se recibió token de autenticación.");
+      }
 
-      const roles = userData.roles || [];
+      const token = authHeader.replace("Bearer ", "");
 
-      const isManager =
-        roles.includes("ROLE_MANAGER") || roles.includes("MANAGER");
-      const isAuthor =
-        roles.includes("ROLE_AUTHOR") || roles.includes("AUTHOR");
+      const payload = JSON.parse(atob(token.split(".")[1]));
 
-      if (selectedRole === "MANAGER" && !isManager) {
+      const roles = payload.roles || [];
+
+      if (selectedRole === "MANAGER" && !roles.includes("MANAGER")) {
         setLoginError("No tienes permisos de Manager.");
         return;
       }
 
-      if (selectedRole === "AUTHOR" && !isAuthor) {
+      if (selectedRole === "AUTHOR" && !roles.includes("AUTHOR")) {
         setLoginError("No tienes permisos de Author.");
         return;
       }
 
+      localStorage.setItem("token", token);
+
       navigate(
         selectedRole === "MANAGER" ? "/dashboard-manager" : "/dashboard-author",
       );
-    
     } catch (err) {
-
       setLoginError(err.message);
-
     }
   };
+
 
   return (
     <form
