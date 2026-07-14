@@ -4,15 +4,14 @@
   padding-bottom: v.$space-xl;
   margin-bottom: v.$space-xl;
   border-bottom: 1px solid rgba(v.$color-text, 0.15);
-  margin:20px;
 
-  &--last {
+  &-last {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
   }
 
-  &__eyebrow {
+  &-eyebrow {
     font-family: v.$font-body;
     font-size: 0.75rem;
     font-weight: 700;
@@ -22,19 +21,19 @@
     margin: 0 0 v.$space-sm;
   }
 
-  &__media {
+  &-media {
     position: relative;
     margin-bottom: v.$space-md;
   }
 
-  &__image {
+  &-image {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
   }
 
-  &__meta {
+  &-meta {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -50,11 +49,11 @@
     text-transform: uppercase;
   }
 
-  &__date {
+  &-date {
     font-weight: 700;
   }
 
-  &__author {
+  &-author {
     opacity: 0.85;
     font-weight: 400;
 
@@ -65,7 +64,7 @@
     }
   }
 
-  &__title {
+  &-title {
     font-family: v.$font-heading-primary;
     font-weight: 700;
     font-size: 1.6rem;
@@ -74,7 +73,7 @@
     margin: 0 0 v.$space-sm;
   }
 
-  &__excerpt {
+  &-excerpt {
     font-family: v.$font-body;
     font-size: 0.95rem;
     line-height: 1.6;
