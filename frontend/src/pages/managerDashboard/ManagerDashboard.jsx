@@ -1,90 +1,107 @@
-import { useEffect, useState } from 'react'
-import styles from './ManagerDashboard.module.scss'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import styles from "./ManagerDashboard.module.scss";
 
 function ManagerDashboard() {
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
-    loadArticles()
-  }, [])
+    loadArticles();
+  }, []);
 
   const loadArticles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/articles')
+      const response = await fetch("http://localhost:8080/api/v1/articles");
 
       if (!response.ok) {
-        throw new Error('No se pudieron cargar los artículos')
+        throw new Error("No se pudieron cargar los artículos");
       }
 
-      const data = await response.json()
-      setArticles(data)
+      const data = await response.json();
+      setArticles(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const updateArticleStatus = async (articleId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      })
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus }),
+        },
+      );
 
       if (!response.ok) {
-        throw new Error('No se pudo actualizar el artículo')
+        throw new Error("No se pudo actualizar el artículo");
       }
 
       setArticles((prev) =>
-        prev.map((a) =>
-          a.id === articleId ? { ...a, status: newStatus } : a
-        )
-      )
+        prev.map((a) => (a.id === articleId ? { ...a, status: newStatus } : a)),
+      );
     } catch (err) {
-      setError(err.message)
+      setError(err.message);
     }
-  }
+  };
 
-  const handleApprove = (articleId) => updateArticleStatus(articleId, 'PUBLISHED')
-  const handleReject = (articleId) => updateArticleStatus(articleId, 'DRAFT')
+  const handleApprove = (articleId) =>
+    updateArticleStatus(articleId, "PUBLISHED");
+  const handleReject = (articleId) => updateArticleStatus(articleId, "DRAFT");
 
   const articlesInReview = articles.filter(
-    (article) => article.status === 'IN_REVIEW'
-  )
+    (article) => article.status === "IN_REVIEW",
+  );
 
-  const totalPages = Math.ceil(articlesInReview.length / itemsPerPage)
-  const safePage = Math.min(currentPage, Math.max(totalPages, 1))
+  const totalPages = Math.ceil(articlesInReview.length / itemsPerPage);
+  const safePage = Math.min(currentPage, Math.max(totalPages, 1));
   const paginatedArticles = articlesInReview.slice(
     (safePage - 1) * itemsPerPage,
     safePage * itemsPerPage,
-  )
+  );
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page)
+      setCurrentPage(page);
     }
-  }
+  };
 
-  const pageNumbers = []
+  const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i)
+    pageNumbers.push(i);
   }
 
-  const itemsPerPageOptions = [10, 20, 50]
+  const itemsPerPageOptions = [10, 20, 50];
 
   const formatDate = (dateStr) => {
-    if (!dateStr) return '27 oct 2026'
-    const d = new Date(dateStr)
-    if (isNaN(d)) return dateStr
-    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
-    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`
-  }
+    if (!dateStr) return "27 oct 2026";
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    const meses = [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ];
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
+  };
 
   return (
     <div className={styles.managerDashboard}>
@@ -108,29 +125,31 @@ function ManagerDashboard() {
         <p className={styles.managerDashboardMessage}>Cargando artículos...</p>
       )}
 
-      {error && (
-        <p className={styles.managerDashboardError}>{error}</p>
-      )}
+      {error && <p className={styles.managerDashboardError}>{error}</p>}
 
       <section className={styles.managerDashboardArticles}>
         {paginatedArticles.map((article) => (
           <article className={styles.managerArticle} key={article.id}>
             <p className={styles.managerArticleCategory}>
-              {article.author?.name || 'Editorial'}
+              {article.author?.name || "Editorial"}
             </p>
 
-            <h2>{article.title}</h2>
+            <Link to={"/article-view/" + article.id}>
+              <h2>{article.title}</h2>
+            </Link>
 
             <div className={styles.managerArticleMeta}>
-              <span>Por {article.author?.name || 'Autor'}</span>
-              <span>
-                {formatDate(article.createdAt || article.created_at)}
-              </span>
+              <span>Por {article.author?.name || "Autor"}</span>
+              <span>{formatDate(article.createdAt || article.created_at)}</span>
             </div>
 
             <div className={styles.managerArticleActions}>
-              <button type="button" onClick={() => handleApprove(article.id)}>Aprobar</button>
-              <button type="button" onClick={() => handleReject(article.id)}>Rechazar</button>
+              <button type="button" onClick={() => handleApprove(article.id)}>
+                Aprobar
+              </button>
+              <button type="button" onClick={() => handleReject(article.id)}>
+                Rechazar
+              </button>
             </div>
           </article>
         ))}
@@ -149,7 +168,7 @@ function ManagerDashboard() {
           <button
             key={num}
             type="button"
-            className={num === safePage ? styles.active : ''}
+            className={num === safePage ? styles.active : ""}
             onClick={() => goToPage(num)}
           >
             {num}
@@ -172,8 +191,8 @@ function ManagerDashboard() {
           className={styles.perPageSelect}
           value={itemsPerPage}
           onChange={(e) => {
-            setItemsPerPage(Number(e.target.value))
-            setCurrentPage(1)
+            setItemsPerPage(Number(e.target.value));
+            setCurrentPage(1);
           }}
         >
           {itemsPerPageOptions.map((opt) => (
@@ -184,7 +203,7 @@ function ManagerDashboard() {
         </select>
       </section>
     </div>
-  )
+  );
 }
 
-export default ManagerDashboard
+export default ManagerDashboard;
