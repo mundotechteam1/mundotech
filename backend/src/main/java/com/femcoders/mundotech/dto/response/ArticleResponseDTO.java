@@ -13,5 +13,6 @@ public class ArticleResponseDTO {
     private Integer id;
     private String title;
     private String content;
+    private String image;
     private AuthorSummaryDTO author;
 }

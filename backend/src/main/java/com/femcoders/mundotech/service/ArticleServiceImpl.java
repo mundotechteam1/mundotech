@@ -150,4 +150,12 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
     }
+
+    @Override
+    public ArticleResponseDTO updateImage(Integer id, String imageUrl) {
+        Article article = getArticleEntity(id);
+        article.setImage(imageUrl);
+        Article saved = articleRepository.save(article);
+        return articleMapper.toResponse(saved);
+    }
 }

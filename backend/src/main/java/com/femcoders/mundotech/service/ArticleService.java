@@ -25,4 +25,6 @@ public interface ArticleService {
     ArticleResponseDTO approveArticle(Integer articleId, Integer managerId);
 
     List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
+
+    ArticleResponseDTO updateImage(Integer id, String imageUrl);
 }

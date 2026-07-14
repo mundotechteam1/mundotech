@@ -3,10 +3,13 @@ import com.femcoders.mundotech.dto.request.ArticleRequestDTO;
 import com.femcoders.mundotech.dto.response.ArticleResponseDTO;
 import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.service.ArticleService;
+import com.femcoders.mundotech.service.ImageService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -14,13 +17,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/articles")
+@RequiredArgsConstructor
 public class ArticleController {
 
     private final ArticleService articleService;
-
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+    private final ImageService imageService;
 
     @PostMapping
     public ResponseEntity<ArticleResponseDTO> createArticle(
@@ -29,6 +30,19 @@ public class ArticleController {
         ArticleResponseDTO created = articleService.createArticle(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
+    @PostMapping("/{id}/upload-image")
+    public ResponseEntity<ArticleResponseDTO> uploadImage(
+            @PathVariable Integer id,
+            @RequestParam("file") MultipartFile file) {
+
+        String imageUrl = imageService.saveImage(file);
+
+        ArticleResponseDTO updated = articleService.updateImage(id, imageUrl);
+
+        return ResponseEntity.ok(updated);
+    }
+
 
     @GetMapping
     public ResponseEntity<List<ArticleResponseDTO>> getAllArticles() {
@@ -45,6 +59,11 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getArticlesByAuthorId(authorId));
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<ArticleResponseDTO>> getArticlesByStatus(@PathVariable ArticleStatus status) {
+        return ResponseEntity.ok(articleService.getArticlesByStatus(status));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ArticleResponseDTO> updateArticle(
             @PathVariable Integer id,
@@ -56,14 +75,6 @@ public class ArticleController {
 
         ArticleResponseDTO updated = articleService.updateArticle(id, authorId, title, content);
         return ResponseEntity.ok(updated);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticleById(
-            @PathVariable Integer id,
-            @RequestParam Integer authorId) {
-        articleService.deleteArticleById(id, authorId);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/send-review")
@@ -82,9 +93,12 @@ public class ArticleController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<ArticleResponseDTO>> getArticlesByStatus(@PathVariable ArticleStatus status) {
-        return ResponseEntity.ok(articleService.getArticlesByStatus(status));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteArticleById(
+            @PathVariable Integer id,
+            @RequestParam Integer authorId) {
+        articleService.deleteArticleById(id, authorId);
+        return ResponseEntity.noContent().build();
     }
 }
 
