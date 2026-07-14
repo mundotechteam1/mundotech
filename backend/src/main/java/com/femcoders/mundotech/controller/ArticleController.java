@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/articles")
+//@CrossOrigin(origin = "http://localhost:5173")
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -29,6 +30,8 @@ public class ArticleController {
         Article created = articleService.createArticle(article, authorId);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Article>> getAllArticles() {
