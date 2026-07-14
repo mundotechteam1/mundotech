@@ -1,5 +1,6 @@
 package com.femcoders.mundotech.entity;
 
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,6 +17,9 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "image")
+    private String image;
 
     @NotBlank(message = "Title is required")
     @Column(nullable = false)

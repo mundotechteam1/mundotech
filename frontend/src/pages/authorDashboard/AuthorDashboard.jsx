@@ -1,176 +1,243 @@
-import { useEffect, useState } from 'react'
-import './AuthorDashboard.module.scss'
+import { useEffect, useState } from "react";
+import styles from "./AuthorDashboard.module.scss";
+import ArticleEditor from "../../components/articleEditor/ArticleEditor";
 
 function AuthorDashboard() {
-  const [articles, setArticles] = useState([])
-  const [filter, setFilter] = useState('ALL')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [articles, setArticles] = useState([]);
+  const [filter, setFilter] = useState("ALL");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   useEffect(() => {
-    loadArticles()
-  }, [])
+    loadArticles();
+  }, []);
 
   const loadArticles = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/articles')
+      const response = await fetch("http://localhost:8080/api/v1/articles");
 
       if (!response.ok) {
-        throw new Error('No se pudieron cargar los artículos')
+        throw new Error("No se pudieron cargar los artículos");
       }
 
-      const data = await response.json()
-      setArticles(data)
+      const data = await response.json();
+      setArticles(data);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
+  const statusLabels = {
+    DRAFT: "Borrador",
+    IN_REVIEW: "En Revisión",
+    PUBLISHED: "Publicado",
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "27 oct 2026";
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    const meses = [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
+    ];
+    return `${d.getDate()} ${meses[d.getMonth()]}, ${d.getFullYear()}`;
+  };
+
+  const statusClassMap = {
+    DRAFT: "statusDraft",
+    IN_REVIEW: "statusInReview",
+    PUBLISHED: "statusPublished",
+  };
 
   const filteredArticles =
-    filter === 'ALL'
+    filter === "ALL"
       ? articles
-      : articles.filter((article) => article.status === filter)
+      : articles.filter((article) => article.status === filter);
+
+  const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
+  const safePage = Math.min(currentPage, Math.max(totalPages, 1));
+  const paginatedArticles = filteredArticles.slice(
+    (safePage - 1) * itemsPerPage,
+    safePage * itemsPerPage,
+  );
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    setCurrentPage(1);
+  };
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  const itemsPerPageOptions = [10, 20, 50];
 
   return (
-    <main className="author-dashboard">
-      <section className="author-dashboard__title">
+    <main className={styles.authorDashboard}>
+      <section className={styles.authorDashboardTitle}>
         <div>
-          <p className="author-dashboard__subtitle">
-            Internal Editorial Terminal
+          <p className={styles.authorDashboardSubtitle}>
+            Terminal Editorial Interno
           </p>
 
           <h1>Panel del Autor</h1>
         </div>
 
-        <button className="author-dashboard__create-button" type="button">
+        <button
+          className={styles.authorDashboardCreateButton}
+          type="button"
+          onClick={() => setIsEditorOpen(true)}
+        >
           Crear nuevo artículo
         </button>
       </section>
 
-      <section className="author-profile">
-        <p className="author-profile__label">Author Profile</p>
+      <section className={styles.authorProfile}>
+        <p className={styles.authorProfileLabel}>Perfil del Autor</p>
 
-        <div className="author-profile__content">
-          <div className="author-profile__avatar">
-            M
-          </div>
+        <div className={styles.authorProfileContent}>
+          <div className={styles.authorProfileAvatar}>M</div>
 
           <div>
             <h2>M. Atrus</h2>
-            <p>Senior Tech Analyst</p>
           </div>
         </div>
 
-        <div className="author-profile__stats">
-          <span>Total Published</span>
+        <div className={styles.authorProfileStats}>
+          <span>Total Publicados</span>
+
           <strong>
             {
-              articles.filter((article) => article.status === 'PUBLISHED')
+              articles.filter((article) => article.status === "PUBLISHED")
                 .length
             }
           </strong>
         </div>
 
-        <div className="author-profile__stats">
-          <span>Review Cycles</span>
+        <div className={styles.authorProfileStats}>
+          <span>Ciclos de Revisión</span>
+
           <strong>
             {
-              articles.filter((article) => article.status === 'IN_REVIEW')
+              articles.filter((article) => article.status === "IN_REVIEW")
                 .length
             }
           </strong>
         </div>
       </section>
 
-      <section className="author-filters">
+      <section className={styles.authorFilters}>
         <span>Filtrar por:</span>
 
         <button
           type="button"
-          className={filter === 'ALL' ? 'active' : ''}
-          onClick={() => setFilter('ALL')}
+          className={filter === "ALL" ? styles.active : ""}
+          onClick={() => setFilter("ALL")}
         >
           Todos
         </button>
 
         <button
           type="button"
-          className={filter === 'DRAFT' ? 'active' : ''}
-          onClick={() => setFilter('DRAFT')}
+          className={filter === "DRAFT" ? styles.active : ""}
+          onClick={() => setFilter("DRAFT")}
         >
-          Draft
+          Borrador
         </button>
 
         <button
           type="button"
-          className={filter === 'IN_REVIEW' ? 'active' : ''}
-          onClick={() => setFilter('IN_REVIEW')}
+          className={filter === "IN_REVIEW" ? styles.active : ""}
+          onClick={() => setFilter("IN_REVIEW")}
         >
-          In Review
+          En Revisión
         </button>
 
         <button
           type="button"
-          className={filter === 'PUBLISHED' ? 'active' : ''}
-          onClick={() => setFilter('PUBLISHED')}
+          className={filter === "PUBLISHED" ? styles.active : ""}
+          onClick={() => setFilter("PUBLISHED")}
         >
-          Published
+          Publicados
         </button>
       </section>
 
       {loading && (
-        <p className="author-dashboard__message">Cargando artículos...</p>
+        <p className={styles.authorDashboardMessage}>Cargando artículos...</p>
       )}
 
-      {error && (
-        <p className="author-dashboard__error">{error}</p>
-      )}
+      {error && <p className={styles.authorDashboardError}>{error}</p>}
 
-      <section className="author-articles">
-        {filteredArticles.map((article) => (
-          <article className="author-card" key={article.id}>
-            <div className="author-card__meta">
-              <span className={`author-card__status status-${article.status}`}>
-                {article.status}
+      <section className={styles.authorArticles}>
+        {paginatedArticles.map((article) => (
+          <article className={styles.authorCard} key={article.id}>
+            <div className={styles.authorCardMeta}>
+              <span
+                className={`${styles.authorCardStatus} ${styles[statusClassMap[article.status]]}`}
+              >
+                {statusLabels[article.status] || article.status}
               </span>
 
-              <span>
-                {article.createdAt || article.created_at || 'OCT 27, 2026'}
-              </span>
+              <span>{formatDate(article.createdAt || article.created_at)}</span>
             </div>
 
             <h2>{article.title}</h2>
 
-            <p className="author-card__content">
-              {article.content}
-            </p>
+            <p className={styles.authorCardContent}>{article.content}</p>
 
-            <div className="author-card__actions">
-              {article.status === 'DRAFT' && (
-                <button className="primary-action" type="button">
+            <div className={styles.authorCardActions}>
+              {article.status === "DRAFT" && (
+                <button className={styles.primaryAction} type="button">
                   Enviar a revisión
                 </button>
               )}
 
-              {article.status === 'IN_REVIEW' && (
-                <button className="secondary-action" type="button">
-                  Pending approval
+              {article.status === "IN_REVIEW" && (
+                <button className={styles.secondaryAction} type="button">
+                  Pendiente de aprobación
                 </button>
               )}
 
-              {article.status === 'PUBLISHED' && (
-                <button className="secondary-action" type="button">
+              {article.status === "PUBLISHED" && (
+                <button className={styles.secondaryAction} type="button">
                   Ver publicado
                 </button>
               )}
 
-              <button className="icon-action delete" type="button">
+              <button
+                className={`${styles.iconAction} ${styles.delete}`}
+                type="button"
+              >
                 ×
               </button>
 
-              <button className="icon-action edit" type="button">
+              <button
+                className={`${styles.iconAction} ${styles.edit}`}
+                type="button"
+              >
                 ✎
               </button>
             </div>
@@ -178,15 +245,21 @@ function AuthorDashboard() {
         ))}
       </section>
 
-      <section className="author-pagination">
+      <section className={styles.authorPagination}>
         <button type="button">Anterior</button>
-        <button className="active" type="button">1</button>
+        <button className={styles.active} type="button">
+          1
+        </button>
         <button type="button">2</button>
         <button type="button">3</button>
         <button type="button">Siguiente</button>
       </section>
+      <ArticleEditor
+        isEditorOpen={isEditorOpen}
+        setIsEditorOpen={setIsEditorOpen}
+      />
     </main>
-  )
+  );
 }
 
-export default AuthorDashboard
+export default AuthorDashboard;

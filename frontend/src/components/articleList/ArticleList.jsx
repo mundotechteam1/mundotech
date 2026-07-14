@@ -1,18 +1,23 @@
-import PropTypes from 'prop-types';
-import ArticleCard from '../articlecard/ArticleCard';
-import './ArticleList.module.scss';
+import ArticleCard from "../articlecard/ArticleCard";
+import { useNavigate } from "react-router-dom";
+import styles from "./ArticleList.module.scss";
 
-/**
- * Lista de artículos de la Home.
- * Este componente es "tonto": no hace fetch, solo pinta lo que le pasan.
- * El fetch (tu servicio/hook de API) vive en el componente padre (ej. HomePage)
- * y se le pasan los resultados por props.
- */
-function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
-  if (error) {
+function ArticleList({
+  articles,
+  totalArticles = 0,
+  isLoading = false,
+  error = null,
+  onLoadMore = () => {},
+  hasMore = false,
+}) {
+  const navigate = useNavigate();
+
+  const stateClassName = styles.articleList;
+
+  if (error && articles.length === 0) {
     return (
-      <section className="article-list article-list--state">
-        <p className="article-list__error">
+      <section className={stateClassName}>
+        <p className={styles.articleListError}>
           No se han podido cargar los artículos. Inténtalo de nuevo más tarde.
         </p>
       </section>
@@ -21,22 +26,26 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
 
   if (isLoading && articles.length === 0) {
     return (
-      <section className="article-list article-list--state">
-        <p className="article-list__loading">Cargando artículos…</p>
+      <section className={stateClassName}>
+        <p className={styles.articleListLoading}>
+          Cargando artículos…
+        </p>
       </section>
     );
   }
 
   if (!isLoading && articles.length === 0) {
     return (
-      <section className="article-list article-list--state">
-        <p className="article-list__empty">Todavía no hay artículos publicados.</p>
+      <section className={stateClassName}>
+        <p className={styles.articleListEmpty}>
+          Todavía no hay artículos publicados.
+        </p>
       </section>
     );
   }
 
   return (
-    <section className="article-list">
+    <section className={styles.articleList}>
       {articles.map((article, index) => (
         <ArticleCard
           key={article.id}
@@ -45,35 +54,40 @@ function ArticleList({ articles, isLoading, error, onLoadMore, hasMore }) {
         />
       ))}
 
-      {hasMore && (
-        <div className="article-list__footer">
+      {/* Botón para ir a la lista completa */}
+      {totalArticles > articles.length && (
+        <div className={styles.articleListFooter}>
           <button
             type="button"
-            className="article-list__load-more"
+            className={styles.articleListLoadMore}
+            onClick={() => navigate("/articles")}
+          >
+            Ver todos los artículos
+          </button>
+        </div>
+      )}
+
+      {/* Botón para cargar más si usamos paginación */}
+      {hasMore && (
+        <div className={styles.articleListFooter}>
+          {error && (
+            <p className={styles.articleListError}>
+              No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
+            </p>
+          )}
+
+          <button
+            type="button"
+            className={styles.articleListLoadMore}
             onClick={onLoadMore}
             disabled={isLoading}
           >
-            {isLoading ? 'Cargando…' : 'Ver más artículos'}
+            {isLoading ? "Cargando…" : "Cargar más"}
           </button>
         </div>
       )}
     </section>
   );
 }
-
-ArticleList.propTypes = {
-  articles: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  onLoadMore: PropTypes.func,
-  hasMore: PropTypes.bool,
-};
-
-ArticleList.defaultProps = {
-  isLoading: false,
-  error: null,
-  onLoadMore: () => {},
-  hasMore: false,
-};
 
 export default ArticleList;

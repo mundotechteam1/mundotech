@@ -1,6 +1,8 @@
 package com.femcoders.mundotech.controller;
 
-import com.femcoders.mundotech.entity.User;
+import com.femcoders.mundotech.dto.request.UserRequestDTO;
+import com.femcoders.mundotech.dto.response.UserResponseDTO;
+import com.femcoders.mundotech.service.RoleService;
 import com.femcoders.mundotech.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,22 +18,27 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = userService.createUser(user);
+    public ResponseEntity<UserResponseDTO> createUser(
+            @Valid @RequestBody UserRequestDTO dto,
+            @RequestParam Integer roleId) {
+
+        UserResponseDTO savedUser = userService.createUser(dto, roleId);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

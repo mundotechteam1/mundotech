@@ -1,30 +1,30 @@
 package com.femcoders.mundotech.service;
 
-import com.femcoders.mundotech.entity.Article;
-import com.femcoders.mundotech.entity.ArticleStatus;
-import org.springframework.stereotype.Service;
+import com.femcoders.mundotech.dto.request.ArticleRequestDTO;
+import com.femcoders.mundotech.dto.response.ArticleResponseDTO;
+import com.femcoders.mundotech.entity.enums.ArticleStatus;
 
 import java.util.List;
 
-@Service
 public interface ArticleService {
 
-    Article createArticle(Article article, Integer authorId);
+    ArticleResponseDTO createArticle(ArticleRequestDTO dto);
 
-    List<Article> getAllArticles();
+    List<ArticleResponseDTO> getAllArticles();
 
-    Article getArticleById(Integer id);
+    ArticleResponseDTO getArticleById(Integer id);
 
-    List<Article> getArticlesByAuthorId(Integer authorId);
+    List<ArticleResponseDTO> getArticlesByAuthorId(Integer authorId);
 
-    Article updateArticle(Integer articleId, Integer authorId, String content, String s);
+    ArticleResponseDTO updateArticle(Integer articleId, Integer authorId, String title, String content);
 
     void deleteArticleById(Integer articleId, Integer authorId);
 
-    Article sendForReview(Integer articleId, Integer authorId);
+    ArticleResponseDTO sendForReview(Integer articleId, Integer authorId);
 
-    Article approveArticle(Integer articleId, Integer managerId);
+    ArticleResponseDTO approveArticle(Integer articleId, Integer managerId);
 
-    List<Article> getArticlesByStatus(ArticleStatus status);
+    List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
+
+    ArticleResponseDTO updateImage(Integer id, String imageUrl);
 }
-

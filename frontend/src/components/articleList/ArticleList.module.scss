@@ -1,37 +1,44 @@
-@use '../../styles/_variables' as v;
+@use "../../styles/_variables" as v;
 
-.article-list {
+.articleList {
   max-width: v.$max-content-width;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: v.$space-lg v.$space-md;
   background: v.$color-bg;
 
-  &--state {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+
+  &State {
     display: flex;
     justify-content: center;
     padding: v.$space-xl v.$space-md;
   }
 
-  &__loading,
-  &__empty,
-  &__error {
+  &Loading,
+  &Empty,
+  &Error {
     font-family: v.$font-body;
     font-size: 0.95rem;
     color: v.$color-text-muted;
     text-align: center;
   }
 
-  &__error {
+  &Error {
     color: #b3261e;
   }
 
-  &__footer {
+  &Footer {
+    grid-column: 1 / -1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
     margin-top: v.$space-lg;
   }
 
-  &__load-more {
+  &LoadMore {
     font-family: v.$font-body;
     font-size: 0.8rem;
     font-weight: 600;

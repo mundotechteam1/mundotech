@@ -1,12 +1,283 @@
-@use "../../styles/variables" as v;
+@use "../../styles/_variables" as v;
 
-.tag {
-  display: inline-block;
-  background-color: v.$color-black;
-  color: v.$color-white;
-  padding: 0.25rem 0.75rem;
-  font-family: v.$font-heading-secondary; 
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.pageLayout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: v.$color-bg;
+  text-align: left;
+
+  .sidebar {
+    width: 240px;
+    background-color: v.$color-bg;
+    border-right: 1px solid v.$color-border;
+    padding: 40px 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+
+    .sidebarLogo {
+      padding: 0 v.$space-md;
+      margin-bottom: v.$space-md;
+      text-align: left;
+
+      h2 {
+        font-family: v.$font-heading-primary;
+        font-size: 32px;
+        margin: 0;
+        line-height: 1;
+        color: v.$color-black;
+      }
+      span {
+        font-size: v.$font-heading-secondary;
+        letter-spacing: 1px;
+        color: v.$color-text-muted;
+      }
+    }
+
+    .sidebarMenu {
+      display: flex;
+      flex-direction: column;
+
+      .menuItem {
+        display: flex;
+        align-items: center;
+        gap: v.$space-xs;
+        padding: v.$space-sm v.$space-md;
+        color: v.$color-text-muted;
+        text-decoration: none;
+        font-size: 18px;
+        font-family: v.$font-heading-secondary;
+        font-weight: v.$weight-semibold;
+        transition: all 0.2s;
+        text-align: left;
+        white-space: nowrap;
+
+        .menuIcon {
+          flex-shrink: 0;
+        }
+
+        &:hover {
+          background-color: v.$color-black;
+        }
+
+        &.active {
+          background-color: v.$color-black;
+          color: v.$color-white;
+          font-weight: v.$weight-bold;
+        }
+      }
+    }
+  }
+
+  .mainContent {
+    flex: 1;
+    padding: v.$space-md;
+    display: flex;
+    justify-content: center;
+    background-color: v.$color-bg;
+  }
+}
+
+.articleContainer {
+  max-width: v.$max-content-width;
+  width: 100%;
+  background-color: v.$color-white;
+  padding: v.$space-md;
+  border: 1px solid v.$color-border;
+  font-family: v.$font-body;
+  color: v.$color-text;
+  text-align: left;
+  box-sizing: border-box;
+
+  .articleMetaHeader {
+    display: flex;
+    justify-content: space-between;
+    font-family: v.$font-heading-secondary;
+    font-size: 11px;
+    font-weight: v.$weight-bold;
+    border-bottom: 2px solid v.$color-black;
+    padding-bottom: v.$space-xs;
+    margin-bottom: v.$space-md;
+    letter-spacing: 1px;
+
+    .statusBadge {
+      background: v.$color-badge-bg;
+      color: v.$color-badge-text;
+      padding: 2px 6px;
+    }
+
+    span {
+      color: v.$color-text;
+    }
+  }
+
+  .articleMainImage {
+    margin-bottom: v.$space-md;
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .imageCaption {
+      font-family: v.$font-heading-primary;
+      font-size: 11px;
+      color: v.$color-text-muted;
+      margin-top: 8px;
+      font-style: italic;
+    }
+  }
+
+  .articleTitle {
+    font-size: v.$font-heading-primary;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-family: v.$font-heading-primary;
+    color: v.$color-black;
+    text-align: left;
+  }
+
+  .articleAuthorBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid v.$color-border;
+    border-bottom: 1px solid v.$color-border;
+    padding: 10px 0;
+    margin-bottom: 30px;
+    font-family: v.$font-heading-primary;
+    font-size: 12px;
+
+    .authorAvatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .authorInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .authorName {
+        font-weight: bold;
+        color: v.$color-black;
+      }
+      .authorRole {
+        color: v.$color-text-muted;
+        font-size: 10px;
+      }
+    }
+
+    .articleDate {
+      margin-left: auto;
+      color: v.$color-text-muted;
+    }
+  }
+
+  .articleBodyLayout {
+    .articleTextColumns {
+      column-count: 2;
+      column-gap: 40px;
+      text-align: justify;
+      font-size: 16px;
+      line-height: 1.6;
+      color: v.$color-text;
+
+      p {
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-indent: 20px;
+      }
+
+      .dropCap {
+        font-size: 55px;
+        float: left;
+        line-height: 40px;
+        padding-top: 4px;
+        padding-right: 8px;
+        font-weight: bold;
+        font-family: v.$font-heading-primary; 
+        color: v.$color-black;
+      }
+    }
+
+    .articleBlockquote {
+      break-inside: avoid;
+      background-color:v.$color-bg;
+      border-left: 4px solid v.$color-black;
+      margin: 20px 0;
+      padding: 20px;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.5;
+      text-indent: 0;
+      text-align: left;
+      color: v.$color-text;
+    }
+  }
+
+  .editorialNotesSection {
+    margin-top: 50px;
+    border-top: 2px solid v.$color-black;
+    padding-top: 20px;
+    font-family: v.$font-heading-primary;
+    text-align: left;
+
+    label {
+      font-size: 11px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      color: v.$color-black;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border: 1px solid v.$color-border;
+      background-color: v.$color-bg;
+      resize: vertical;
+      font-family: inherit;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      color: v.$color-black;
+      text-align: left;
+    }
+
+    .editorialActions {
+      display: flex;
+      gap: 10px;
+
+      button {
+        flex: 1;
+        padding: 12px;
+        font-weight: bold;
+        font-size: 12px;
+        cursor: pointer;
+        border: 1px solid v.$color-black;
+        transition: all 0.2s;
+      }
+
+      .btnApprove {
+        background: v.$color-black;
+        color: v.$color-white;
+        &:hover {
+          background: v.$color-text-muted;
+        }
+      }
+
+      .btnReject {
+        background: v.$color-white;
+        color: v.$color-error;
+        border-color: v.$color-error;
+        &:hover {
+          background: v.$color-white;
+        }
+      }
+    }
+  }
+
 }
