@@ -1,6 +1,6 @@
 @use '../../styles/_variables' as v;
 
-.manager-dashboard {
+.managerDashboard {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -10,7 +10,7 @@
   font-family: v.$font-heading-primary;
   text-align: left;
 
-  &__title {
+  &Title {
     position: relative;
     text-align: center;
     padding: 0 18px 10px;
@@ -39,7 +39,7 @@
     }
   }
 
-  &__badge {
+  &Badge {
     position: absolute;
     right: 18px;
     bottom: 10px;
@@ -54,25 +54,25 @@
     white-space: nowrap;
   }
 
-  &__message,
-  &__error {
+  &Message,
+  &Error {
     padding: 0 18px;
     font-family: v.$font-heading-secondary;
     font-size: 10px;
   }
 
-  &__error {
+  &Error {
     color: v.$color-error;
   }
 
-  &__articles {
+  &Articles {
     display: flex;
     flex-direction: column;
     padding: 0 18px;
   }
 }
 
-.manager-article {
+.managerArticle {
   padding: 0 0 28px;
   margin-bottom: 28px;
   border-bottom: 1px solid #a9a18f;
@@ -81,7 +81,7 @@
     margin-bottom: 0;
   }
 
-  &__category {
+  &Category {
     margin: 0 0 8px;
     color: v.$color-error;
     font-family: v.$font-heading-secondary;
@@ -101,7 +101,7 @@
     letter-spacing: -0.7px;
   }
 
-  &__meta {
+  &Meta {
     display: flex;
     gap: 12px;
     margin-bottom: 10px;
@@ -112,7 +112,7 @@
     text-transform: uppercase;
   }
 
-  &__actions {
+  &Actions {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -146,43 +146,43 @@
 /* ---------- TABLET ---------- */
 
 @media (min-width: 640px) {
-  .manager-dashboard {
+  .managerDashboard {
     max-width: 600px;
     padding: 70px 24px 48px;
   }
 
-  .manager-dashboard__title {
+  .managerDashboardTitle {
     padding: 0 24px 14px;
   }
 
-  .manager-dashboard__title h1 {
+  .managerDashboardTitle h1 {
     font-size: 44px;
   }
 
-  .manager-dashboard__title p {
+  .managerDashboardTitle p {
     font-size: 9px;
   }
 
-  .manager-dashboard__badge {
+  .managerDashboardBadge {
     font-size: 9px;
     padding: 8px 12px;
     right: 24px;
   }
 
-  .manager-article h2 {
+  .managerArticle h2 {
     font-size: 30px;
   }
 
-  .manager-article__meta,
-  .manager-article__category {
+  .managerArticleMeta,
+  .managerArticleCategory {
     font-size: 9px;
   }
 
-  .manager-article__actions button {
+  .managerArticleActions button {
     font-size: 10px;
   }
 
-  .manager-article__actions button:first-child {
+  .managerArticleActions button:first-child {
     padding: 8px 24px;
   }
 }
@@ -190,55 +190,106 @@
 /* ---------- DESKTOP ---------- */
 
 @media (min-width: 1024px) {
-  .manager-dashboard {
+  .managerDashboard {
     max-width: 900px;
     padding: 70px 32px 56px;
   }
 
-  .manager-dashboard__title {
+  .managerDashboardTitle {
     padding: 0 32px 18px;
     margin-bottom: 48px;
   }
 
-  .manager-dashboard__title h1 {
+  .managerDashboardTitle h1 {
     font-size: 52px;
     letter-spacing: -1.8px;
   }
 
-  .manager-dashboard__title p {
+  .managerDashboardTitle p {
     font-size: 10px;
   }
 
-  .manager-dashboard__badge {
+  .managerDashboardBadge {
     font-size: 10px;
     padding: 10px 16px;
     right: 32px;
   }
 
-  .manager-article {
+  .managerArticle {
     padding: 0 0 36px;
     margin-bottom: 36px;
   }
 
-  .manager-article h2 {
+  .managerArticle h2 {
     font-size: 36px;
   }
 
-  .manager-article__meta,
-  .manager-article__category {
+  .managerArticleMeta,
+  .managerArticleCategory {
     font-size: 10px;
   }
 
-  .manager-article__actions {
+  .managerArticleActions {
     flex-direction: row;
     align-items: center;
   }
 
-  .manager-article__actions button {
+  .managerArticleActions button {
     font-size: 11px;
   }
 
-  .manager-article__actions button:first-child {
+  .managerArticleActions button:first-child {
     padding: 10px 32px;
   }
+}
+
+.managerPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 28px;
+  padding: 0 18px;
+
+  button {
+    border: 1px solid v.$color-text;
+    background-color: transparent;
+    color: v.$color-text;
+    padding: 4px 7px;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &[disabled] {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    &.active {
+      background-color: v.$color-text;
+      color: v.$color-white;
+    }
+  }
+}
+
+.paginationInfo {
+  margin-left: auto;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  color: v.$color-text-muted;
+  white-space: nowrap;
+}
+
+.perPageSelect {
+  border: 1px solid v.$color-text;
+  background-color: transparent;
+  color: v.$color-text;
+  padding: 3px 4px;
+  font-family: v.$font-heading-secondary;
+  font-size: 7px;
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+  cursor: pointer;
 }
