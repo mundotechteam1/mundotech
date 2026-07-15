@@ -1,11 +1,41 @@
 @use "../../styles/variables" as v;
 
 .loginPage {
-    padding: 3rem
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
 }
+
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+.loginHeading {
+  font-family: v.$font-heading-primary;
+  font-size: 1.75rem;
+  text-align: center;
+  margin: 1rem 0 0.5rem;
+}
+
+.loginDescription {
+  font-family: v.$font-body;
+  font-size: 1rem;
+  text-align: center;
+  color: v.$color-form-label;
+  margin-bottom: 1.5rem;
+}
+
 .securityBadge {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   margin-top: 2rem;
   color: v.$color-form-security;
@@ -18,7 +48,7 @@
 }
 
 .securityText {
-  font-family: v.$font-heading-secondary; 
+  font-family: v.$font-heading-secondary;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;

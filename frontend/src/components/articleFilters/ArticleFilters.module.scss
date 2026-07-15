@@ -1,0 +1,49 @@
+@use "../../styles/_variables" as v;
+
+.articleFilters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-family: v.$font-heading-secondary;
+
+  span {
+    margin-right: 4px;
+    color: v.$color-text;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+  }
+
+  button {
+    border: 1px solid v.$color-text;
+    background-color: transparent;
+    color: v.$color-text;
+    padding: 4px 7px;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &.active {
+      background-color: v.$color-text;
+      color: v.$color-white;
+    }
+  }
+}
+
+@media (min-width: 640px) {
+  .articleFilters span,
+  .articleFilters button {
+    font-size: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .articleFilters span,
+  .articleFilters button {
+    font-size: 9px;
+  }
+}

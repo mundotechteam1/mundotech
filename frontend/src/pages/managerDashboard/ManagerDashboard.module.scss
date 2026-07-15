@@ -72,79 +72,6 @@
   }
 }
 
-.managerArticle {
-  padding: 0 0 28px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid #a9a18f;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &Category {
-    margin: 0 0 8px;
-    color: v.$color-error;
-    font-family: v.$font-heading-secondary;
-    font-size: 9px;
-    font-weight: v.$weight-bold;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-
-  h2 {
-    margin: 0 0 14px;
-    color: v.$color-text;
-    font-family: v.$font-heading-primary;
-    font-size: 25px;
-    font-weight: v.$weight-bold;
-    line-height: 1.05;
-    letter-spacing: -0.7px;
-  }
-
-  &Meta {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 10px;
-    color: v.$color-text;
-    font-family: v.$font-heading-secondary;
-    font-size: 8px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-  }
-
-  &Actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 9px;
-
-    button {
-      font-family: v.$font-heading-secondary;
-      font-size: 9px;
-      font-weight: v.$weight-bold;
-      letter-spacing: 0.2px;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    button:first-child {
-      border: none;
-      background-color: v.$color-text;
-      color: v.$color-white;
-      padding: 7px 20px;
-    }
-
-    button:nth-child(2) {
-      border: none;
-      background-color: transparent;
-      color: v.$color-text;
-      padding: 0 0 0 20px;
-    }
-  }
-}
-
-/* ---------- TABLET ---------- */
-
 @media (min-width: 640px) {
   .managerDashboard {
     max-width: 600px;
@@ -168,26 +95,7 @@
     padding: 8px 12px;
     right: 24px;
   }
-
-  .managerArticle h2 {
-    font-size: 30px;
-  }
-
-  .managerArticleMeta,
-  .managerArticleCategory {
-    font-size: 9px;
-  }
-
-  .managerArticleActions button {
-    font-size: 10px;
-  }
-
-  .managerArticleActions button:first-child {
-    padding: 8px 24px;
-  }
 }
-
-/* ---------- DESKTOP ---------- */
 
 @media (min-width: 1024px) {
   .managerDashboard {
@@ -214,82 +122,4 @@
     padding: 10px 16px;
     right: 32px;
   }
-
-  .managerArticle {
-    padding: 0 0 36px;
-    margin-bottom: 36px;
-  }
-
-  .managerArticle h2 {
-    font-size: 36px;
-  }
-
-  .managerArticleMeta,
-  .managerArticleCategory {
-    font-size: 10px;
-  }
-
-  .managerArticleActions {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .managerArticleActions button {
-    font-size: 11px;
-  }
-
-  .managerArticleActions button:first-child {
-    padding: 10px 32px;
-  }
-}
-
-.managerPagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  margin-top: 28px;
-  padding: 0 18px;
-
-  button {
-    border: 1px solid v.$color-text;
-    background-color: transparent;
-    color: v.$color-text;
-    padding: 4px 7px;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-    cursor: pointer;
-
-    &[disabled] {
-      opacity: 0.35;
-      cursor: default;
-    }
-
-    &.active {
-      background-color: v.$color-text;
-      color: v.$color-white;
-    }
-  }
-}
-
-.paginationInfo {
-  margin-left: auto;
-  font-family: v.$font-heading-secondary;
-  font-size: 7px;
-  color: v.$color-text-muted;
-  white-space: nowrap;
-}
-
-.perPageSelect {
-  border: 1px solid v.$color-text;
-  background-color: transparent;
-  color: v.$color-text;
-  padding: 3px 4px;
-  font-family: v.$font-heading-secondary;
-  font-size: 7px;
-  font-weight: v.$weight-bold;
-  text-transform: uppercase;
-  cursor: pointer;
 }

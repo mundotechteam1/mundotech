@@ -6,8 +6,13 @@ import com.femcoders.mundotech.entity.Role;
 import com.femcoders.mundotech.entity.User;
 import com.femcoders.mundotech.mapper.UserMapper;
 import com.femcoders.mundotech.repository.UserRepository;
+import com.femcoders.mundotech.security.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,11 +21,12 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
@@ -32,7 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO getUserById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                "User not found with id: " + id));
 
         return userMapper.toResponse(user);
     }
@@ -40,13 +49,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserEntityById(Integer id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
     }
 
     @Override
     public UserResponseDTO createUser(UserRequestDTO dto, Integer roleId) {
+
         User user = userMapper.toEntity(dto);
-        Role role = roleService.getRoleEntityById(roleId);        user.setRoles(Set.of(role));
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        Role role = roleService.getRoleEntityById(roleId);
+        user.setRoles(Set.of(role));
 
         User saved = userRepository.save(user);
 
@@ -56,5 +71,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .map(UserDetail::new)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return loadUserByEmail(email);
     }
 }
