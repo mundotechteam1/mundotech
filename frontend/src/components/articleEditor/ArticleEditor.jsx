@@ -5,21 +5,14 @@ import styles from "./ArticleEditor.module.scss";
 export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
   const [headline, setHeadline] = useState("");
   const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const today = "05/24/2024";
 
   const handleFileChange = (e) => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
-
-      if (selectedFiles.length > 5) {
-        alert("¡Error! No puedes seleccionar más de 5 imágenes.");
-        return;
-      }
-
-      setImages(selectedFiles);
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
     }
   };
 
@@ -32,7 +25,7 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
       title: headline,
       content: content,
       status: statusType,
-      authorId: 1,
+      authorId: 4,
     };
 
     formData.append(
@@ -40,9 +33,9 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
       new Blob([JSON.stringify(articleDto)], { type: "application/json" }),
     );
 
-    images.forEach((file) => {
-      formData.append("images", file);
-    });
+    if (image) {
+      formData.append("image", image);
+    }
 
     try {
       await axios.post("http://localhost:8080/api/v1/articles", formData, {
@@ -53,11 +46,11 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
       alert(`¡Éxito! Estado: ${statusType}`);
       setHeadline("");
       setContent("");
-      setImages([]);
+      setImage(null);
       if (setIsEditorOpen) setIsEditorOpen(false);
     } catch (error) {
       console.error(error);
-      alert("Error en el servidor backend");
+      alert("Error backend");
     } finally {
       setLoading(false);
     }
@@ -118,47 +111,33 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
               />
             </div>
 
-            <div className={styles.uploadGroup}>
+            <div
+              className={styles.uploadGroup}
+              style={
+                image
+                  ? {
+                      border: "2px solid #2e7d32",
+                      backgroundColor: "#e8f5e9",
+                      borderRadius: "8px",
+                    }
+                  : {}
+              }
+            >
               <label htmlFor="file-picker" className={styles.uploadLabel}>
                 <div className={styles.uploadContent}>
                   <span className={styles.uploadIcon}>📷</span>
-                  <span className={styles.uploadTextMain}>SUBIR IMÁGENES</span>
+                  <span className={styles.uploadTextMain}>SUBIR IMAGEN </span>
                   <span className={styles.uploadTextSub}>
-                    Recomendado: 1600x900px | Máx 5 imágenes
+                    Recomendado: 1600x900px | Máx 5MB
                   </span>
-                  {images.length > 0 && (
-                    <div
-                      style={{
-                        marginTop: "10px",
-                        color: "#4caf50",
-                        fontSize: "14px",
-                      }}
-                    >
-                      <strong>Archivos seleccionados ({images.length}):</strong>
-                      <ul
-                        style={{
-                          listStyle: "none",
-                          padding: 0,
-                          margin: "5px 0 0 0",
-                        }}
-                      >
-                        {images.map((img, index) => (
-                          <li
-                            key={index}
-                            style={{ fontSize: "12px", color: "#555" }}
-                          >
-                            📎 {img.name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  {image && (
+                    <p className={styles.fileName}>Selected: {image.name}</p>
                   )}
                 </div>
               </label>
               <input
                 type="file"
                 id="file-picker"
-                multiple
                 accept="image/*"
                 onChange={handleFileChange}
                 style={{ display: "none" }}
