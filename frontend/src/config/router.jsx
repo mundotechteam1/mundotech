@@ -6,6 +6,7 @@ import AuthorDashboard from "../pages/authorDashboard/AuthorDashboard";
 import ManagerDashboard from "../pages/managerDashboard/ManagerDashboard";
 import ArticleView from "../pages/articleView/ArticleView";
 import Articles from "../pages/articles/Articles";
+import ProtectedRouter from "./protectedRouter";
 
 export const router = createBrowserRouter([
   {
@@ -22,11 +23,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "dashboard-author",
-        element: <AuthorDashboard />,
+        element: (
+          <ProtectedRouter requiredRole="AUTHOR">
+            <AuthorDashboard />
+          </ProtectedRouter>
+        ),
       },
       {
         path: "dashboard-manager",
-        element: <ManagerDashboard />,
+        element: (
+          <ProtectedRouter requiredRole="MANAGER">
+            <ManagerDashboard />
+          </ProtectedRouter>
+        ),
       },
       {
         path: "article-view/:id",
