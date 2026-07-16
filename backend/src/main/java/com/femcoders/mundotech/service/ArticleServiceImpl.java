@@ -18,9 +18,8 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final ArticleMapper articleMapper;
-    private final ImageService imageService; // Inyección del servicio de imágenes de las chicas
+    private final ImageService imageService; 
 
-    // Constructor con todos los servicios necesarios
     public ArticleServiceImpl(
             ArticleRepository articleRepository,
             UserService userService,
@@ -44,7 +43,6 @@ public class ArticleServiceImpl implements ArticleService {
         article.setAuthor(author);
         article.setStatus(ArticleStatus.DRAFT);
 
-        // CORREGIDO: Guarda la imagen física en disco y asigna la ruta de texto (String) al artículo
         if (dto.getImage() != null && !dto.getImage().isEmpty()) {
             String imagePath = imageService.saveImage(dto.getImage());
             article.setImage(imagePath);
