@@ -18,15 +18,19 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final ArticleMapper articleMapper;
+    private final ImageService imageService; // Inyección del servicio de imágenes de las chicas
 
+    // Constructor con todos los servicios necesarios
     public ArticleServiceImpl(
             ArticleRepository articleRepository,
             UserService userService,
-            ArticleMapper articleMapper
+            ArticleMapper articleMapper,
+            ImageService imageService
     ) {
         this.articleRepository = articleRepository;
         this.userService = userService;
         this.articleMapper = articleMapper;
+        this.imageService = imageService;
     }
 
     @Override
@@ -39,6 +43,13 @@ public class ArticleServiceImpl implements ArticleService {
         article.setContent(dto.getContent());
         article.setAuthor(author);
         article.setStatus(ArticleStatus.DRAFT);
+
+        // CORREGIDO: Guarda la imagen física en disco y asigna la ruta de texto (String) al artículo
+        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
+            String imagePath = imageService.saveImage(dto.getImage());
+            article.setImage(imagePath);
+        }
+
 
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
@@ -154,7 +165,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleResponseDTO updateImage(Integer id, String imageUrl) {
         Article article = getArticleEntity(id);
-        article.setImage(imageUrl);
+        article.setImage(imageUrl); // CORREGIDO: Vuelve a su estado original (String)
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }

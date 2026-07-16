@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType; // CORREGIDO: Importación necesaria para Multipart
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,9 +24,11 @@ public class ArticleController {
     private final ArticleService articleService;
     private final ImageService imageService;
 
-    @PostMapping
+    // CORREGIDO: Se cambia @RequestBody por @ModelAttribute y se consume MULTIPART_FORM_DATA_VALUE
+    // para que el frontend pueda enviar la imagen física junto con el texto del artículo.
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArticleResponseDTO> createArticle(
-            @Valid @RequestBody ArticleRequestDTO dto) {
+            @Valid @ModelAttribute ArticleRequestDTO dto) {
 
         ArticleResponseDTO created = articleService.createArticle(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -101,5 +104,3 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 }
-
-
