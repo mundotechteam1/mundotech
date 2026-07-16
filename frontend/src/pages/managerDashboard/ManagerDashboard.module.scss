@@ -1,0 +1,125 @@
+@use '../../styles/_variables' as v;
+
+.managerDashboard {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 70px 18px 40px;
+  color: v.$color-text;
+  background-color: v.$color-bg;
+  font-family: v.$font-heading-primary;
+  text-align: left;
+
+  &Title {
+    position: relative;
+    text-align: center;
+    padding: 0 18px 10px;
+    margin-bottom: 42px;
+    border-bottom: 1px solid v.$color-text;
+
+    h1 {
+      margin: 0;
+      color: v.$color-text;
+      font-family: v.$font-heading-primary;
+      font-size: 36px;
+      font-style: italic;
+      font-weight: v.$weight-bold;
+      line-height: 0.95;
+      letter-spacing: -1.2px;
+    }
+
+    p {
+      margin: 14px 0 0;
+      color: v.$color-text;
+      font-family: v.$font-heading-secondary;
+      font-size: 8px;
+      font-weight: v.$weight-bold;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+  }
+
+  &Badge {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    padding: 6px 8px;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    font-family: v.$font-heading-secondary;
+    font-size: 8px;
+    font-weight: v.$weight-bold;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &Message,
+  &Error {
+    padding: 0 18px;
+    font-family: v.$font-heading-secondary;
+    font-size: 10px;
+  }
+
+  &Error {
+    color: v.$color-error;
+  }
+
+  &Articles {
+    display: flex;
+    flex-direction: column;
+    padding: 0 18px;
+  }
+}
+
+@media (min-width: 640px) {
+  .managerDashboard {
+    max-width: 600px;
+    padding: 70px 24px 48px;
+  }
+
+  .managerDashboardTitle {
+    padding: 0 24px 14px;
+  }
+
+  .managerDashboardTitle h1 {
+    font-size: 44px;
+  }
+
+  .managerDashboardTitle p {
+    font-size: 9px;
+  }
+
+  .managerDashboardBadge {
+    font-size: 9px;
+    padding: 8px 12px;
+    right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .managerDashboard {
+    max-width: 900px;
+    padding: 70px 32px 56px;
+  }
+
+  .managerDashboardTitle {
+    padding: 0 32px 18px;
+    margin-bottom: 48px;
+  }
+
+  .managerDashboardTitle h1 {
+    font-size: 52px;
+    letter-spacing: -1.8px;
+  }
+
+  .managerDashboardTitle p {
+    font-size: 10px;
+  }
+
+  .managerDashboardBadge {
+    font-size: 10px;
+    padding: 10px 16px;
+    right: 32px;
+  }
+}

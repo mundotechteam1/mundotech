@@ -1,0 +1,100 @@
+@use "../../styles/variables" as v;
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* CHECKBOX */
+.roleSelector {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.roleOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* LABELS */
+.loginForm label {
+  font-family: v.$font-heading-secondary;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$color-form-label;
+  margin-bottom: 0.25rem;
+}
+
+/* INPUTS */
+.loginForm input {
+  width: 100%;
+  padding: 0.75rem 0.5rem;
+  font-family: v.$font-body; 
+  font-size: 1rem;
+  border: 1px solid v.$color-border;
+  background-color: transparent;
+  color: v.$color-text;
+  outline: none;
+}
+
+.loginForm input:focus {
+  border-color: v.$color-black;
+}
+
+/* ERROR */
+.formError {
+  color: v.$color-error;
+  font-size: 0.875rem;
+  margin-top: -1rem;
+}
+
+.formErrorGlobal {
+  color: v.$color-error;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid v.$color-error;
+}
+
+/* FORGOTTEN PASSCODE */
+.forgotLink {
+  font-family: v.$font-heading-secondary;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$color-form-label;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+// BUTTON
+.loginBtn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: v.$color-black;
+  color: v.$color-white;
+  font-family: v.$font-heading-secondary; 
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+}
+
+.loginBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

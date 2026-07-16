@@ -1,0 +1,118 @@
+@use "../../styles/_variables" as v;
+
+.authorDashboard {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+  color: v.$color-text;
+  background-color: v.$color-bg;
+  font-family: v.$font-heading-primary;
+  text-align: left;
+
+
+  
+  &Title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      color: v.$color-text;
+      font-family: v.$font-heading-primary;
+      font-size: 30px;
+      font-style: italic;
+      font-weight: v.$weight-bold;
+      line-height: 0.95;
+      letter-spacing: -1px;
+    }
+  }
+
+  &Subtitle {
+    margin: 0 0 6px;
+    color: v.$color-text;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  &CreateButton {
+    border: none;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    padding: 7px 9px;
+    font-family: v.$font-heading-secondary;
+    font-size: 7px;
+    font-weight: v.$weight-bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &Message,
+  &Error {
+    font-family: v.$font-heading-secondary;
+    font-size: 10px;
+  }
+
+  &Error {
+    color: v.$color-error;
+  }
+}
+
+.authorArticles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .authorDashboard {
+    max-width: 600px;
+    padding: 32px 24px 48px;
+  }
+
+  .authorDashboardTitle h1 {
+    font-size: 38px;
+  }
+
+  .authorDashboardSubtitle {
+    font-size: 8px;
+  }
+
+  .authorDashboardCreateButton {
+    font-size: 8px;
+    padding: 8px 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .authorDashboard {
+    max-width: 960px;
+    padding: 40px 32px 56px;
+  }
+
+  .authorDashboardTitle h1 {
+    font-size: 46px;
+    letter-spacing: -1.5px;
+  }
+
+  .authorDashboardSubtitle {
+    font-size: 9px;
+  }
+
+  .authorDashboardCreateButton {
+    font-size: 9px;
+    padding: 10px 16px;
+  }
+
+  .authorArticles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+}

@@ -1,0 +1,69 @@
+@use "../../styles/_variables" as v;
+
+.articleList {
+  max-width: v.$max-content-width;
+  margin: 1rem auto;
+  padding: v.$space-lg v.$space-md;
+  background: v.$color-bg;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+
+  &State {
+    display: flex;
+    justify-content: center;
+    padding: v.$space-xl v.$space-md;
+  }
+
+  &Loading,
+  &Empty,
+  &Error {
+    font-family: v.$font-body;
+    font-size: 0.95rem;
+    color: v.$color-text-muted;
+    text-align: center;
+  }
+
+  &Error {
+    color: #b3261e;
+  }
+
+  &Footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: v.$space-lg;
+  }
+
+  &LoadMore {
+    font-family: v.$font-body;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: v.$color-text;
+    background: transparent;
+    border: 1px solid v.$color-text;
+    padding: 0.85rem 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background: v.$color-text;
+      color: v.$color-bg;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$color-text;
+      outline-offset: 2px;
+    }
+  }
+}

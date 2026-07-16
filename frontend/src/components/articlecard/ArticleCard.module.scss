@@ -1,0 +1,94 @@
+@use "../../styles/_variables" as v;
+
+.articleCard {
+  padding-bottom: v.$space-xl;
+  margin-bottom: v.$space-xl;
+  border-bottom: 1px solid rgba(v.$color-text, 0.15);
+
+  &Last {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  &Eyebrow {
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: v.$color-text;
+    margin: 0 0 v.$space-sm;
+  }
+
+  &Media {
+    position: relative;
+    margin-bottom: v.$space-md;
+  }
+
+  &Image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  &Meta {
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+    margin-bottom: v.$space-md;
+  }
+
+  &Date {
+    display: inline-block;
+    background-color: v.$color-text;
+    color: v.$color-white;
+    padding: 0.35rem 0.8rem;
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &Author {
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    color: v.$color-text-muted;
+
+    &::before {
+      content: "•";
+      margin: 0 0.5rem;
+    }
+  }
+
+  &Title {
+    margin: 0 0 v.$space-sm;
+    font-family: v.$font-heading-primary;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: v.$color-text;
+  }
+
+  &Excerpt {
+    margin: 0 0 v.$space-md;
+    font-family: v.$font-body;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: v.$color-text-muted;
+  }
+
+  &Status {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid v.$color-text;
+    font-family: v.$font-body;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: v.$color-text;
+    background-color: transparent;
+  }
+}
