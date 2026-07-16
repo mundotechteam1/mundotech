@@ -15,13 +15,22 @@ function AuthorDashboard() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
+  const authHeaders = () => {
+    const token = localStorage.getItem("token");
+    const headers = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    return headers;
+  };
+
   useEffect(() => {
     loadArticles();
   }, []);
 
   const loadArticles = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/articles");
+      const response = await fetch("http://localhost:8080/api/v1/articles", {
+        headers: authHeaders(),
+      });
 
       if (!response.ok) {
         throw new Error("No se pudieron cargar los artículos");
@@ -82,7 +91,7 @@ function AuthorDashboard() {
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
-        { method: "DELETE" },
+        { method: "DELETE", headers: authHeaders() },
       );
 
       if (!response.ok) {
