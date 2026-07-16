@@ -1,14 +1,16 @@
 @use "../../styles/_variables" as v;
 
 .articleList {
-  max-width: v.$max-content-width;
-  margin: 1rem auto;
+  width: 100%;
+  max-width: 1400px;
+  margin: 1.2rem auto;
   padding: v.$space-lg v.$space-md;
   background: v.$color-bg;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: 1fr;
   gap: 2rem;
+  box-sizing: border-box;
 
   &State {
     display: flex;
@@ -20,7 +22,7 @@
   &Empty,
   &Error {
     font-family: v.$font-body;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     color: v.$color-text-muted;
     text-align: center;
   }
@@ -31,6 +33,7 @@
 
   &Footer {
     grid-column: 1 / -1;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +43,7 @@
 
   &LoadMore {
     font-family: v.$font-body;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -66,4 +69,55 @@
       outline-offset: 2px;
     }
   }
+
+  /* Tablet */
+@media (max-width: 768px) {
+  .articleList {
+    width: 100%;
+    padding: 1.5rem 1rem;
+    margin: 0 auto;
+    gap: 1.5rem;
+  }
+
+  .articleListFooter {
+    width: 100%;
+    padding: 0;
+  }
+
+  .articleListLoadMore {
+    width: 100%;
+    max-width: 280px;
+    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.3;
+  }
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+  .articleList {
+    width: 100%;
+    padding: 1rem 0.75rem;
+    margin: 0 auto;
+  }
+
+  .articleListFooter {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .articleListLoadMore {
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    letter-spacing: 0.03em;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.4;
+  }
+}
 }

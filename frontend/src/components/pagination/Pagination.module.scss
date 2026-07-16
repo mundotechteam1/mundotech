@@ -4,16 +4,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: v.$space-xs;
+  flex-wrap: wrap;
+  gap: 0.375rem;
   margin-top: v.$space-lg;
 
   button {
     border: 1px solid v.$color-text;
     background-color: transparent;
     color: v.$color-text;
-    padding: 6px 10px;
+    padding: 4px 8px;
+    min-width: 32px;
     font-family: v.$font-heading-secondary;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
     cursor: pointer;
@@ -24,33 +26,61 @@
       cursor: default;
     }
 
-    &.active {
-      background-color: v.$color-text;
-      color: v.$color-white;
-    }
-
     &:focus-visible {
       outline: 3px solid v.$color-border;
       outline-offset: 2px;
     }
   }
+
+  .active {
+    background-color: v.$color-text;
+    color: v.$color-white;
+  }
+
+  .ellipsis {
+    padding: 4px 6px;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.875rem;
+    color: v.$color-text-muted;
+  }
+
+  @media (min-width: 481px) {
+    button {
+      padding: 6px 10px;
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (min-width: 769px) {
+    flex-wrap: nowrap;
+  }
 }
 
 .paginationInfo {
-  margin-left: auto;
+  margin-left: 0;
+  width: 100%;
+  text-align: center;
+  order: 1;
   font-family: v.$font-heading-secondary;
   font-size: 0.875rem;
   color: v.$color-text-muted;
   white-space: nowrap;
+
+  @media (min-width: 481px) {
+    margin-left: auto;
+    width: auto;
+    text-align: right;
+    order: 0;
+  }
 }
 
 .perPageSelect {
   border: 1px solid v.$color-text;
   background-color: transparent;
   color: v.$color-text;
-  padding: 6px 10px;
+  padding: 4px 6px;
   font-family: v.$font-heading-secondary;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: v.$weight-bold;
   text-transform: uppercase;
   cursor: pointer;
@@ -60,5 +90,9 @@
     outline: 3px solid v.$color-border;
     outline-offset: 2px;
   }
-}
 
+  @media (min-width: 481px) {
+    padding: 6px 10px;
+    font-size: 0.875rem;
+  }
+}
