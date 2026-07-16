@@ -49,7 +49,6 @@
     gap: 6px;
 
     button {
-      height: 22px;
       border: 1px solid v.$color-text;
       font-family: v.$font-heading-secondary;
       font-size: 7px;
@@ -88,13 +87,36 @@
 }
 
 .iconAction {
-  width: 22px;
-  padding: 0;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
   background-color: transparent;
   color: v.$color-text;
+  font-size: 1rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid v.$color-text;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    transform: scale(1.1);
+  }
 
   &.delete {
     color: v.$color-error;
+    border-color: v.$color-error;
+
+    &:hover {
+      background-color: rgba(220, 38, 38, 0.08);
+    }
+  }
+
+  svg {
+    display: block;
   }
 }
 
@@ -143,27 +165,28 @@
 
 .managerActions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 9px;
+  margin-bottom: 10px;
+}
 
-  button {
-    font-family: v.$font-heading-secondary;
-    font-size: 9px;
-    font-weight: v.$weight-bold;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
+.managerActionBtn {
+  font-family: v.$font-heading-secondary;
+  font-size: 9px;
+  font-weight: v.$weight-bold;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  cursor: pointer;
 
-  button:first-child {
+  &:first-child {
     border: none;
     background-color: v.$color-text;
     color: v.$color-white;
     padding: 7px 20px;
   }
 
-  button:nth-child(2) {
+  &:nth-child(2) {
     border: none;
     background-color: transparent;
     color: v.$color-text;
@@ -226,7 +249,6 @@
   }
 
   .articleCardActions button {
-    height: 26px;
     font-size: 8px;
   }
 
@@ -244,11 +266,11 @@
     align-items: center;
   }
 
-  .managerActions button {
+  .managerActionBtn {
     font-size: 11px;
   }
 
-  .managerActions button:first-child {
+  .managerActionBtn:first-child {
     padding: 10px 32px;
   }
 }

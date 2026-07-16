@@ -1,3 +1,4 @@
+import { FaTrash, FaPen } from "react-icons/fa6";
 import styles from "./ArticleCardManager.module.scss";
 
 const statusLabels = {
@@ -57,28 +58,25 @@ function ArticleCard({
         </div>
 
         <div className={styles.managerActions}>
-          <button type="button" onClick={() => onApprove?.(article.id)}>
+          <button className={styles.managerActionBtn} type="button" onClick={() => onApprove?.(article.id)}>
             Aprobar
           </button>
-          <button type="button" onClick={() => onReject?.(article.id)}>
+          <button className={styles.managerActionBtn} type="button" onClick={() => onReject?.(article.id)}>
             Rechazar
           </button>
-        </div>
-
-        <div className={styles.managerIconActions}>
           <button
             className={`${styles.iconAction} ${styles.delete}`}
             type="button"
             onClick={() => onDelete?.(article.id)}
           >
-            ×
+            <FaTrash />
           </button>
           <button
             className={styles.iconAction}
             type="button"
             onClick={() => onEdit?.(article.id)}
           >
-            ✎
+            <FaPen />
           </button>
         </div>
       </article>
@@ -124,7 +122,7 @@ function ArticleCard({
           type="button"
           onClick={() => onDelete?.(article.id)}
         >
-          ×
+          <FaTrash />
         </button>
 
         <button
@@ -132,7 +130,7 @@ function ArticleCard({
           type="button"
           onClick={() => onEdit?.(article.id)}
         >
-          ✎
+          <FaPen />
         </button>
       </div>
     </article>

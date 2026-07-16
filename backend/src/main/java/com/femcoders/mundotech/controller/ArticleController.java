@@ -94,11 +94,27 @@ public class ArticleController {
         return ResponseEntity.ok(updated);
     }
 
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<ArticleResponseDTO> rejectArticle(
+            @PathVariable Integer id,
+            @RequestParam Integer managerId) {
+        ArticleResponseDTO updated = articleService.rejectArticle(id, managerId);
+        return ResponseEntity.ok(updated);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticleById(
             @PathVariable Integer id,
             @RequestParam Integer authorId) {
         articleService.deleteArticleById(id, authorId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/manager")
+    public ResponseEntity<Void> deleteArticleByManager(
+            @PathVariable Integer id,
+            @RequestParam Integer managerId) {
+        articleService.deleteArticleByManager(id, managerId);
         return ResponseEntity.noContent().build();
     }
 }

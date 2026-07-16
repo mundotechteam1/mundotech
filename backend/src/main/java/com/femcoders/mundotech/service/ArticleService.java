@@ -20,9 +20,13 @@ public interface ArticleService {
 
     void deleteArticleById(Integer articleId, Integer authorId);
 
+    void deleteArticleByManager(Integer articleId, Integer managerId);
+
     ArticleResponseDTO sendForReview(Integer articleId, Integer authorId);
 
     ArticleResponseDTO approveArticle(Integer articleId, Integer managerId);
+
+    ArticleResponseDTO rejectArticle(Integer articleId, Integer managerId);
 
     List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
 

@@ -106,6 +106,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void deleteArticleByManager(Integer articleId, Integer managerId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        User manager = userService.getUserEntityById(managerId);
+
+        boolean isManager = manager.getRoles().stream()
+                .anyMatch(role -> role.getName().equalsIgnoreCase("MANAGER"));
+
+        if (!isManager) {
+            throw new RuntimeException("Only a manager can delete articles this way");
+        }
+
+        articleRepository.delete(article);
+    }
+
+    @Override
     public ArticleResponseDTO sendForReview(Integer articleId, Integer authorId) {
         Article article = getArticleEntity(articleId);
 
@@ -142,6 +159,29 @@ public class ArticleServiceImpl implements ArticleService {
 
         article.setStatus(ArticleStatus.PUBLISHED);
         article.setPublishedAt(LocalDateTime.now());
+
+        Article saved = articleRepository.save(article);
+        return articleMapper.toResponse(saved);
+    }
+
+    @Override
+    public ArticleResponseDTO rejectArticle(Integer articleId, Integer managerId) {
+        Article article = getArticleEntity(articleId);
+
+        User manager = userService.getUserEntityById(managerId);
+
+        boolean isManager = manager.getRoles().stream()
+                .anyMatch(role -> role.getName().equalsIgnoreCase("MANAGER"));
+
+        if (!isManager) {
+            throw new RuntimeException("Only a manager can reject articles");
+        }
+
+        if (article.getStatus() != ArticleStatus.IN_REVIEW) {
+            throw new RuntimeException("Only articles in review can be rejected");
+        }
+
+        article.setStatus(ArticleStatus.DRAFT);
 
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
