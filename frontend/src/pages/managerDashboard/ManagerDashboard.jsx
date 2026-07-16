@@ -71,7 +71,34 @@ function ManagerDashboard() {
       }
 
       setArticles((prev) =>
-        prev.map((a) => (a.id === articleId ? { ...a, status: "PUBLISHED" } : a)),
+        prev.map((a) =>
+          a.id === articleId ? { ...a, status: "PUBLISHED" } : a,
+        ),
+      );
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleReject = async (articleId) => {
+    const managerId = getUserId();
+    if (!managerId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}/reject?managerId=${managerId}`,
+        { method: "PUT", headers: authHeaders() },
+      );
+
+      if (!response.ok) {
+        throw new Error("No se pudo rechazar el artículo");
+      }
+
+      setArticles((prev) =>
+        prev.map((a) => (a.id === articleId ? { ...a, status: "DRAFT" } : a)),
       );
     } catch (err) {
       setError(err.message);
@@ -174,8 +201,7 @@ function ManagerDashboard() {
             article={article}
             variant="manager"
             onApprove={handleApprove}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
+            onReject={handleReject}
           />
         ))}
       </section>
