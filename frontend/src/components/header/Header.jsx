@@ -87,7 +87,6 @@ function Header() {
           </a>
         )}
       </div>
-
       <div className={styles.newspaper}>
         <div className={styles.line}></div>
 

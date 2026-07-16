@@ -3,7 +3,7 @@
 .header {
   background: v.$color-bg;
   width: 100%;
-  padding: 2.5rem 0;
+  padding: 1rem 0;
   position: relative;
 }
 
@@ -31,11 +31,11 @@
 }
 
 .userArea {
-  position: absolute;
-  top: 0.5rem;
-  right: 2rem;
+  width: min(900px, 90%);
+  margin: 0 auto 0.5rem;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.75rem;
 }
 
@@ -84,6 +84,7 @@
   width: min(900px, 90%);
   margin: 0 auto;
   text-align: center;
+  position: relative;
 }
 
 .line {
@@ -144,11 +145,6 @@ h1 {
     padding: 3.5rem 0;
   }
 
-  .userArea {
-    top: 0.8rem;
-    right: 1.5rem;
-  }
-
   .loginLink svg {
     font-size: 1.7rem;
   }
@@ -173,11 +169,6 @@ h1 {
 @media (min-width: 769px) {
   .header {
     padding: 5rem 0;
-  }
-
-  .userArea {
-    top: 2rem;
-    right: 3rem;
   }
 
   .loginLink svg {

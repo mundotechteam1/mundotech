@@ -50,11 +50,11 @@ function ArticleList({
         <ArticleCard
           key={article.id}
           article={article}
+          index={index}
           isLast={!hasMore && index === articles.length - 1}
         />
       ))}
 
-      {/* Botón para ir a la lista completa */}
       {totalArticles > articles.length && (
         <div className={styles.articleListFooter}>
           <button
@@ -67,9 +67,9 @@ function ArticleList({
         </div>
       )}
 
-      {/* Botón para cargar más si usamos paginación */}
       {hasMore && (
         <div className={styles.articleListFooter}>
+
           {error && (
             <p className={styles.articleListError}>
               No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
@@ -84,8 +84,10 @@ function ArticleList({
           >
             {isLoading ? "Cargando…" : "Cargar más"}
           </button>
+
         </div>
       )}
+
     </section>
   );
 }

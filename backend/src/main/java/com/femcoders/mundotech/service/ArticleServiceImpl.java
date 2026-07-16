@@ -18,15 +18,18 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final ArticleMapper articleMapper;
+    private final ImageService imageService; 
 
     public ArticleServiceImpl(
             ArticleRepository articleRepository,
             UserService userService,
-            ArticleMapper articleMapper
+            ArticleMapper articleMapper,
+            ImageService imageService
     ) {
         this.articleRepository = articleRepository;
         this.userService = userService;
         this.articleMapper = articleMapper;
+        this.imageService = imageService;
     }
 
     @Override
@@ -39,6 +42,12 @@ public class ArticleServiceImpl implements ArticleService {
         article.setContent(dto.getContent());
         article.setAuthor(author);
         article.setStatus(ArticleStatus.DRAFT);
+
+        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
+            String imagePath = imageService.saveImage(dto.getImage());
+            article.setImage(imagePath);
+        }
+
 
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
@@ -97,6 +106,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void deleteArticleByManager(Integer articleId, Integer managerId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+
+        User manager = userService.getUserEntityById(managerId);
+
+        boolean isManager = manager.getRoles().stream()
+                .anyMatch(role -> role.getName().equalsIgnoreCase("MANAGER"));
+
+        if (!isManager) {
+            throw new RuntimeException("Only a manager can delete articles this way");
+        }
+
+        articleRepository.delete(article);
+    }
+
+    @Override
     public ArticleResponseDTO sendForReview(Integer articleId, Integer authorId) {
         Article article = getArticleEntity(articleId);
 
@@ -139,6 +165,29 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public ArticleResponseDTO rejectArticle(Integer articleId, Integer managerId) {
+        Article article = getArticleEntity(articleId);
+
+        User manager = userService.getUserEntityById(managerId);
+
+        boolean isManager = manager.getRoles().stream()
+                .anyMatch(role -> role.getName().equalsIgnoreCase("MANAGER"));
+
+        if (!isManager) {
+            throw new RuntimeException("Only a manager can reject articles");
+        }
+
+        if (article.getStatus() != ArticleStatus.IN_REVIEW) {
+            throw new RuntimeException("Only articles in review can be rejected");
+        }
+
+        article.setStatus(ArticleStatus.DRAFT);
+
+        Article saved = articleRepository.save(article);
+        return articleMapper.toResponse(saved);
+    }
+
+    @Override
     public List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status) {
         return articleRepository.findByStatus(status)
                 .stream()
@@ -155,6 +204,19 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleResponseDTO updateImage(Integer id, String imageUrl) {
         Article article = getArticleEntity(id);
         article.setImage(imageUrl);
+        Article saved = articleRepository.save(article);
+        return articleMapper.toResponse(saved);
+    }
+
+    @Override
+    public ArticleResponseDTO deleteArticleImage(Integer articleId, Integer authorId) {
+        Article article = getArticleEntity(articleId);
+
+        if (!article.getAuthor().getId().equals(authorId)) {
+            throw new RuntimeException("Only the author can remove the image");
+        }
+
+        article.setImage(null);
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }

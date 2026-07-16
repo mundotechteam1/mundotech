@@ -4,67 +4,81 @@
 
 .articleCard {
   border: 1px solid v.$color-text;
-  padding: 10px;
+  padding: v.$space-sm;
   background-color: transparent;
+  font-family: v.$font-body; /* más legible */
 
   &Meta {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: v.$space-xs;
+    margin-bottom: v.$space-xs;
     font-family: v.$font-heading-secondary;
-    font-size: 7px;
+    font-size: 0.875rem; /* 14px — antes 7px */
     font-weight: v.$weight-bold;
     text-transform: uppercase;
+    color: v.$color-text-muted;
   }
 
   &Status {
-    padding: 3px 5px;
+    padding: 4px 6px;
     border: 1px solid v.$color-text;
     color: v.$color-text;
     background-color: transparent;
+    font-size: 0.75rem; /* 12px */
+    border-radius: 4px;
   }
 
   h2 {
-    margin: 0 0 8px;
+    margin: 0 0 v.$space-xs;
     color: v.$color-text;
     font-family: v.$font-heading-primary;
-    font-size: 22px;
+    font-size: 1.375rem; /* 22px */
     font-weight: v.$weight-regular;
-    line-height: 1;
+    line-height: 1.2;
     letter-spacing: -0.6px;
   }
 
   &Content {
-    margin: 0 0 10px;
+    margin: 0 0 v.$space-sm;
     color: v.$color-text;
-    font-family: v.$font-heading-secondary;
-    font-size: 9px;
-    line-height: 1.35;
+    font-family: v.$font-body;
+    font-size: 0.875rem; /* 14px — antes 9px */
+    line-height: 1.45;
   }
 
   &Actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: v.$space-xs;
 
     button {
-      height: 22px;
       border: 1px solid v.$color-text;
       font-family: v.$font-heading-secondary;
-      font-size: 7px;
+      font-size: 0.75rem; /* 12px — antes 7px */
       font-weight: v.$weight-bold;
       text-transform: uppercase;
       cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 4px;
+
+      &:focus-visible {
+        outline: 3px solid v.$color-border;
+        outline-offset: 2px;
+      }
     }
   }
 }
+
+/* ---- status badges ---- */
 
 .statusDraft {
   background-color: transparent;
   color: v.$color-text;
   border: 1px solid v.$color-text;
-  padding: 3px 5px;
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  border-radius: 4px;
 }
 
 .statusInReview,
@@ -72,38 +86,74 @@
   background-color: v.$color-text;
   color: v.$color-white;
   border: 1px solid v.$color-text;
-  padding: 3px 5px;
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  border-radius: 4px;
 }
+
+/* ---- action buttons ---- */
 
 .primaryAction {
   background-color: v.$color-text;
   color: v.$color-white;
-  padding: 0 8px;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  border-radius: 4px;
 }
 
 .secondaryAction {
   background-color: transparent;
   color: v.$color-text;
-  padding: 0 8px;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  border-radius: 4px;
 }
 
 .iconAction {
-  width: 22px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   background-color: transparent;
   color: v.$color-text;
+  font-size: 1.125rem; /* 18px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid v.$color-text;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 3px solid v.$color-border;
+    outline-offset: 2px;
+  }
 
   &.delete {
     color: v.$color-error;
+    border-color: v.$color-error;
+
+    &:hover {
+      background-color: rgba(220, 38, 38, 0.08);
+    }
+  }
+
+  svg {
+    display: block;
   }
 }
 
 /* ---- manager variant ---- */
 
 .managerArticle {
-  padding: 0 0 28px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid #a9a18f;
+  padding: 0 0 v.$space-lg;
+  margin-bottom: v.$space-lg;
+  border-bottom: 1px solid v.$color-border;
 
   &:last-child {
     margin-bottom: 0;
@@ -111,132 +161,119 @@
 }
 
 .managerCategory {
-  margin: 0 0 8px;
+  margin: 0 0 v.$space-xs;
   color: v.$color-error;
   font-family: v.$font-heading-secondary;
-  font-size: 9px;
+  font-size: 0.875rem; /* 14px — antes 9px */
   font-weight: v.$weight-bold;
-  letter-spacing: 0.3px;
   text-transform: uppercase;
 }
 
 .managerArticle h2 {
-  margin: 0 0 14px;
+  margin: 0 0 v.$space-sm;
   color: v.$color-text;
   font-family: v.$font-heading-primary;
-  font-size: 25px;
+  font-size: 1.5625rem; /* 25px */
   font-weight: v.$weight-bold;
-  line-height: 1.05;
-  letter-spacing: -0.7px;
+  line-height: 1.2;
 }
 
 .managerMeta {
   display: flex;
-  gap: 12px;
-  margin-bottom: 10px;
-  color: v.$color-text;
+  gap: v.$space-sm;
+  margin-bottom: v.$space-xs;
+  color: v.$color-text-muted;
   font-family: v.$font-heading-secondary;
-  font-size: 8px;
+  font-size: 0.75rem; /* 12px — antes 8px */
   font-weight: v.$weight-bold;
   text-transform: uppercase;
 }
 
 .managerActions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 9px;
-
-  button {
-    font-family: v.$font-heading-secondary;
-    font-size: 9px;
-    font-weight: v.$weight-bold;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-
-  button:first-child {
-    border: none;
-    background-color: v.$color-text;
-    color: v.$color-white;
-    padding: 7px 20px;
-  }
-
-  button:nth-child(2) {
-    border: none;
-    background-color: transparent;
-    color: v.$color-text;
-    padding: 0 0 0 20px;
-  }
+  flex-wrap: wrap;
+  align-items: center;
+  gap: v.$space-xs;
+  margin-bottom: v.$space-xs;
 }
 
-.managerIconActions {
-  display: flex;
-  gap: 6px;
-  margin-top: 10px;
+.managerActionBtn {
+  font-family: v.$font-heading-secondary;
+  font-size: 0.875rem; /* 14px — antes 9px */
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  padding: 8px 20px;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 3px solid v.$color-border;
+    outline-offset: 2px;
+  }
 }
 
 /* ---- responsive ---- */
 
 @media (min-width: 640px) {
   .articleCard {
-    padding: 14px;
+    padding: v.$space-md;
   }
 
   .articleCard h2 {
-    font-size: 26px;
+    font-size: 1.625rem; /* 26px */
   }
 
   .articleCardMeta,
   .articleCardContent {
-    font-size: 8px;
+    font-size: 0.875rem; /* 14px */
   }
 
   .managerArticle h2 {
-    font-size: 30px;
+    font-size: 1.875rem; /* 30px */
   }
 
   .managerMeta,
   .managerCategory {
-    font-size: 9px;
+    font-size: 0.875rem; /* 14px */
   }
 
   .managerActions button {
-    font-size: 10px;
+    font-size: 1rem;
   }
 
   .managerActions button:first-child {
-    padding: 8px 24px;
+    padding: 10px 24px;
   }
 }
 
 @media (min-width: 1024px) {
   .articleCard {
-    padding: 18px;
+    padding: v.$space-lg;
   }
 
   .articleCard h2 {
-    font-size: 30px;
+    font-size: 1.875rem; /* 30px */
   }
 
   .articleCardMeta,
   .articleCardContent {
-    font-size: 9px;
+    font-size: 1rem; /* 16px */
   }
 
   .articleCardActions button {
-    height: 26px;
-    font-size: 8px;
+    font-size: 0.875rem;
   }
 
   .managerArticle h2 {
-    font-size: 36px;
+    font-size: 2.25rem; /* 36px */
   }
 
   .managerMeta,
   .managerCategory {
-    font-size: 10px;
+    font-size: 1rem; /* 16px */
   }
 
   .managerActions {
@@ -244,11 +281,8 @@
     align-items: center;
   }
 
-  .managerActions button {
-    font-size: 11px;
-  }
-
-  .managerActions button:first-child {
-    padding: 10px 32px;
+  .managerActionBtn {
+    font-size: 1rem;
+    padding: 12px 32px;
   }
 }

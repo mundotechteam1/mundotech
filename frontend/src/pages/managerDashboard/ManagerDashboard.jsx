@@ -11,6 +11,27 @@ function ManagerDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+<<<<<<< HEAD
+  const [editingArticle, setEditingArticle] = useState(null);
+
+  const authHeaders = () => {
+    const token = localStorage.getItem("token");
+    const headers = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    return headers;
+  };
+
+  const getUserId = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split(".")[1])).id;
+    } catch {
+      return null;
+    }
+  };
+=======
+>>>>>>> main
 
   useEffect(() => {
     loadArticles();
@@ -18,7 +39,13 @@ function ManagerDashboard() {
 
   const loadArticles = async () => {
     try {
+<<<<<<< HEAD
+      const response = await fetch("http://localhost:8080/api/v1/articles", {
+        headers: authHeaders(),
+      });
+=======
       const response = await fetch("http://localhost:8080/api/v1/articles");
+>>>>>>> main
 
       if (!response.ok) {
         throw new Error("No se pudieron cargar los artículos");
@@ -33,6 +60,27 @@ function ManagerDashboard() {
     }
   };
 
+<<<<<<< HEAD
+  const handleApprove = async (articleId) => {
+    const managerId = getUserId();
+    if (!managerId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}/approve?managerId=${managerId}`,
+        { method: "PUT", headers: authHeaders() },
+      );
+
+      if (!response.ok) {
+        throw new Error("No se pudo aprobar el artículo");
+      }
+
+      setArticles((prev) =>
+        prev.map((a) => (a.id === articleId ? { ...a, status: "PUBLISHED" } : a)),
+=======
   const updateArticleStatus = async (articleId, newStatus) => {
     try {
       const response = await fetch(
@@ -50,26 +98,43 @@ function ManagerDashboard() {
 
       setArticles((prev) =>
         prev.map((a) => (a.id === articleId ? { ...a, status: newStatus } : a)),
+>>>>>>> main
       );
     } catch (err) {
       setError(err.message);
     }
   };
 
+<<<<<<< HEAD
+=======
   const handleApprove = (articleId) =>
     updateArticleStatus(articleId, "PUBLISHED");
   const handleReject = (articleId) => updateArticleStatus(articleId, "DRAFT");
 
+>>>>>>> main
   const handleDelete = async (articleId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
       return;
 
+<<<<<<< HEAD
+    const managerId = getUserId();
+    if (!managerId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}/manager?managerId=${managerId}`,
+        { method: "DELETE", headers: authHeaders() },
+=======
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
         {
           method: "DELETE",
         },
+>>>>>>> main
       );
 
       if (!response.ok) {
@@ -82,8 +147,26 @@ function ManagerDashboard() {
     }
   };
 
+<<<<<<< HEAD
+  const handleEdit = (articleId) => {
+    const article = articles.find((a) => a.id === articleId);
+    if (article) {
+      setEditingArticle(article);
+      setIsEditorOpen(true);
+    }
+  };
+
+  const handleArticleUpdated = () => {
+    loadArticles();
+  };
+
+  const handleEditorClose = (val) => {
+    setIsEditorOpen(val);
+    if (!val) setEditingArticle(null);
+=======
   const handleEdit = () => {
     setIsEditorOpen(true);
+>>>>>>> main
   };
 
   const articlesInReview = articles.filter(
@@ -139,7 +222,10 @@ function ManagerDashboard() {
             article={article}
             variant="manager"
             onApprove={handleApprove}
+<<<<<<< HEAD
+=======
             onReject={handleReject}
+>>>>>>> main
             onDelete={handleDelete}
             onEdit={handleEdit}
           />
@@ -157,7 +243,13 @@ function ManagerDashboard() {
 
       <ArticleEditor
         isEditorOpen={isEditorOpen}
+<<<<<<< HEAD
+        setIsEditorOpen={handleEditorClose}
+        article={editingArticle}
+        onArticleUpdated={handleArticleUpdated}
+=======
         setIsEditorOpen={setIsEditorOpen}
+>>>>>>> main
       />
     </div>
   );

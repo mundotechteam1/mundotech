@@ -1,13 +1,18 @@
 package com.femcoders.mundotech.controller;
 import com.femcoders.mundotech.dto.request.ArticleRequestDTO;
 import com.femcoders.mundotech.dto.response.ArticleResponseDTO;
+import com.femcoders.mundotech.entity.User;
 import com.femcoders.mundotech.entity.enums.ArticleStatus;
 import com.femcoders.mundotech.service.ArticleService;
 import com.femcoders.mundotech.service.ImageService;
+import com.femcoders.mundotech.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,10 +27,11 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final ImageService imageService;
+    private final UserService userService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ArticleResponseDTO> createArticle(
-            @Valid @RequestBody ArticleRequestDTO dto) {
+            @Valid @ModelAttribute ArticleRequestDTO dto) {
 
         ArticleResponseDTO created = articleService.createArticle(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -93,6 +99,14 @@ public class ArticleController {
         return ResponseEntity.ok(updated);
     }
 
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<ArticleResponseDTO> rejectArticle(
+            @PathVariable Integer id,
+            @RequestParam Integer managerId) {
+        ArticleResponseDTO updated = articleService.rejectArticle(id, managerId);
+        return ResponseEntity.ok(updated);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticleById(
             @PathVariable Integer id,
@@ -100,6 +114,20 @@ public class ArticleController {
         articleService.deleteArticleById(id, authorId);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<ArticleResponseDTO> deleteArticleImage(
+            @PathVariable Integer id,
+            @RequestParam Integer authorId) {
+        ArticleResponseDTO updated = articleService.deleteArticleImage(id, authorId);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{id}/manager")
+    public ResponseEntity<Void> deleteArticleByManager(
+            @PathVariable Integer id,
+            @RequestParam Integer managerId) {
+        articleService.deleteArticleByManager(id, managerId);
+        return ResponseEntity.noContent().build();
+    }
 }
-
-
