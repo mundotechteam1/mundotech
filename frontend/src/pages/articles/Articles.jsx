@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ArticleList from "../../components/ArticleList/ArticleList";
+import ArticleList from "../../components/articleList/ArticleList";
 import { getArticles } from "../../services/articleService";
 
 function Articles() {

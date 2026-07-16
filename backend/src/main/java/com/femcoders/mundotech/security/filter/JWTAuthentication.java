@@ -4,7 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.femcoders.mundotech.dto.request.LoginRequestDTO;
+import com.femcoders.mundotech.entity.User;
 import com.femcoders.mundotech.security.CustomAuthenticationManager;
+import com.femcoders.mundotech.security.UserDetail;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,11 +65,16 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
                 .map(grantedAuthority -> grantedAuthority.getAuthority().replace("ROLE_", ""))
                 .toList();
 
+        UserDetail user = (UserDetail) authResult.getPrincipal();
+
         String token = JWT.create()
                 .withSubject(authResult.getName())
+                .withClaim("id", user.getId())
+                .withClaim("name", user.getName())
                 .withClaim("roles", roles)
-                .withExpiresAt(new Date(System.currentTimeMillis() + (5 * 60000)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 60 * 1000)))
                 .sign(Algorithm.HMAC256(secret));
+
 
         response.addHeader("Authorization", "Bearer " + token);
     }

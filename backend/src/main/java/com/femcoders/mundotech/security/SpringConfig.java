@@ -16,7 +16,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-
 @Configuration
 public class SpringConfig {
 
@@ -57,18 +56,23 @@ public class SpringConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/h2/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/articles").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/author/**").hasAnyRole("AUTHOR", "MANAGER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/published").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/in-review").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/draft").hasRole("AUTHOR")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/articles/**").hasRole("AUTHOR")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/**").hasRole("AUTHOR")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/send-review").hasRole("AUTHOR")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/PUBLISHED").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/send-review").hasAnyRole("AUTHOR", "USER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/approve").hasRole("MANAGER")
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/reject").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/articles/**").hasRole("AUTHOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/*/manager").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/*/image").hasRole("AUTHOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/**").hasRole("AUTHOR")
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
