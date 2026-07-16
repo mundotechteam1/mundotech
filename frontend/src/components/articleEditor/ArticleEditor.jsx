@@ -33,7 +33,6 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
     try {
       const token = localStorage.getItem("token");
 
-      // 1. Creamos el artículo (El backend siempre lo guarda como DRAFT por defecto)
       const response = await axios.post(
         "http://localhost:8080/api/v1/articles",
         formData,
@@ -45,10 +44,8 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
         },
       );
 
-      // Obtenemos el ID del artículo que nos acaba de devolver el backend
       const createdArticleId = response.data.id;
 
-      // 2. SOLUCIÓN: Si presionaste "ENVIAR A REVISIÓN", hacemos el PUT automático para cambiar el estado en pgAdmin
       if (statusType === "IN_REVIEW" && createdArticleId) {
         await axios.put(
           `http://localhost:8080/api/v1/articles/${createdArticleId}/send-review?authorId=1`,
