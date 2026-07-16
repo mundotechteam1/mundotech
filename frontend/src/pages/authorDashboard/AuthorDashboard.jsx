@@ -180,7 +180,7 @@ function AuthorDashboard() {
           type="button"
           onClick={handleCreateNew}
         >
-          Crear nuevo artículo
+          Crear artículo
         </button>
       </section>
 
