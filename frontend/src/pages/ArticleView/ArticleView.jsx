@@ -176,13 +176,13 @@ export default function ArticleView() {
 
           {isManager && (
             <div className={styles.editorialNotesSection}>
-              <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
+              {/* <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
               <textarea
                 id="editor-notes"
                 value={editorialNote}
                 onChange={(e) => setEditorialNote(e.target.value)}
                 placeholder="Escribe una nota para el autor..."
-              />
+              /> */}
               <div className={styles.editorialActions}>
                 <button className={styles.btnApprove} onClick={handleApprove}>
                   APROBAR
