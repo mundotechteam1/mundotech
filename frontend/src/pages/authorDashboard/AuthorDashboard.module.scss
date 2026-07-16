@@ -2,117 +2,125 @@
 
 .authorDashboard {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 24px 18px 40px;
+  padding: v.$space-md v.$space-sm v.$space-lg;
+  text-align: left;
   color: v.$color-text;
   background-color: v.$color-bg;
-  font-family: v.$font-heading-primary;
-  text-align: left;
+  font-family: v.$font-body;
+  line-height: 1.55;
+}
 
+/* --- HEADER --- */
+.authorDashboardTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: v.$space-xs;
+  margin-bottom: v.$space-md;
 
-  
-  &Title {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 12px;
-    margin-bottom: 24px;
-
-    h1 {
-      margin: 0;
-      color: v.$color-text;
-      font-family: v.$font-heading-primary;
-      font-size: 30px;
-      font-style: italic;
-      font-weight: v.$weight-bold;
-      line-height: 0.95;
-      letter-spacing: -1px;
-    }
-  }
-
-  &Subtitle {
-    margin: 0 0 6px;
-    color: v.$color-text;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
+  h1 {
+    margin: 0;
+    font-family: v.$font-heading-primary;
+    font-size: 1.875rem; /* 30px → accesible */
     font-weight: v.$weight-bold;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-  }
-
-  &CreateButton {
-    border: none;
-    background-color: v.$color-text;
-    color: v.$color-white;
-    padding: 7px 9px;
-    font-family: v.$font-heading-secondary;
-    font-size: 7px;
-    font-weight: v.$weight-bold;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-
-  &Message,
-  &Error {
-    font-family: v.$font-heading-secondary;
-    font-size: 10px;
-  }
-
-  &Error {
-    color: v.$color-error;
+    letter-spacing: -1px;
+    line-height: 1.1;
   }
 }
 
+.authorDashboardSubtitle {
+  margin: 0 0 v.$space-xs;
+  font-family: v.$font-heading-secondary;
+  font-size: 0.875rem; /* 14px — antes 7px */
+  font-weight: v.$weight-bold;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: v.$color-text-muted;
+}
+
+/* --- BUTTON --- */
+.authorDashboardCreateButton {
+  border: none;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  padding: v.$space-xs v.$space-sm;
+  font-family: v.$font-heading-secondary;
+  font-size: 0.875rem; /* 14px — antes 7px */
+  font-weight: v.$weight-bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 3px solid v.$color-border;
+    outline-offset: 2px;
+  }
+}
+
+/* --- MESSAGES --- */
+.authorDashboardMessage,
+.authorDashboardError {
+  font-family: v.$font-body;
+  font-size: 1rem; /* 16px */
+}
+
+.authorDashboardError {
+  color: v.$color-error;
+}
+
+/* --- ARTICLES LIST --- */
 .authorArticles {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: v.$space-sm;
 }
 
+/* --- TABLET --- */
 @media (min-width: 640px) {
   .authorDashboard {
-    max-width: 600px;
-    padding: 32px 24px 48px;
+    padding: v.$space-lg v.$space-md v.$space-xl;
   }
 
   .authorDashboardTitle h1 {
-    font-size: 38px;
+    font-size: 2.375rem; /* 38px */
   }
 
   .authorDashboardSubtitle {
-    font-size: 8px;
+    font-size: 1rem; /* 16px */
   }
 
   .authorDashboardCreateButton {
-    font-size: 8px;
-    padding: 8px 12px;
+    font-size: 1rem;
+    padding: v.$space-sm v.$space-md;
   }
 }
 
+/* --- DESKTOP --- */
 @media (min-width: 1024px) {
   .authorDashboard {
     max-width: 960px;
-    padding: 40px 32px 56px;
+    padding: v.$space-xl v.$space-lg v.$space-xl;
   }
 
   .authorDashboardTitle h1 {
-    font-size: 46px;
+    font-size: 2.875rem; /* 46px */
     letter-spacing: -1.5px;
   }
 
   .authorDashboardSubtitle {
-    font-size: 9px;
+    font-size: 1.125rem; /* 18px */
   }
 
   .authorDashboardCreateButton {
-    font-size: 9px;
-    padding: 10px 16px;
+    font-size: 1.125rem;
+    padding: v.$space-sm v.$space-lg;
   }
 
   .authorArticles {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 18px;
+    gap: v.$space-md;
   }
 }

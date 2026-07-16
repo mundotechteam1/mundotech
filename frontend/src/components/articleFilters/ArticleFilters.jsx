@@ -12,16 +12,18 @@ function ArticleFilters({ filter, onFilterChange }) {
     <section className={styles.articleFilters}>
       <span>Filtrar por:</span>
 
-      {FILTERS.map(({ value, label }) => (
-        <button
-          key={value}
-          type="button"
-          className={filter === value ? styles.active : ""}
-          onClick={() => onFilterChange(value)}
-        >
-          {label}
-        </button>
-      ))}
+      <div className={styles.buttonsRow}>
+        {FILTERS.map(({ value, label }) => (
+          <button
+            key={value}
+            type="button"
+            className={filter === value ? styles.active : ""}
+            onClick={() => onFilterChange(value)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }

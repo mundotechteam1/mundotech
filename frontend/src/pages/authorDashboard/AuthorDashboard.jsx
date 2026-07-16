@@ -41,9 +41,10 @@ function AuthorDashboard() {
 
   const loadArticles = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/articles", {
-        headers: authHeaders(),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/author/${userInfo.id}`,
+        { headers: authHeaders() },
+      );
 
       if (!response.ok) {
         throw new Error("No se pudieron cargar los artículos");
@@ -179,7 +180,7 @@ function AuthorDashboard() {
           type="button"
           onClick={handleCreateNew}
         >
-          Crear nuevo artículo
+          Crear artículo
         </button>
       </section>
 

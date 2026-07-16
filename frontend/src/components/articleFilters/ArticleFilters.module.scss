@@ -2,34 +2,45 @@
 
 .articleFilters {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 18px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: v.$space-xs;
+  margin-bottom: v.$space-md;
   font-family: v.$font-heading-secondary;
 
   span {
-    margin-right: 4px;
     color: v.$color-text;
-    font-size: 7px;
+    font-size: 0.875rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
+  }
+
+  .buttonsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$space-xs;
   }
 
   button {
     border: 1px solid v.$color-text;
     background-color: transparent;
     color: v.$color-text;
-    padding: 4px 7px;
+    padding: 6px 10px;
     font-family: v.$font-heading-secondary;
-    font-size: 7px;
+    font-size: 0.875rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
     cursor: pointer;
+    border-radius: 4px;
 
     &.active {
       background-color: v.$color-text;
       color: v.$color-white;
+    }
+
+    &:focus-visible {
+      outline: 3px solid v.$color-border;
+      outline-offset: 2px;
     }
   }
 }
@@ -37,13 +48,13 @@
 @media (min-width: 640px) {
   .articleFilters span,
   .articleFilters button {
-    font-size: 8px;
+    font-size: 1rem;
   }
 }
 
 @media (min-width: 1024px) {
   .articleFilters span,
   .articleFilters button {
-    font-size: 9px;
+    font-size: 1.125rem;
   }
 }
