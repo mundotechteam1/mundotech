@@ -22,6 +22,19 @@ function AuthorDashboard() {
     return headers;
   };
 
+  const getUserInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return { id: payload.id, name: payload.name, email: payload.sub };
+    } catch {
+      return null;
+    }
+  };
+
+  const userInfo = getUserInfo();
+
   useEffect(() => {
     loadArticles();
   }, []);
@@ -81,16 +94,21 @@ function AuthorDashboard() {
     (article) => article.status === "IN_REVIEW",
   ).length;
 
-  const firstArticle = articles[0];
-  const author = firstArticle?.author || { name: "M. Atrus" };
+  const loggedInUser = { name: userInfo?.name || "Autor" };
 
   const handleDelete = async (articleId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
       return;
 
+    const authorId = userInfo?.id;
+    if (!authorId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
+        `http://localhost:8080/api/v1/articles/${articleId}?authorId=${authorId}`,
         { method: "DELETE", headers: authHeaders() },
       );
 
@@ -128,7 +146,7 @@ function AuthorDashboard() {
       </section>
 
       <AuthorProfile
-        author={author}
+        author={loggedInUser}
         totalPublished={totalPublished}
         reviewCycles={reviewCycles}
       />

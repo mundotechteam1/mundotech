@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FaTrash, FaPen } from "react-icons/fa6";
 import styles from "./ArticleCardManager.module.scss";
 
@@ -43,6 +44,7 @@ function ArticleCard({
   onDelete,
   onEdit,
 }) {
+  const navigate = useNavigate();
   if (variant === "manager") {
     return (
       <article className={styles.managerArticle}>
@@ -107,12 +109,16 @@ function ArticleCard({
 
         {article.status === "IN_REVIEW" && (
           <button className={styles.secondaryAction} type="button">
-            Pendiente de aprobación
+            En Revisión
           </button>
         )}
 
         {article.status === "PUBLISHED" && (
-          <button className={styles.secondaryAction} type="button">
+          <button
+            className={styles.secondaryAction}
+            type="button"
+            onClick={() => navigate(`/article-view/${article.id}`)}
+          >
             Ver publicado
           </button>
         )}
