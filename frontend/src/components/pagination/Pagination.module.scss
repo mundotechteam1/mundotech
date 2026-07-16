@@ -4,19 +4,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  margin-top: 28px;
+  gap: v.$space-xs;
+  margin-top: v.$space-lg;
 
   button {
     border: 1px solid v.$color-text;
     background-color: transparent;
     color: v.$color-text;
-    padding: 4px 7px;
+    padding: 6px 10px;
     font-family: v.$font-heading-secondary;
-    font-size: 7px;
+    font-size: 0.875rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
     cursor: pointer;
+    border-radius: 4px;
 
     &[disabled] {
       opacity: 0.35;
@@ -27,13 +28,18 @@
       background-color: v.$color-text;
       color: v.$color-white;
     }
+
+    &:focus-visible {
+      outline: 3px solid v.$color-border;
+      outline-offset: 2px;
+    }
   }
 }
 
 .paginationInfo {
   margin-left: auto;
   font-family: v.$font-heading-secondary;
-  font-size: 7px;
+  font-size: 0.875rem;
   color: v.$color-text-muted;
   white-space: nowrap;
 }
@@ -42,10 +48,17 @@
   border: 1px solid v.$color-text;
   background-color: transparent;
   color: v.$color-text;
-  padding: 3px 4px;
+  padding: 6px 10px;
   font-family: v.$font-heading-secondary;
-  font-size: 7px;
+  font-size: 0.875rem;
   font-weight: v.$weight-bold;
   text-transform: uppercase;
   cursor: pointer;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 3px solid v.$color-border;
+    outline-offset: 2px;
+  }
 }
+
