@@ -9,7 +9,16 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const today = "05/24/2024";
+  const token = localStorage.getItem("token");
+  const decoded = token ? jwtDecode(token) : null;
+  const userName = decoded?.name || "Autor";
+  const userId = decoded?.id;
+
+  const today = new Date().toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -17,42 +26,52 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
     }
   };
 
-const handleSubmit = async (e, statusType) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e, statusType) => {
+    e.preventDefault();
+    if (!userId) {
+      alert("No se pudo identificar al usuario");
+      return;
+    }
+    setLoading(true);
 
-  const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
-  const userId = decoded.id; 
+    const formData = new FormData();
+    formData.append("title", headline);
+    formData.append("content", content);
+    formData.append("authorId", userId);
 
-  const formData = new FormData();
-  formData.append("title", headline);
-  formData.append("content", content);
-  formData.append("status", statusType);
-  formData.append("authorId", userId); 
+    if (image) {
+      formData.append("image", image);
+    }
 
-  if (image) {
-    formData.append("image", image);
-  }
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/articles",
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
 
-  try {
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/articles",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // ← sin Content-Type
-        },
+      const createdArticleId = response.data.id;
+
+      if (statusType === "IN_REVIEW" && createdArticleId) {
+        await axios.put(
+          `http://localhost:8080/api/v1/articles/${createdArticleId}/send-review?authorId=${userId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
       }
-    );
 
-    console.log("Artículo creado:", response.data);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
+      alert(`¡Éxito! Estado: ${statusType}`);
+      setHeadline("");
+      setContent("");
+      setImage(null);
+      if (setIsEditorOpen) setIsEditorOpen(false);
+    } catch (error) {
+      console.error(error);
+      alert("Error backend");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!isEditorOpen) return null;
 
@@ -84,7 +103,7 @@ const handleSubmit = async (e, statusType) => {
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>AUTOR</span>
                 <div className={styles.formGroup}>
-                  <input type="text" defaultValue="Julius V. Thorne" disabled />
+                  <input type="text" defaultValue={userName} disabled />
                 </div>
               </div>
 
