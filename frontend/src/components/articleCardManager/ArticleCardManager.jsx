@@ -48,11 +48,12 @@ function ArticleCard({
   if (variant === "manager") {
     return (
       <article className={styles.managerArticle}>
-        <p className={styles.managerCategory}>
-          {article.author?.name || "Editorial"}
-        </p>
-
-        <h2>{article.title}</h2>
+        <h2
+          className={styles.managerTitle}
+          onClick={() => navigate(`/article-view/${article.id}`)}
+        >
+          {article.title}
+        </h2>
 
         <div className={styles.managerMeta}>
           <span>Por {article.author?.name || "Autor"}</span>
@@ -60,27 +61,27 @@ function ArticleCard({
         </div>
 
         <div className={styles.managerActions}>
-          <button className={styles.managerActionBtn} type="button" onClick={() => onApprove?.(article.id)}>
+          <button
+            className={styles.managerApprove}
+            type="button"
+            onClick={() => onApprove?.(article.id)}
+          >
             Aprobar
           </button>
+
           <button
-            className={`${styles.iconAction} ${styles.delete}`}
+            className={styles.managerReject}
             type="button"
-            onClick={() => onDelete?.(article.id)}
+            onClick={() => onReject?.(article.id)}
           >
-            <FaTrash />
-          </button>
-          <button
-            className={styles.iconAction}
-            type="button"
-            onClick={() => onEdit?.(article.id)}
-          >
-            <FaPen />
+            Rechazar
           </button>
         </div>
       </article>
     );
   }
+
+
 
   return (
     <article className={styles.articleCard}>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styles from "./articleview.module.scss";
-import processorImg from "../../assets/icons/processor.jpg";
+import { useParams, useNavigate } from "react-router-dom";
+import styles from "./ArticleView.module.scss";
 
 export default function ArticleView() {
   const { id } = useParams();
@@ -9,6 +8,8 @@ export default function ArticleView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editorialNote, setEditorialNote] = useState("");
+
+  const navigate = useNavigate();
 
   const getUserInfo = () => {
     const token = localStorage.getItem("token");
@@ -110,6 +111,16 @@ export default function ArticleView() {
     <div className={styles.pageLayout}>
       <main className={styles.mainContent}>
         <div className={styles.articleContainer}>
+          <button
+            className={styles.backButton}
+            onClick={() => {
+              if (isManager) navigate("/dashboard-manager");
+              else navigate("/dashboard-author");
+            }}
+          >
+            ← Volver
+          </button>
+
           <div className={styles.articleMetaHeader}>
             <span className={styles.statusBadge}>ESTADO: {article.status}</span>
             <span>
@@ -122,7 +133,10 @@ export default function ArticleView() {
 
           {article.image && (
             <div className={styles.articleMainImage}>
-              <img src={`http://localhost:8080${article.image}`} alt={article.title} />
+              <img
+                src={`http://localhost:8080${article.image}`}
+                alt={article.title}
+              />
             </div>
           )}
 
@@ -162,13 +176,13 @@ export default function ArticleView() {
 
           {isManager && (
             <div className={styles.editorialNotesSection}>
-              <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
+              {/* <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
               <textarea
                 id="editor-notes"
                 value={editorialNote}
                 onChange={(e) => setEditorialNote(e.target.value)}
                 placeholder="Escribe una nota para el autor..."
-              />
+              /> */}
               <div className={styles.editorialActions}>
                 <button className={styles.btnApprove} onClick={handleApprove}>
                   APROBAR
