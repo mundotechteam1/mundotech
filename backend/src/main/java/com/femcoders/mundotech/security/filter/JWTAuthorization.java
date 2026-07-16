@@ -71,6 +71,7 @@ public class JWTAuthorization extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (Exception e) {
+            System.out.println("JWT verification failed: " + e.getMessage());
             SecurityContextHolder.clearContext();
         }
 

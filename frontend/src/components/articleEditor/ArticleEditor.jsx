@@ -21,28 +21,43 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
     setLoading(true);
 
     const formData = new FormData();
-    const articleDto = {
-      title: headline,
-      content: content,
-      status: statusType,
-      authorId: 1,
-    };
-
-    formData.append(
-      "article",
-      new Blob([JSON.stringify(articleDto)], { type: "application/json" }),
-    );
+    formData.append("title", headline);
+    formData.append("content", content);
+    formData.append("status", statusType);
+    formData.append("authorId", 1);
 
     if (image) {
       formData.append("image", image);
     }
 
     try {
-      await axios.post("http://localhost:8080/api/v1/articles", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/articles",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
+
+      const createdArticleId = response.data.id;
+
+      if (statusType === "IN_REVIEW" && createdArticleId) {
+        await axios.put(
+          `http://localhost:8080/api/v1/articles/${createdArticleId}/send-review?authorId=1`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+      }
+
       alert(`¡Éxito! Estado: ${statusType}`);
       setHeadline("");
       setContent("");
@@ -74,26 +89,26 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
                 <span className={styles.tagNew}>NUEVO BORRADOR</span>
                 <span className={styles.tagId}>/ #4429</span>
               </div>
-              <div className={styles.submissionTitleText}>Sin título</div>
+              <div
+                className={styles.submissionTitleText}
+                style={{ minHeight: "24px", color: "#000", fontWeight: "bold" }}
+              >
+                {headline.trim() !== "" ? headline : "Sin título..."}
+              </div>
             </div>
 
             <div className={styles.metaGrid}>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>AUTOR</span>
                 <div className={styles.formGroup}>
-                  <input
-                    type="text"
-                    value="Julius V. Thorne"
-                    readOnly
-                    disabled
-                  />
+                  <input type="text" defaultValue="Julius V. Thorne" disabled />
                 </div>
               </div>
 
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>FECHA DE PUBLICACIÓN</span>
                 <div className={styles.formGroup}>
-                  <input type="text" value={today} readOnly disabled />
+                  <input type="text" defaultValue={today} disabled />
                 </div>
               </div>
             </div>
