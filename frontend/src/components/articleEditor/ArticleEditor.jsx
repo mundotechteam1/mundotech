@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./ArticleEditor.module.scss";
+import { jwtDecode } from "jwt-decode";
 
 export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
   const [headline, setHeadline] = useState("");
@@ -16,60 +17,42 @@ export default function ArticleEditor({ isEditorOpen, setIsEditorOpen }) {
     }
   };
 
-  const handleSubmit = async (e, statusType) => {
-    e.preventDefault();
-    setLoading(true);
+const handleSubmit = async (e, statusType) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const formData = new FormData();
-    formData.append("title", headline);
-    formData.append("content", content);
-    formData.append("status", statusType);
-    formData.append("authorId", 1);
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
+  const userId = decoded.id; 
 
-    if (image) {
-      formData.append("image", image);
-    }
+  const formData = new FormData();
+  formData.append("title", headline);
+  formData.append("content", content);
+  formData.append("status", statusType);
+  formData.append("authorId", userId); 
 
-    try {
-      const token = localStorage.getItem("token");
+  if (image) {
+    formData.append("image", image);
+  }
 
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/articles",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/v1/articles",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ← sin Content-Type
         },
-      );
-
-      const createdArticleId = response.data.id;
-
-      if (statusType === "IN_REVIEW" && createdArticleId) {
-        await axios.put(
-          `http://localhost:8080/api/v1/articles/${createdArticleId}/send-review?authorId=1`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
       }
+    );
 
-      alert(`¡Éxito! Estado: ${statusType}`);
-      setHeadline("");
-      setContent("");
-      setImage(null);
-      if (setIsEditorOpen) setIsEditorOpen(false);
-    } catch (error) {
-      console.error(error);
-      alert("Error backend");
-    } finally {
-      setLoading(false);
-    }
-  };
+    console.log("Artículo creado:", response.data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (!isEditorOpen) return null;
 
