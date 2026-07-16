@@ -18,18 +18,28 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final ArticleMapper articleMapper;
+<<<<<<< HEAD
     private final ImageService imageService; 
+=======
+>>>>>>> main
 
     public ArticleServiceImpl(
             ArticleRepository articleRepository,
             UserService userService,
+<<<<<<< HEAD
             ArticleMapper articleMapper,
             ImageService imageService
+=======
+            ArticleMapper articleMapper
+>>>>>>> main
     ) {
         this.articleRepository = articleRepository;
         this.userService = userService;
         this.articleMapper = articleMapper;
+<<<<<<< HEAD
         this.imageService = imageService;
+=======
+>>>>>>> main
     }
 
     @Override
@@ -43,12 +53,15 @@ public class ArticleServiceImpl implements ArticleService {
         article.setAuthor(author);
         article.setStatus(ArticleStatus.DRAFT);
 
+<<<<<<< HEAD
         if (dto.getImage() != null && !dto.getImage().isEmpty()) {
             String imagePath = imageService.saveImage(dto.getImage());
             article.setImage(imagePath);
         }
 
 
+=======
+>>>>>>> main
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }
@@ -106,6 +119,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+<<<<<<< HEAD
     public void deleteArticleByManager(Integer articleId, Integer managerId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
@@ -123,6 +137,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+=======
+>>>>>>> main
     public ArticleResponseDTO sendForReview(Integer articleId, Integer authorId) {
         Article article = getArticleEntity(articleId);
 
@@ -165,6 +181,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+<<<<<<< HEAD
     public ArticleResponseDTO rejectArticle(Integer articleId, Integer managerId) {
         Article article = getArticleEntity(articleId);
 
@@ -188,6 +205,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+=======
+>>>>>>> main
     public List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status) {
         return articleRepository.findByStatus(status)
                 .stream()
@@ -207,6 +226,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }
+<<<<<<< HEAD
 
     @Override
     public ArticleResponseDTO deleteArticleImage(Integer articleId, Integer authorId) {
@@ -220,4 +240,6 @@ public class ArticleServiceImpl implements ArticleService {
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }
+=======
+>>>>>>> main
 }

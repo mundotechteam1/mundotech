@@ -46,7 +46,6 @@ function ArticleList({
 
   return (
     <section className={styles.articleList}>
-
       {articles.map((article, index) => (
         <ArticleCard
           key={article.id}

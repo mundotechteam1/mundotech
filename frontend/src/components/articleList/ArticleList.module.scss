@@ -1,16 +1,26 @@
 @use "../../styles/_variables" as v;
 
 .articleList {
+<<<<<<< HEAD
   width: 100%;
   max-width: 1400px;
   margin: 1.2rem auto;
+=======
+  max-width: v.$max-content-width;
+  margin: 1rem auto;
+>>>>>>> main
   padding: v.$space-lg v.$space-md;
   background: v.$color-bg;
 
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: 1fr;
   gap: 2rem;
   box-sizing: border-box;
+=======
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+>>>>>>> main
 
   &State {
     display: flex;
@@ -22,7 +32,11 @@
   &Empty,
   &Error {
     font-family: v.$font-body;
+<<<<<<< HEAD
     font-size: 1.2rem;
+=======
+    font-size: 0.95rem;
+>>>>>>> main
     color: v.$color-text-muted;
     text-align: center;
   }
@@ -33,7 +47,10 @@
 
   &Footer {
     grid-column: 1 / -1;
+<<<<<<< HEAD
     width: 100%;
+=======
+>>>>>>> main
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,7 +60,11 @@
 
   &LoadMore {
     font-family: v.$font-body;
+<<<<<<< HEAD
     font-size: 1.2rem;
+=======
+    font-size: 0.8rem;
+>>>>>>> main
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
