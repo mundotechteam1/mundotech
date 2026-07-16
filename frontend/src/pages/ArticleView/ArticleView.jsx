@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./articleview.module.scss";
 import processorImg from "../../assets/icons/processor.jpg";
@@ -9,6 +9,21 @@ export default function ArticleView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editorialNote, setEditorialNote] = useState("");
+
+  const getUserInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload;
+    } catch {
+      return null;
+    }
+  };
+
+  const user = getUserInfo();
+  const isManager = user?.roles?.includes("MANAGER");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -31,45 +46,51 @@ export default function ArticleView() {
     fetchArticleData();
   }, [id]);
 
+  const authHeaders = () => {
+    const headers = {};
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    return headers;
+  };
+
   const handleApprove = async () => {
+    if (!user?.id) return;
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${id || 1}/approve?managerId=1`,
-        {
-          method: "PUT",
-        },
+        `http://localhost:8080/api/v1/articles/${id}/approve?managerId=${user.id}`,
+        { method: "PUT", headers: authHeaders() },
       );
       if (response.ok) {
         const updated = await response.json();
         setArticle(updated);
         alert("Artículo aprobado con éxito");
+      } else {
+        const text = await response.text();
+        alert(text || "Error al aprobar");
       }
     } catch (err) {
       console.error(err);
+      alert("Error al aprobar");
     }
   };
 
   const handleReject = async () => {
+    if (!user?.id) return;
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${id || 1}?authorId=1`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: article.title,
-            content: article.content,
-            status: "DRAFT",
-          }),
-        },
+        `http://localhost:8080/api/v1/articles/${id}/reject?managerId=${user.id}`,
+        { method: "PUT", headers: authHeaders() },
       );
       if (response.ok) {
         const updated = await response.json();
         setArticle(updated);
         alert("Artículo enviado a borradores");
+      } else {
+        const text = await response.text();
+        alert(text || "Error al rechazar");
       }
     } catch (err) {
       console.error(err);
+      alert("Error al rechazar");
     }
   };
 
@@ -77,19 +98,12 @@ export default function ArticleView() {
   if (error) return <div className={styles.mainContent}>Error: {error}</div>;
   if (!article) return <div className={styles.mainContent}>Empty</div>;
 
-  const rawParagraphs = article.content
-    ? article.content.split(/(?<=\.)\s+/)
+  const paragraphs = article.content
+    ? article.content.split(/\n\s*\n/).filter(Boolean)
     : [];
-  const articleParagraphs = [];
 
-  if (rawParagraphs.length > 0) {
-    if (rawParagraphs.length <= 2) {
-      articleParagraphs.push(...rawParagraphs);
-    } else {
-      const mid = Math.ceil(rawParagraphs.length / 2);
-      articleParagraphs.push(rawParagraphs.slice(0, mid).join(" "));
-      articleParagraphs.push(rawParagraphs.slice(mid).join(" "));
-    }
+  if (paragraphs.length === 0 && article.content) {
+    paragraphs.push(article.content);
   }
 
   return (
@@ -100,15 +114,17 @@ export default function ArticleView() {
             <span className={styles.statusBadge}>ESTADO: {article.status}</span>
             <span>
               RECIBIDO:{" "}
-              {article.created_at
-                ? new Date(article.created_at).toLocaleDateString()
+              {article.createdAt
+                ? new Date(article.createdAt).toLocaleDateString()
                 : new Date().toLocaleDateString()}
             </span>
           </div>
 
-          <div className={styles.articleMainImage}>
-            <img src={processorImg} alt="Processor" />
-          </div>
+          {article.image && (
+            <div className={styles.articleMainImage}>
+              <img src={`http://localhost:8080${article.image}`} alt={article.title} />
+            </div>
+          )}
 
           <h1 className={styles.articleTitle}>{article.title}</h1>
 
@@ -119,15 +135,15 @@ export default function ArticleView() {
               </span>
             </div>
             <span className={styles.articleDate}>
-              {article.published_at
-                ? new Date(article.published_at).toLocaleDateString()
+              {article.publishedAt
+                ? new Date(article.publishedAt).toLocaleDateString()
                 : "No publicado"}
             </span>
           </div>
 
           <div className={styles.articleBodyLayout}>
             <div className={styles.articleTextColumns}>
-              {articleParagraphs.map((paragraph, index) => (
+              {paragraphs.map((paragraph, index) => (
                 <p key={index}>
                   {index === 0 ? (
                     <>
@@ -144,23 +160,25 @@ export default function ArticleView() {
             </div>
           </div>
 
-          <div className={styles.editorialNotesSection}>
-            <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
-            <textarea
-              id="editor-notes"
-              value={editorialNote}
-              onChange={(e) => setEditorialNote(e.target.value)}
-              placeholder="Escribe una nota para el autor..."
-            />
-            <div className={styles.editorialActions}>
-              <button className={styles.btnApprove} onClick={handleApprove}>
-                APROBAR
-              </button>
-              <button className={styles.btnReject} onClick={handleReject}>
-                RECHAZAR
-              </button>
+          {isManager && (
+            <div className={styles.editorialNotesSection}>
+              <label htmlFor="editor-notes">NOTAS EDITORIALES:</label>
+              <textarea
+                id="editor-notes"
+                value={editorialNote}
+                onChange={(e) => setEditorialNote(e.target.value)}
+                placeholder="Escribe una nota para el autor..."
+              />
+              <div className={styles.editorialActions}>
+                <button className={styles.btnApprove} onClick={handleApprove}>
+                  APROBAR
+                </button>
+                <button className={styles.btnReject} onClick={handleReject}>
+                  RECHAZAR
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
     </div>

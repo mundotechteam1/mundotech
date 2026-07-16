@@ -11,12 +11,23 @@ function ManagerDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [editingArticle, setEditingArticle] = useState(null);
 
   const authHeaders = () => {
     const token = localStorage.getItem("token");
     const headers = { "Content-Type": "application/json" };
     if (token) headers["Authorization"] = `Bearer ${token}`;
     return headers;
+  };
+
+  const getUserId = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split(".")[1])).id;
+    } catch {
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -42,44 +53,45 @@ function ManagerDashboard() {
     }
   };
 
-  const updateArticleStatus = async (articleId, newStatus) => {
+  const handleApprove = async (articleId) => {
+    const managerId = getUserId();
+    if (!managerId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${articleId}`,
-        {
-          method: "PATCH",
-          headers: authHeaders(),
-          body: JSON.stringify({ status: newStatus }),
-        },
+        `http://localhost:8080/api/v1/articles/${articleId}/approve?managerId=${managerId}`,
+        { method: "PUT", headers: authHeaders() },
       );
 
       if (!response.ok) {
-        throw new Error("No se pudo actualizar el artículo");
+        throw new Error("No se pudo aprobar el artículo");
       }
 
       setArticles((prev) =>
-        prev.map((a) => (a.id === articleId ? { ...a, status: newStatus } : a)),
+        prev.map((a) => (a.id === articleId ? { ...a, status: "PUBLISHED" } : a)),
       );
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const handleApprove = (articleId) =>
-    updateArticleStatus(articleId, "PUBLISHED");
-  const handleReject = (articleId) => updateArticleStatus(articleId, "DRAFT");
-
   const handleDelete = async (articleId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
       return;
 
+    const managerId = getUserId();
+    if (!managerId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
-        {
-          method: "DELETE",
-          headers: authHeaders(),
-        },
+        `http://localhost:8080/api/v1/articles/${articleId}/manager?managerId=${managerId}`,
+        { method: "DELETE", headers: authHeaders() },
       );
 
       if (!response.ok) {
@@ -92,8 +104,21 @@ function ManagerDashboard() {
     }
   };
 
-  const handleEdit = () => {
-    setIsEditorOpen(true);
+  const handleEdit = (articleId) => {
+    const article = articles.find((a) => a.id === articleId);
+    if (article) {
+      setEditingArticle(article);
+      setIsEditorOpen(true);
+    }
+  };
+
+  const handleArticleUpdated = () => {
+    loadArticles();
+  };
+
+  const handleEditorClose = (val) => {
+    setIsEditorOpen(val);
+    if (!val) setEditingArticle(null);
   };
 
   const articlesInReview = articles.filter(
@@ -149,7 +174,6 @@ function ManagerDashboard() {
             article={article}
             variant="manager"
             onApprove={handleApprove}
-            onReject={handleReject}
             onDelete={handleDelete}
             onEdit={handleEdit}
           />
@@ -167,7 +191,9 @@ function ManagerDashboard() {
 
       <ArticleEditor
         isEditorOpen={isEditorOpen}
-        setIsEditorOpen={setIsEditorOpen}
+        setIsEditorOpen={handleEditorClose}
+        article={editingArticle}
+        onArticleUpdated={handleArticleUpdated}
       />
     </div>
   );

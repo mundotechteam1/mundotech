@@ -22,6 +22,19 @@ function AuthorDashboard() {
     return headers;
   };
 
+  const getUserInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return { id: payload.id, name: payload.name, email: payload.sub };
+    } catch {
+      return null;
+    }
+  };
+
+  const userInfo = getUserInfo();
+
   useEffect(() => {
     loadArticles();
   }, []);
@@ -81,16 +94,39 @@ function AuthorDashboard() {
     (article) => article.status === "IN_REVIEW",
   ).length;
 
-  const firstArticle = articles[0];
-  const author = firstArticle?.author || { name: "M. Atrus" };
+  const loggedInUser = { name: userInfo?.name || "Autor" };
+
+  const handleSendReview = async (articleId) => {
+    const authorId = userInfo?.id;
+    if (!authorId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/articles/${articleId}/send-review?authorId=${authorId}`,
+        { method: "PUT", headers: authHeaders() },
+      );
+      if (!response.ok) throw new Error("No se pudo enviar a revisión");
+      loadArticles();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   const handleDelete = async (articleId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
       return;
 
+    const authorId = userInfo?.id;
+    if (!authorId) {
+      setError("No se pudo identificar al usuario");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${articleId}?authorId=1`,
+        `http://localhost:8080/api/v1/articles/${articleId}?authorId=${authorId}`,
         { method: "DELETE", headers: authHeaders() },
       );
 
@@ -104,8 +140,28 @@ function AuthorDashboard() {
     }
   };
 
-  const handleEdit = () => {
+  const [editingArticle, setEditingArticle] = useState(null);
+
+  const handleEdit = (articleId) => {
+    const article = articles.find((a) => a.id === articleId);
+    if (article) {
+      setEditingArticle(article);
+      setIsEditorOpen(true);
+    }
+  };
+
+  const handleCreateNew = () => {
+    setEditingArticle(null);
     setIsEditorOpen(true);
+  };
+
+  const handleArticleUpdated = () => {
+    loadArticles();
+  };
+
+  const handleEditorClose = (val) => {
+    setIsEditorOpen(val);
+    if (!val) setEditingArticle(null);
   };
 
   return (
@@ -121,14 +177,14 @@ function AuthorDashboard() {
         <button
           className={styles.authorDashboardCreateButton}
           type="button"
-          onClick={() => setIsEditorOpen(true)}
+          onClick={handleCreateNew}
         >
           Crear nuevo artículo
         </button>
       </section>
 
       <AuthorProfile
-        author={author}
+        author={loggedInUser}
         totalPublished={totalPublished}
         reviewCycles={reviewCycles}
       />
@@ -149,6 +205,7 @@ function AuthorDashboard() {
             variant="author"
             onDelete={handleDelete}
             onEdit={handleEdit}
+            onSendReview={handleSendReview}
           />
         ))}
       </section>
@@ -164,7 +221,9 @@ function AuthorDashboard() {
 
       <ArticleEditor
         isEditorOpen={isEditorOpen}
-        setIsEditorOpen={setIsEditorOpen}
+        setIsEditorOpen={handleEditorClose}
+        article={editingArticle}
+        onArticleUpdated={handleArticleUpdated}
       />
     </main>
   );
