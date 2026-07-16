@@ -16,7 +16,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-
 @Configuration
 public class SpringConfig {
 
@@ -59,17 +58,16 @@ public class SpringConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/articles").hasAnyRole("AUTHOR", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/articles").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.GET, "/api/v1/articles/author/**").hasAnyRole("AUTHOR", "MANAGER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/published").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/in-review").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/draft").hasRole("AUTHOR")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/PUBLISHED").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/articles/status/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/**").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/articles/**").hasRole("AUTHOR")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/send-review").hasAnyRole("AUTHOR", "USER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/articles/*/approve").hasRole("MANAGER")
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)

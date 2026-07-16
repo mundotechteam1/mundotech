@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ArticleList from "../../components/ArticleList/ArticleList";
-import { getArticles } from "../../services/articleService";
+import ArticleList from "../../components/articleList/ArticleList";
+import { getPublishedArticles } from "../../services/articleService";
 
 function Home() {
   const [articles, setArticles] = useState([]);
@@ -10,18 +10,12 @@ function Home() {
   useEffect(() => {
     const loadArticles = async () => {
       try {
-        const data = await getArticles();
+        const data = await getPublishedArticles();
 
-        const publishedArticles = data
-          .filter((article) => article.status === "PUBLISHED")
-          .sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          )
-          .slice(0, 5);
+        setArticles(data.slice(0, 5));
 
-        setArticles(publishedArticles);
       } catch (err) {
-        console.error(err);
+        console.error("Error cargando artículos:", err);
         setError("No se pudieron cargar los artículos.");
       } finally {
         setIsLoading(false);
