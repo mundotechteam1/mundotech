@@ -11,9 +11,9 @@
     border: 1px solid v.$color-text;
     background-color: transparent;
     color: v.$color-text;
-    padding: 4px 7px;
+    padding: 4px 23px;
     font-family: v.$font-heading-secondary;
-    font-size: 7px;
+    font-size: 1.2rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
     cursor: pointer;
@@ -33,7 +33,7 @@
 .paginationInfo {
   margin-left: auto;
   font-family: v.$font-heading-secondary;
-  font-size: 7px;
+  font-size: 1.2rem;
   color: v.$color-text-muted;
   white-space: nowrap;
 }
@@ -44,7 +44,7 @@
   color: v.$color-text;
   padding: 3px 4px;
   font-family: v.$font-heading-secondary;
-  font-size: 7px;
+  font-size: 1.2rem;
   font-weight: v.$weight-bold;
   text-transform: uppercase;
   cursor: pointer;
