@@ -1,12 +1,12 @@
 @use '../../styles/_variables' as v;
 
-/* ---- author variant ---- */
+/* ---- AUTHOR VARIANT ---- */
 
 .articleCard {
   border: 1px solid v.$color-text;
   padding: v.$space-sm;
   background-color: transparent;
-  font-family: v.$font-body; /* más legible */
+  font-family: v.$font-body;
 
   &Meta {
     display: flex;
@@ -14,7 +14,7 @@
     gap: v.$space-xs;
     margin-bottom: v.$space-xs;
     font-family: v.$font-heading-secondary;
-    font-size: 0.875rem; /* 14px — antes 7px */
+    font-size: 0.875rem;
     font-weight: v.$weight-bold;
     text-transform: uppercase;
     color: v.$color-text-muted;
@@ -25,7 +25,7 @@
     border: 1px solid v.$color-text;
     color: v.$color-text;
     background-color: transparent;
-    font-size: 0.75rem; /* 12px */
+    font-size: 0.75rem;
     border-radius: 4px;
   }
 
@@ -33,7 +33,7 @@
     margin: 0 0 v.$space-xs;
     color: v.$color-text;
     font-family: v.$font-heading-primary;
-    font-size: 1.375rem; /* 22px */
+    font-size: 1.375rem;
     font-weight: v.$weight-regular;
     line-height: 1.2;
     letter-spacing: -0.6px;
@@ -43,7 +43,7 @@
     margin: 0 0 v.$space-sm;
     color: v.$color-text;
     font-family: v.$font-body;
-    font-size: 0.875rem; /* 14px — antes 9px */
+    font-size: 0.875rem;
     line-height: 1.45;
   }
 
@@ -55,7 +55,7 @@
     button {
       border: 1px solid v.$color-text;
       font-family: v.$font-heading-secondary;
-      font-size: 0.75rem; /* 12px — antes 7px */
+      font-size: 0.75rem;
       font-weight: v.$weight-bold;
       text-transform: uppercase;
       cursor: pointer;
@@ -70,7 +70,7 @@
   }
 }
 
-/* ---- status badges ---- */
+/* ---- STATUS BADGES ---- */
 
 .statusDraft {
   background-color: transparent;
@@ -91,7 +91,7 @@
   border-radius: 4px;
 }
 
-/* ---- action buttons ---- */
+/* ---- AUTHOR ACTION BUTTONS ---- */
 
 .primaryAction {
   background-color: v.$color-text;
@@ -115,7 +115,7 @@
   padding: 0;
   background-color: transparent;
   color: v.$color-text;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -148,74 +148,60 @@
   }
 }
 
-/* ---- manager variant ---- */
+/* ---- MANAGER VARIANT ---- */
 
 .managerArticle {
-  padding: 0 0 v.$space-lg;
-  margin-bottom: v.$space-lg;
-  border-bottom: 1px solid v.$color-border;
+  padding: v.$space-sm;
+  border: 1px solid v.$color-text;
+  background: transparent;
+  margin-bottom: v.$space-md;
 
-  &:last-child {
-    margin-bottom: 0;
+  .managerTitle {
+    margin: 0 0 v.$space-xs;
+    font-family: v.$font-heading-primary;
+    font-size: 1.375rem;
+    font-weight: v.$weight-bold;
+    cursor: pointer;
+  }
+
+  .managerMeta {
+    display: flex;
+    gap: v.$space-sm;
+    font-family: v.$font-heading-secondary;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    margin-bottom: v.$space-sm;
+    color: v.$color-text-muted;
+  }
+
+  .managerActions {
+    display: flex;
+    gap: v.$space-xs;
+
+    button {
+      padding: 6px 12px;
+      font-family: v.$font-heading-secondary;
+      font-size: 0.875rem;
+      font-weight: v.$weight-bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .managerApprove {
+      background: v.$color-text;
+      color: v.$color-white;
+    }
+
+    .managerReject {
+      background: transparent;
+      color: v.$color-error;
+      border: 1px solid v.$color-error;
+    }
   }
 }
 
-.managerCategory {
-  margin: 0 0 v.$space-xs;
-  color: v.$color-error;
-  font-family: v.$font-heading-secondary;
-  font-size: 0.875rem; /* 14px — antes 9px */
-  font-weight: v.$weight-bold;
-  text-transform: uppercase;
-}
-
-.managerArticle h2 {
-  margin: 0 0 v.$space-sm;
-  color: v.$color-text;
-  font-family: v.$font-heading-primary;
-  font-size: 1.5625rem; /* 25px */
-  font-weight: v.$weight-bold;
-  line-height: 1.2;
-}
-
-.managerMeta {
-  display: flex;
-  gap: v.$space-sm;
-  margin-bottom: v.$space-xs;
-  color: v.$color-text-muted;
-  font-family: v.$font-heading-secondary;
-  font-size: 0.75rem; /* 12px — antes 8px */
-  font-weight: v.$weight-bold;
-  text-transform: uppercase;
-}
-
-.managerActions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: v.$space-xs;
-  margin-bottom: v.$space-xs;
-}
-
-.managerActionBtn {
-  font-family: v.$font-heading-secondary;
-  font-size: 0.875rem; /* 14px — antes 9px */
-  font-weight: v.$weight-bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  background-color: v.$color-text;
-  color: v.$color-white;
-  padding: 8px 20px;
-  border-radius: 4px;
-
-  &:focus-visible {
-    outline: 3px solid v.$color-border;
-    outline-offset: 2px;
-  }
-}
-
-/* ---- responsive ---- */
+/* ---- RESPONSIVE ---- */
 
 @media (min-width: 640px) {
   .articleCard {
@@ -223,21 +209,20 @@
   }
 
   .articleCard h2 {
-    font-size: 1.625rem; /* 26px */
+    font-size: 1.625rem;
   }
 
   .articleCardMeta,
   .articleCardContent {
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.875rem;
   }
 
   .managerArticle h2 {
-    font-size: 1.875rem; /* 30px */
+    font-size: 1.875rem;
   }
 
-  .managerMeta,
-  .managerCategory {
-    font-size: 0.875rem; /* 14px */
+  .managerMeta {
+    font-size: 0.875rem;
   }
 
   .managerActions button {
@@ -255,12 +240,12 @@
   }
 
   .articleCard h2 {
-    font-size: 1.875rem; /* 30px */
+    font-size: 1.875rem;
   }
 
   .articleCardMeta,
   .articleCardContent {
-    font-size: 1rem; /* 16px */
+    font-size: 1rem;
   }
 
   .articleCardActions button {
@@ -268,12 +253,11 @@
   }
 
   .managerArticle h2 {
-    font-size: 2.25rem; /* 36px */
+    font-size: 2.25rem;
   }
 
-  .managerMeta,
-  .managerCategory {
-    font-size: 1rem; /* 16px */
+  .managerMeta {
+    font-size: 1rem;
   }
 
   .managerActions {
@@ -281,7 +265,7 @@
     align-items: center;
   }
 
-  .managerActionBtn {
+  .managerActions button {
     font-size: 1rem;
     padding: 12px 32px;
   }
