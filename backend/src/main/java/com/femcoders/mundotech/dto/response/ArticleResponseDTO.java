@@ -18,5 +18,6 @@ public class ArticleResponseDTO {
     private String image;
     private String status;
     private LocalDateTime createdAt;
+    private LocalDateTime publishedAt;
     private AuthorSummaryDTO author;
 }

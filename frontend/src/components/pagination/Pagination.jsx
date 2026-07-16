@@ -10,7 +10,7 @@ function Pagination({
   onPageChange,
   onItemsPerPageChange,
 }) {
-  if (totalPages <= 1 && totalItems <= itemsPerPage) return null;
+  const showPagination = totalPages > 1;
 
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
@@ -19,32 +19,36 @@ function Pagination({
 
   return (
     <section className={styles.pagination}>
-      <button
-        type="button"
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-      >
-        Anterior
-      </button>
+      {showPagination && (
+        <>
+          <button
+            type="button"
+            disabled={currentPage === 1}
+            onClick={() => onPageChange(currentPage - 1)}
+          >
+            Anterior
+          </button>
 
-      {pageNumbers.map((num) => (
-        <button
-          key={num}
-          type="button"
-          className={num === currentPage ? styles.active : ""}
-          onClick={() => onPageChange(num)}
-        >
-          {num}
-        </button>
-      ))}
+          {pageNumbers.map((num) => (
+            <button
+              key={num}
+              type="button"
+              className={num === currentPage ? styles.active : ""}
+              onClick={() => onPageChange(num)}
+            >
+              {num}
+            </button>
+          ))}
 
-      <button
-        type="button"
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
-      >
-        Siguiente
-      </button>
+          <button
+            type="button"
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+          >
+            Siguiente
+          </button>
+        </>
+      )}
 
       <span className={styles.paginationInfo}>
         {totalItems} artículos &mdash;

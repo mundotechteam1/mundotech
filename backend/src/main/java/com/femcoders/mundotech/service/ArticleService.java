@@ -31,4 +31,6 @@ public interface ArticleService {
     List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
 
     ArticleResponseDTO updateImage(Integer id, String imageUrl);
+
+    ArticleResponseDTO deleteArticleImage(Integer articleId, Integer authorId);
 }

@@ -42,6 +42,7 @@ function ArticleCard({
   onApprove,
   onDelete,
   onEdit,
+  onSendReview,
 }) {
   const navigate = useNavigate();
   if (variant === "manager") {
@@ -98,7 +99,7 @@ function ArticleCard({
 
       <div className={styles.articleCardActions}>
         {article.status === "DRAFT" && (
-          <button className={styles.primaryAction} type="button">
+          <button className={styles.primaryAction} type="button" onClick={() => onSendReview?.(article.id)}>
             Enviar a revisión
           </button>
         )}

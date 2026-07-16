@@ -203,7 +203,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleResponseDTO updateImage(Integer id, String imageUrl) {
         Article article = getArticleEntity(id);
-        article.setImage(imageUrl); // CORREGIDO: Vuelve a su estado original (String)
+        article.setImage(imageUrl);
+        Article saved = articleRepository.save(article);
+        return articleMapper.toResponse(saved);
+    }
+
+    @Override
+    public ArticleResponseDTO deleteArticleImage(Integer articleId, Integer authorId) {
+        Article article = getArticleEntity(articleId);
+
+        if (!article.getAuthor().getId().equals(authorId)) {
+            throw new RuntimeException("Only the author can remove the image");
+        }
+
+        article.setImage(null);
         Article saved = articleRepository.save(article);
         return articleMapper.toResponse(saved);
     }

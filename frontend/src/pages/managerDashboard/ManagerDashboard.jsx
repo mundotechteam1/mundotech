@@ -11,6 +11,7 @@ function ManagerDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [editingArticle, setEditingArticle] = useState(null);
 
   const authHeaders = () => {
     const token = localStorage.getItem("token");
@@ -103,8 +104,21 @@ function ManagerDashboard() {
     }
   };
 
-  const handleEdit = () => {
-    setIsEditorOpen(true);
+  const handleEdit = (articleId) => {
+    const article = articles.find((a) => a.id === articleId);
+    if (article) {
+      setEditingArticle(article);
+      setIsEditorOpen(true);
+    }
+  };
+
+  const handleArticleUpdated = () => {
+    loadArticles();
+  };
+
+  const handleEditorClose = (val) => {
+    setIsEditorOpen(val);
+    if (!val) setEditingArticle(null);
   };
 
   const articlesInReview = articles.filter(
@@ -177,7 +191,9 @@ function ManagerDashboard() {
 
       <ArticleEditor
         isEditorOpen={isEditorOpen}
-        setIsEditorOpen={setIsEditorOpen}
+        setIsEditorOpen={handleEditorClose}
+        article={editingArticle}
+        onArticleUpdated={handleArticleUpdated}
       />
     </div>
   );

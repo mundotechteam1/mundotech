@@ -110,6 +110,14 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<ArticleResponseDTO> deleteArticleImage(
+            @PathVariable Integer id,
+            @RequestParam Integer authorId) {
+        ArticleResponseDTO updated = articleService.deleteArticleImage(id, authorId);
+        return ResponseEntity.ok(updated);
+    }
+
     @DeleteMapping("/{id}/manager")
     public ResponseEntity<Void> deleteArticleByManager(
             @PathVariable Integer id,
