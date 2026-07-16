@@ -70,8 +70,9 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
         String token = JWT.create()
                 .withSubject(authResult.getName())
                 .withClaim("id", user.getId())
+                .withClaim("name", user.getName())
                 .withClaim("roles", roles)
-                .withExpiresAt(new Date(System.currentTimeMillis() + (5 * 60000)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 60 * 1000)))
                 .sign(Algorithm.HMAC256(secret));
 
 
