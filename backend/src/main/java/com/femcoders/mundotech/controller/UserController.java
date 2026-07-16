@@ -2,7 +2,6 @@ package com.femcoders.mundotech.controller;
 
 import com.femcoders.mundotech.dto.request.UserRequestDTO;
 import com.femcoders.mundotech.dto.response.UserResponseDTO;
-import com.femcoders.mundotech.service.RoleService;
 import com.femcoders.mundotech.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

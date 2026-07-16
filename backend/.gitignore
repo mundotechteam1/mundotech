@@ -1,39 +1,36 @@
-HELP.md
+# Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
+# Spring Boot local config
+src/main/resources/application.properties
+src/main/resources/application.yml
+
+# Logs
+*.log
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# STS
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
-.env
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+/nb-gradle/
 
-### VS Code ###
-.vscode/
-
-### Spring Boot config (local only) ###
-src/main/resources/application.properties
-src/main/resources/application.yml
+# OS
+.DS_Store
