@@ -46,6 +46,7 @@ function ArticleList({
 
   return (
     <section className={styles.articleList}>
+
       {articles.map((article, index) => (
         <ArticleCard
           key={article.id}
@@ -69,6 +70,7 @@ function ArticleList({
 
       {hasMore && (
         <div className={styles.articleListFooter}>
+
           {error && (
             <p className={styles.articleListError}>
               No se han podido cargar más artículos. Inténtalo de nuevo más tarde.
@@ -83,8 +85,10 @@ function ArticleList({
           >
             {isLoading ? "Cargando…" : "Cargar más"}
           </button>
+
         </div>
       )}
+
     </section>
   );
 }

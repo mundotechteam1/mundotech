@@ -12,10 +12,25 @@ function Pagination({
 }) {
   const showPagination = totalPages > 1;
 
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+  const getPageNumbers = () => {
+    const pages = [];
+    const delta = 1;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - delta && i <= currentPage + delta)
+      ) {
+        pages.push(i);
+      } else if (pages[pages.length - 1] !== '...') {
+        pages.push('...');
+      }
+    }
+    return pages;
+  };
+
+  const pageNumbers = getPageNumbers();
 
   return (
     <section className={styles.pagination}>
@@ -29,16 +44,22 @@ function Pagination({
             Anterior
           </button>
 
-          {pageNumbers.map((num) => (
-            <button
-              key={num}
-              type="button"
-              className={num === currentPage ? styles.active : ""}
-              onClick={() => onPageChange(num)}
-            >
-              {num}
-            </button>
-          ))}
+          {pageNumbers.map((num, index) =>
+            num === '...' ? (
+              <span key={`ellipsis-${index}`} className={styles.ellipsis}>
+                ...
+              </span>
+            ) : (
+              <button
+                key={num}
+                type="button"
+                className={num === currentPage ? styles.active : ''}
+                onClick={() => onPageChange(num)}
+              >
+                {num}
+              </button>
+            )
+          )}
 
           <button
             type="button"
