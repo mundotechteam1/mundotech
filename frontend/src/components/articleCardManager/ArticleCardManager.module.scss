@@ -178,20 +178,10 @@
   letter-spacing: 0.2px;
   text-transform: uppercase;
   cursor: pointer;
-
-  &:first-child {
-    border: none;
-    background-color: v.$color-text;
-    color: v.$color-white;
-    padding: 7px 20px;
-  }
-
-  &:nth-child(2) {
-    border: none;
-    background-color: transparent;
-    color: v.$color-text;
-    padding: 0 0 0 20px;
-  }
+  border: none;
+  background-color: v.$color-text;
+  color: v.$color-white;
+  padding: 7px 20px;
 }
 
 .managerIconActions {
@@ -268,9 +258,6 @@
 
   .managerActionBtn {
     font-size: 11px;
-  }
-
-  .managerActionBtn:first-child {
     padding: 10px 32px;
   }
 }

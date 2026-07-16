@@ -77,31 +77,6 @@ function ManagerDashboard() {
     }
   };
 
-  const handleReject = async (articleId) => {
-    const managerId = getUserId();
-    if (!managerId) {
-      setError("No se pudo identificar al usuario");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/articles/${articleId}/reject?managerId=${managerId}`,
-        { method: "PUT", headers: authHeaders() },
-      );
-
-      if (!response.ok) {
-        throw new Error("No se pudo rechazar el artículo");
-      }
-
-      setArticles((prev) =>
-        prev.map((a) => (a.id === articleId ? { ...a, status: "DRAFT" } : a)),
-      );
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
   const handleDelete = async (articleId) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este artículo?"))
       return;
@@ -185,7 +160,6 @@ function ManagerDashboard() {
             article={article}
             variant="manager"
             onApprove={handleApprove}
-            onReject={handleReject}
             onDelete={handleDelete}
             onEdit={handleEdit}
           />

@@ -40,7 +40,6 @@ function ArticleCard({
   article,
   variant = "author",
   onApprove,
-  onReject,
   onDelete,
   onEdit,
 }) {
@@ -62,9 +61,6 @@ function ArticleCard({
         <div className={styles.managerActions}>
           <button className={styles.managerActionBtn} type="button" onClick={() => onApprove?.(article.id)}>
             Aprobar
-          </button>
-          <button className={styles.managerActionBtn} type="button" onClick={() => onReject?.(article.id)}>
-            Rechazar
           </button>
           <button
             className={`${styles.iconAction} ${styles.delete}`}
