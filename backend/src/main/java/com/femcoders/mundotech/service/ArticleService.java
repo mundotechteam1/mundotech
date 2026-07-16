@@ -20,16 +20,12 @@ public interface ArticleService {
 
     void deleteArticleById(Integer articleId, Integer authorId);
 
-<<<<<<< HEAD
     void deleteArticleByManager(Integer articleId, Integer managerId);
 
-=======
->>>>>>> main
     ArticleResponseDTO sendForReview(Integer articleId, Integer authorId);
 
     ArticleResponseDTO approveArticle(Integer articleId, Integer managerId);
 
-<<<<<<< HEAD
     ArticleResponseDTO rejectArticle(Integer articleId, Integer managerId);
 
     List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
@@ -37,9 +33,4 @@ public interface ArticleService {
     ArticleResponseDTO updateImage(Integer id, String imageUrl);
 
     ArticleResponseDTO deleteArticleImage(Integer articleId, Integer authorId);
-=======
-    List<ArticleResponseDTO> getArticlesByStatus(ArticleStatus status);
-
-    ArticleResponseDTO updateImage(Integer id, String imageUrl);
->>>>>>> main
 }
