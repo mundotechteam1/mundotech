@@ -1,14 +1,17 @@
 @use "../../styles/_variables" as v;
 
 .articleList {
-  max-width: v.$max-content-width;
-  margin: 1rem auto;
+  max-width: 1400px;
+  width: 100%;
+  margin: 1.2rem auto;
   padding: v.$space-lg v.$space-md;
   background: v.$color-bg;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: 1fr;
   gap: 2rem;
+
+  // ...
 
   &State {
     display: flex;
